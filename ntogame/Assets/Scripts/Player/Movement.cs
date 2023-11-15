@@ -5,9 +5,9 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private Player Player;
     [SerializeField] private Rigidbody Rigidbody;
-    [SerializeField] private float Speed;
+    [SerializeField] private float Speed; 
     [SerializeField] private float JumpForce;
-    private Coroutine GroundCheck = null;
+    private Coroutine GroundCheck = null; 
 
     void Update()
     {
@@ -20,7 +20,7 @@ public class Movement : MonoBehaviour
         else if (Input.GetKey(KeyCode.A))
         {
             direction.x = -1;
-        }
+        } 
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -47,7 +47,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckGround()
+    private IEnumerator CheckGround() 
     {
         yield return new WaitForSeconds(0.2f);
 
