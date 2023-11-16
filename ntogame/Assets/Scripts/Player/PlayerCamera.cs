@@ -36,7 +36,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void UpdateOffset()
     {
-        Player.transform.localRotation = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
+        Player.transform.localRotation = Quaternion.Euler(22.5f, transform.localEulerAngles.y, 0);
 
         Vector3 newOffset = Vector3.zero;
         newOffset.y = StartOffset.y;

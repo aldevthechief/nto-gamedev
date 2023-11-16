@@ -14,12 +14,12 @@ public class Movement : MonoBehaviour
     // [SerializeField] private float JumpForce;
     // private Coroutine GroundCheck = null;
 
-    private float x, z;
+    //private float x, z; нет причин делать лишние поля у класса, когда эти переменные юзаются в одном блоке
 
-    private bool isGrounded;
+    //private bool isGrounded;
     public Transform gc;
     public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    public LayerMask groundMask; 
 
     // если groundvelmult = 50, то игрок перемещается с помощью velocity, то есть он действует на физические объекты, но силы на него не действуют, если = 0, то у игрока отсутствует торможение (на него влияют только ускорения, придаваемые силами)
     public float groundvelmult;
@@ -36,17 +36,17 @@ public class Movement : MonoBehaviour
     private float? lastgrounded;
     private float? jumppress;
 
-    void Start()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+    //void Start() - перенёс данную ответственность на Level.cs
+    //{
+    //    Cursor.visible = false;
+    //    Cursor.lockState = CursorLockMode.Locked; 
+    //}
 
     void Update()
     {
-        isGrounded = Physics.CheckSphere(gc.position, groundDistance, groundMask);
+        //isGrounded = Physics.CheckSphere(gc.position, groundDistance, groundMask); 
 
-        if(isGrounded)
+        if(Physics.CheckSphere(gc.position, groundDistance, groundMask)) //поле isGrounded используется только в этом месте, не вижу смысла выделять для нее отдельную память
         {
             velocitymult = groundvelmult;
             lastgrounded = Time.time;
@@ -56,8 +56,8 @@ public class Movement : MonoBehaviour
             velocitymult = groundvelmult * airmult;
         }
 
-        x = Input.GetAxis("Horizontal") * speed;
-        z = Input.GetAxis("Vertical") * speed;
+        float x = Input.GetAxis("Horizontal") * speed;
+        float z = Input.GetAxis("Vertical") * speed;
 
         Vector3 move = transform.right * x + transform.forward * z;
         Vector3 newmove = new Vector3(move.x, rb.velocity.y, move.z);
