@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Level : MonoBehaviour 
+public class Level : MonoBehaviour
 {
     [SerializeField] private float MinimalY;
 
@@ -9,6 +9,6 @@ public class Level : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
