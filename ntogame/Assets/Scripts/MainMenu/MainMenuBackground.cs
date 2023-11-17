@@ -13,7 +13,7 @@ public class MainMenuBackground : MonoBehaviour
         float magnitude = direction.magnitude;
         if(magnitude > 10)
         {
-            Transform.anchoredPosition += direction / magnitude * (Time.deltaTime * Speed * Mathf.Clamp01(magnitude*0.005f));
+            Transform.anchoredPosition += direction / magnitude * (Time.deltaTime * Speed * Mathf.Clamp01(magnitude * 0.005f));
         }
     }
 }

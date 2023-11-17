@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Transform: {fileID: 472661343}
-  Speed: 500
+  Speed: 50
 --- !u!1 &535641531
 GameObject:
   m_ObjectHideFlags: 0
