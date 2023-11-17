@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using System.IO;
 using GameData;
 
 class Settings : MonoBehaviour
 {
+    [SerializeField] private AudioMixer Mixer;
     [SerializeField] private ConfigInfo Config;
     [SerializeField] private ConfigInfo CurrentConfig;
 
@@ -76,7 +78,9 @@ class Settings : MonoBehaviour
         set 
         {
             value = Mathf.Clamp01(value);
-            Config.MusicsVolume = value; 
+            Config.MusicsVolume = value;
+
+            Mixer.SetFloat("MusicVolume", value == 0 ? -80 : -30 * (1 - value));
         }
     }
     public float _EffectsVolume
@@ -85,7 +89,9 @@ class Settings : MonoBehaviour
         set
         {
             value = Mathf.Clamp01(value);
-            Config.EffectsVolume = value; 
+            Config.EffectsVolume = value;
+
+            Mixer.SetFloat("EffectVolume", value == 0 ? -80 : -30 * (1 - value));
         }
     }
 
@@ -112,6 +118,12 @@ class Settings : MonoBehaviour
         ApplyNewConfig();
     }
 
+    private void Start()
+    {
+        Mixer.SetFloat("EffectVolume", CurrentConfig.EffectsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.EffectsVolume));
+        Mixer.SetFloat("MusicVolume", CurrentConfig.MusicsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.MusicsVolume));
+    }
+
     public void ApplyNewConfig()
     {
         CurrentConfig = Config.CreateClone();
@@ -128,6 +140,9 @@ class Settings : MonoBehaviour
         }
 
         Application.targetFrameRate = CurrentConfig.FPSCap;
+
+        Mixer.SetFloat("EffectVolume", CurrentConfig.EffectsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.EffectsVolume));
+        Mixer.SetFloat("MusicVolume", CurrentConfig.MusicsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.MusicsVolume));
 
         File.WriteAllText(Path.Combine(Application.dataPath, "config.txt"), JsonUtility.ToJson(CurrentConfig));
 
