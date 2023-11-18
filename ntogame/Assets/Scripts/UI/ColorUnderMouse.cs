@@ -8,6 +8,14 @@ public class ColorUnderMouse : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] private Color HighlightColor;
     [SerializeField] private Color DefaultColor;
 
+    private void OnDisable()
+    {
+        foreach (Graphic colorful in Colorful)
+        {
+            colorful.color = DefaultColor;
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         foreach (Graphic colorful in Colorful)

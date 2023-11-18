@@ -5,22 +5,30 @@ using System.Collections;
 
 public class MenuButton : CustomButton, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] private RectTransform ImagePart;
-    [SerializeField] private Graphic[] Defaults; // то что окрасится дефолтным цветом
-    [SerializeField] private Graphic[] Whites; // то что окрасится белым цветом
+    [SerializeField] private RectTransform[] Parts;
+    [SerializeField] private Graphic[] Colorful; 
     [SerializeField] private Color HighlightColor;
     [SerializeField] private Color DefaultColor;
     [SerializeField] private float ImagePartSpeed;
 
+    private void OnDisable()
+    {
+        foreach (Graphic defaultColorful in Colorful)
+        {
+            defaultColorful.color = DefaultColor;
+        }
+
+        transform.localScale = Vector3.one;
+
+        Parts[0].anchoredPosition = new Vector2(-50, 0);
+        Parts[1].anchoredPosition = new Vector2(50, 0);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        foreach (Graphic defaultColorful in Defaults)
+        foreach (Graphic defaultColorful in Colorful)
         {
             defaultColorful.color = HighlightColor;
-        }
-        foreach (Graphic white in Whites)
-        {
-            white.color = HighlightColor;
         }
 
         StopAllCoroutines();
@@ -29,13 +37,9 @@ public class MenuButton : CustomButton, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        foreach (Graphic defaultColorful in Defaults)
+        foreach (Graphic defaultColorful in Colorful)
         {
             defaultColorful.color = DefaultColor;
-        }
-        foreach (Graphic white in Whites)
-        {
-            white.color = Color.white;
         }
 
         transform.localScale = Vector3.one;
@@ -48,25 +52,29 @@ public class MenuButton : CustomButton, IPointerEnterHandler, IPointerExitHandle
     {
         if (closeUp)
         {
-            while (ImagePart.anchoredPosition.x < 0)
+            while (Parts[0].anchoredPosition.x < 0)
             {
-                ImagePart.anchoredPosition += Vector2.right * ImagePartSpeed * Time.deltaTime;
+                Parts[0].anchoredPosition += Vector2.right * ImagePartSpeed * Time.unscaledDeltaTime;
+                Parts[1].anchoredPosition -= Vector2.right * ImagePartSpeed * Time.unscaledDeltaTime;
 
                 yield return new WaitForEndOfFrame();
             }
 
-            ImagePart.anchoredPosition = new Vector2(0, 0);
+            Parts[0].anchoredPosition = new Vector2(0, 0);
+            Parts[1].anchoredPosition = new Vector2(0, 0);
         }
         else
         {
-            while (ImagePart.anchoredPosition.x + 15 > 0)
+            while (Parts[0].anchoredPosition.x + 50 > 0)
             {
-                ImagePart.anchoredPosition -= Vector2.right * ImagePartSpeed * Time.deltaTime;
+                Parts[0].anchoredPosition -= Vector2.right * ImagePartSpeed * Time.unscaledDeltaTime;
+                Parts[1].anchoredPosition += Vector2.right * ImagePartSpeed * Time.unscaledDeltaTime;
 
                 yield return new WaitForEndOfFrame();
             }
 
-            ImagePart.anchoredPosition = new Vector2(-15, 0);
+            Parts[0].anchoredPosition = new Vector2(-50, 0);
+            Parts[1].anchoredPosition = new Vector2(50, 0);
         }
     }
 }

@@ -10,6 +10,10 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         FindObjectOfType<Music>().SetMusic(Music);
+
+        Time.timeScale = 1;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void Continue()

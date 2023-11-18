@@ -7,10 +7,18 @@ public class Level : MonoBehaviour
 
     public float _MinimalY => MinimalY;
 
-    private void Awake()
+    public void GoMainMenu()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     public void Restart()

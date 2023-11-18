@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 01d9daa6105d4004fbba2260b1283dc2
+guid: 08745954c086dc94793d5b81f732a966
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
@@ -108,18 +108,84 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: SettingsSlider_0
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 0
+        width: 61
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5720b484f8c890346afa6182a67de6a2
+      internalID: 873390378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingsSlider_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 500
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50877af82a8ee56489cd7bdec5c2928c
+      internalID: 1117152335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingsSlider_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 500
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d0f567b2cc7a1e49aefe8e6839636bb
+      internalID: 1092182322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 625238e2d0618b74c90981a4ff30decf
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SettingsSlider_0: 873390378
+      SettingsSlider_1: 1117152335
+      SettingsSlider_2: 1092182322
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

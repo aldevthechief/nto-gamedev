@@ -10,7 +10,7 @@ public class MainMenuBackground : MonoBehaviour
     {
         Vector2 mouseViewPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
-        Vector2 mousePosition = new Vector2(mouseViewPosition.x * Canvas.sizeDelta.x, mouseViewPosition.y * Canvas.sizeDelta.y);
+        Vector2 mousePosition = new Vector2(Mathf.Clamp01(mouseViewPosition.x) * Canvas.sizeDelta.x, Mathf.Clamp01(mouseViewPosition.y) * Canvas.sizeDelta.y);
         foreach(MainMenuBackgroundElement element in Elements)
         {
             element.Move(mousePosition, Multiplier);
