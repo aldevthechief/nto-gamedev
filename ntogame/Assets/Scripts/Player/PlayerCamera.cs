@@ -3,12 +3,17 @@ using UnityEngine.Rendering;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Player Player;
     [SerializeField] private Movement PlayerMovement;
 
+    [Header("Offset and rotation")]
     [SerializeField] private Vector3 StartOffset;
     [SerializeField] private float Speed;
+    [SerializeField] float RotationAngle;
     private Vector3 Offset = Vector3.zero;
+    private Vector3 rotOffset = Vector3.zero;
+    private Vector3 refVelocity = Vector3.zero;
 
     [Header("CameraFovTweaking")]
     private Camera cam;
@@ -27,6 +32,9 @@ public class PlayerCamera : MonoBehaviour
     {
         cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, FovValues[(int)PlayerMovement.PlayerState], ref refValue, Smooth);
 
+        // an attempt ot make smooth camera movement
+        // transform.localEulerAngles = Vector3.SmoothDamp(transform.localEulerAngles, rotOffset, ref refVelocity, Smooth);
+
         Vector3 direction = Player.transform.position - transform.position + Offset;
         if(direction.sqrMagnitude > 0.1f)
         {
@@ -35,12 +43,14 @@ public class PlayerCamera : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y + 45, 0);
+            // rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
+            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
             UpdateOffset();
         }
         else if(Input.GetKeyDown(KeyCode.E))
         {
-            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y - 45, 0);
+            // rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
+            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
             UpdateOffset();
         }
     }

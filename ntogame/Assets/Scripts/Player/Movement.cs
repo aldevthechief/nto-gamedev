@@ -59,7 +59,6 @@ public class Movement : MonoBehaviour
         else
         {
             PlayerState = MovementState.air;
-            SpriteAnim.SetTrigger("jump");
             velocitymult = groundvelmult * airmult;
         }
 
@@ -81,6 +80,7 @@ public class Movement : MonoBehaviour
 
         if(Time.time - lastgrounded <= jumpgrace && Time.time - jumppress <= jumpgrace)
         {
+            SpriteAnim.SetTrigger("isJumping");
             Instantiate(JumpParticles, gc.position, Quaternion.identity);
             rb.AddForce(Vector3.up * jumpheight, ForceMode.Impulse);
             jumppress = null;

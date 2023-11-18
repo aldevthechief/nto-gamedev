@@ -1528,6 +1528,7 @@ MonoBehaviour:
   PlayerMovement: {fileID: 264462237}
   StartOffset: {x: -3, y: 3, z: -3}
   Speed: 3
+  RotationAngle: 90
   Smooth: 0.7
   FovValues: 5a0000005f000000
 --- !u!1 &1315459166
