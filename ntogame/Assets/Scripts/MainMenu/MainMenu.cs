@@ -5,6 +5,12 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject CreditsPanel;
     [SerializeField] private GameObject SettingsPanel;
+    [SerializeField] private AudioClip Music;
+
+    private void Start()
+    {
+        FindObjectOfType<Music>().SetMusic(Music);
+    }
 
     public void Continue()
     {
