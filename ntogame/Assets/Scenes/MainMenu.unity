@@ -1493,6 +1493,8 @@ MonoBehaviour:
   - {fileID: 1894811908}
   - {fileID: 1703338640}
   - {fileID: 1171971921}
+  MousePosition: {x: 0, y: 0}
+  MouseFollowSpeed: 1.5
   Multiplier: 0.1
 --- !u!1 &659918371
 GameObject:

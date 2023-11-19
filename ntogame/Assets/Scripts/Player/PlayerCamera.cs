@@ -1,7 +1,5 @@
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -17,7 +15,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float RotationAngle;
 
     private Vector3 Offset = Vector3.zero;
-    private Vector3 rotOffset = Vector3.zero;
+    [SerializeField] private Vector3 rotOffset = Vector3.zero;
     private float refAngle = 0;
 
     [Header("CameraFovTweaking")]
@@ -47,27 +45,68 @@ public class PlayerCamera : MonoBehaviour
         }
     
         Vector3 direction = Player.transform.position - transform.position + Offset;
-        if(direction.sqrMagnitude > 0.01f)
+        float magnitude = direction.magnitude;
+        if (magnitude > 0.01f)
         {
-            transform.position += Time.deltaTime * Speed * Mathf.Min(direction.magnitude, 3) * direction.normalized;
+            transform.position += Time.deltaTime * Speed * Mathf.Min(magnitude, 3) / magnitude * direction;
         }
 
-        float dampDiff = Math.Abs(transform.eulerAngles.y - rotOffset.y);
+        //float dampDiff = Math.Abs(transform.localEulerAngles.y - rotOffset.y);
 
-        if(Input.GetButtonDown("TurnCamLeft") && dampDiff < 1f)
+        //if (Input.GetButtonDown("TurnCamLeft") && dampDiff < 1f)
+        //{
+        //    rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
+        //    rotOffset.y -= rotOffset.y > 360 ? 360 : 0; //оффсет уходил за 360, а eulerAngles всегда <= 360 то dampDiff был > 1 = баг
+        //    UpdateOffset();
+        //}
+        //else if(Input.GetButtonDown("TurnCamRight") && dampDiff < 1f)
+        //{
+        //    rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
+        //    rotOffset.y += rotOffset.y < 0 ? 360 : 0; // оффсет становился -10, когда eulerAngles = 350
+        //    UpdateOffset();
+        //}
+
+        if (Input.GetButtonDown("TurnCamLeft"))
         {
-            rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
-            UpdateOffset();
+            if (CanRotate())
+            {
+                rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
+                UpdateOffset();
+            }
         }
-        else if(Input.GetButtonDown("TurnCamRight") && dampDiff < 1f)
+        else if (Input.GetButtonDown("TurnCamRight"))
         {
-            rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
-            UpdateOffset();
+            if (CanRotate())
+            {
+                rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
+                UpdateOffset();
+            }
         }
+    }
+
+    private bool CanRotate()
+    {
+        float offsetY = rotOffset.y;
+        float y = transform.localEulerAngles.y;
+
+        if(offsetY < 0)
+        {
+            offsetY += 360;
+        }
+        if(y < 0)
+        {
+            y += 360;
+        }
+
+        offsetY %= 360;
+
+        return Math.Abs(offsetY - y) < 1;
     }
 
     private void UpdateOffset()
     {
+        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
+
         Vector3 newOffset = Vector3.zero;
         newOffset.y = StartOffset.y;
 
@@ -80,7 +119,5 @@ public class PlayerCamera : MonoBehaviour
         newOffset.z = StartOffset.z * (Mathf.Abs(op) < 0.25f ? 0 : Math.Sign(op));
 
         Offset = newOffset;
-
-        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
     }
 }
