@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,11 +11,14 @@ public class PlayerCamera : MonoBehaviour
 
     [Header("Offset and rotation")]
     [SerializeField] private Vector3 StartOffset;
+    [SerializeField] private Vector3 StartRotOffset;
+
     [SerializeField] private float Speed;
-    [SerializeField] float RotationAngle;
+    [SerializeField] private float RotationAngle;
+
     private Vector3 Offset = Vector3.zero;
     private Vector3 rotOffset = Vector3.zero;
-    private Vector3 refVelocity = Vector3.zero;
+    private float refAngle = 0;
 
     [Header("CameraFovTweaking")]
     private Camera cam;
@@ -24,7 +29,8 @@ public class PlayerCamera : MonoBehaviour
     private void Start()
     {
         Offset = StartOffset;
-        Player.transform.localRotation = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
+        rotOffset = StartRotOffset;
+        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
         cam = GetComponent<Camera>();
     }
 
@@ -32,44 +38,49 @@ public class PlayerCamera : MonoBehaviour
     {
         cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, FovValues[(int)PlayerMovement.PlayerState], ref refValue, Smooth);
 
-        // an attempt ot make smooth camera movement
-        // transform.localEulerAngles = Vector3.SmoothDamp(transform.localEulerAngles, rotOffset, ref refVelocity, Smooth);
-
+        float delta = Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotOffset));
+        if(delta > 0f)
+        {
+            float t = Mathf.SmoothDampAngle(delta, 0.0f, ref refAngle, Smooth);
+            t = 1.0f - (t / delta);
+            transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotOffset), t);
+        }
+    
         Vector3 direction = Player.transform.position - transform.position + Offset;
-        if(direction.sqrMagnitude > 0.1f)
+        if(direction.sqrMagnitude > 0.01f)
         {
             transform.position += Time.deltaTime * Speed * Mathf.Min(direction.magnitude, 3) * direction.normalized;
         }
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        float dampDiff = Math.Abs(transform.eulerAngles.y - rotOffset.y);
+
+        if(Input.GetButtonDown("TurnCamLeft") && dampDiff < 1f)
         {
-            // rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
-            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
+            rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
             UpdateOffset();
         }
-        else if(Input.GetKeyDown(KeyCode.E))
+        else if(Input.GetButtonDown("TurnCamRight") && dampDiff < 1f)
         {
-            // rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
-            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
+            rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
             UpdateOffset();
         }
     }
 
     private void UpdateOffset()
     {
-        Player.transform.localRotation = Quaternion.Euler(22.5f, transform.localEulerAngles.y, 0);
-
         Vector3 newOffset = Vector3.zero;
         newOffset.y = StartOffset.y;
 
-        float radians = transform.localEulerAngles.y * Mathf.Deg2Rad;
+        float radians = rotOffset.y * Mathf.Deg2Rad;
 
         float op = Mathf.Sin(radians);
-        newOffset.x = StartOffset.x * (Mathf.Abs(op) < 0.01f ? 0 : Mathf.Sign(op));
+        newOffset.x = StartOffset.x * (Mathf.Abs(op) < 0.25f ? 0 : Mathf.Sign(op));
 
         op = Mathf.Cos(radians);
-        newOffset.z = StartOffset.z * (Mathf.Abs(op) < 0.01f ? 0 : Mathf.Sign(op));
+        newOffset.z = StartOffset.z * (Mathf.Abs(op) < 0.25f ? 0 : Math.Sign(op));
 
         Offset = newOffset;
+
+        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
     }
 }

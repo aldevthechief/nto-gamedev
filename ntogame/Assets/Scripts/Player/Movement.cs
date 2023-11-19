@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
 
     //private float x, z; нет причин делать лишние поля у класса, когда эти переменные юзаются в одном блоке
 
-    //private bool isGrounded;
+    private bool isGrounded;
     public Transform gc;
     public float groundDistance = 0.4f;
     public LayerMask groundMask; 
@@ -46,11 +46,16 @@ public class Movement : MonoBehaviour
     [SerializeField] GameObject JumpParticles;
     [SerializeField] float trailtime;
 
+    void Start()
+    {
+        StartCoroutine(InstantiateTrail());
+    }
+
     void Update()
     {
-        //isGrounded = Physics.CheckSphere(gc.position, groundDistance, groundMask); 
+        isGrounded = Physics.CheckSphere(gc.position, groundDistance, groundMask); 
 
-        if(Physics.CheckSphere(gc.position, groundDistance, groundMask))
+        if(isGrounded)
         {
             PlayerState = MovementState.grounded;
             velocitymult = groundvelmult;
@@ -102,5 +107,13 @@ public class Movement : MonoBehaviour
     {
         velocityChange = dir - rb.velocity;
         velocityChange = Vector3.ClampMagnitude(velocityChange, speed);
+    }
+
+    IEnumerator InstantiateTrail()
+    {
+        if(isGrounded)
+            Instantiate(PlayerTrail, gc.position, Quaternion.identity);
+        yield return new WaitForSeconds(trailtime);
+        StartCoroutine(InstantiateTrail());
     }
 }

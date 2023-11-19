@@ -120,8 +120,11 @@ class Settings : MonoBehaviour
 
     private void Start()
     {
-        Mixer.SetFloat("EffectVolume", CurrentConfig.EffectsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.EffectsVolume));
-        Mixer.SetFloat("MusicVolume", CurrentConfig.MusicsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.MusicsVolume));
+        if(Mixer != null)
+        {
+            Mixer.SetFloat("EffectVolume", CurrentConfig.EffectsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.EffectsVolume));
+            Mixer.SetFloat("MusicVolume", CurrentConfig.MusicsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.MusicsVolume));
+        }
     }
 
     public void ApplyNewConfig()
@@ -141,8 +144,11 @@ class Settings : MonoBehaviour
 
         Application.targetFrameRate = CurrentConfig.FPSCap;
 
-        Mixer.SetFloat("EffectVolume", CurrentConfig.EffectsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.EffectsVolume));
-        Mixer.SetFloat("MusicVolume", CurrentConfig.MusicsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.MusicsVolume));
+        if(Mixer != null)
+        {
+            Mixer.SetFloat("EffectVolume", CurrentConfig.EffectsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.EffectsVolume));
+            Mixer.SetFloat("MusicVolume", CurrentConfig.MusicsVolume == 0 ? -80 : -30 * (1 - CurrentConfig.MusicsVolume));
+        }
 
         File.WriteAllText(Path.Combine(Application.dataPath, "config.txt"), JsonUtility.ToJson(CurrentConfig));
 
