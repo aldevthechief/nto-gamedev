@@ -91,11 +91,6 @@ public class Movement : MonoBehaviour
             jumppress = null;
             lastgrounded = null;
         }
-
-        if(transform.position.y < player._Level._MinimalY)
-        {
-            player._Level.Restart();
-        }
     }
 
     void FixedUpdate()

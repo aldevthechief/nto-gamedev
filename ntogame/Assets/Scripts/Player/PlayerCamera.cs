@@ -37,11 +37,24 @@ public class PlayerCamera : MonoBehaviour
         cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, FovValues[(int)PlayerMovement.PlayerState], ref refValue, Smooth);
 
         float delta = Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotOffset));
-        if(delta > 0f)
+        if (delta > 1f)
         {
             float t = Mathf.SmoothDampAngle(delta, 0.0f, ref refAngle, Smooth);
             t = 1.0f - (t / delta);
             transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotOffset), t);
+        }
+        else
+        {
+            if (Input.GetButtonDown("TurnCamLeft"))
+            {
+                rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
+                UpdateOffset();
+            }
+            else if (Input.GetButtonDown("TurnCamRight"))
+            {
+                rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
+                UpdateOffset();
+            }
         }
     
         Vector3 direction = Player.transform.position - transform.position + Offset;
@@ -51,7 +64,7 @@ public class PlayerCamera : MonoBehaviour
             transform.position += Time.deltaTime * Speed * Mathf.Min(magnitude, 3) / magnitude * direction;
         }
 
-        //float dampDiff = Math.Abs(transform.localEulerAngles.y - rotOffset.y);
+        //float dampDiff = Math.Abs(transform.localEulerAngles.y - rotOffset.y); // зачем это, если ты до этого использовал Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotOffset)) ?
 
         //if (Input.GetButtonDown("TurnCamLeft") && dampDiff < 1f)
         //{
@@ -65,42 +78,6 @@ public class PlayerCamera : MonoBehaviour
         //    rotOffset.y += rotOffset.y < 0 ? 360 : 0; // оффсет становился -10, когда eulerAngles = 350
         //    UpdateOffset();
         //}
-
-        if (Input.GetButtonDown("TurnCamLeft"))
-        {
-            if (CanRotate())
-            {
-                rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
-                UpdateOffset();
-            }
-        }
-        else if (Input.GetButtonDown("TurnCamRight"))
-        {
-            if (CanRotate())
-            {
-                rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
-                UpdateOffset();
-            }
-        }
-    }
-
-    private bool CanRotate()
-    {
-        float offsetY = rotOffset.y;
-        float y = transform.localEulerAngles.y;
-
-        if(offsetY < 0)
-        {
-            offsetY += 360;
-        }
-        if(y < 0)
-        {
-            y += 360;
-        }
-
-        offsetY %= 360;
-
-        return Math.Abs(offsetY - y) < 1;
     }
 
     private void UpdateOffset()
