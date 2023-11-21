@@ -1700,7 +1700,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c5bba8daef9eec4aab92afdce191c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 264462238}
   rb: {fileID: 264462236}
   speed: 7.5
   gc: {fileID: 321101342}
@@ -3393,7 +3392,7 @@ MonoBehaviour:
   Renderer: {fileID: 605708376}
   Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: d87f921cf5502de4383c2cfd0d50998f, type: 2}
+  - {fileID: 2100000, guid: 74359a6b1c79bfb468abff809a55eb17, type: 2}
 --- !u!136 &605708375
 CapsuleCollider:
   m_ObjectHideFlags: 0

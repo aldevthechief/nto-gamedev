@@ -6,6 +6,7 @@ Shader "Custom/Dark" {
         SubShader{
         Tags { "RenderType" = "Opaque" }
         
+
         CGPROGRAM
           #pragma surface surf SimpleLambert fullforwardshadows
 
