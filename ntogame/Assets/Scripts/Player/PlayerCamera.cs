@@ -15,13 +15,15 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float RotationAngle;
 
     private Vector3 Offset = Vector3.zero;
-    [SerializeField] private Vector3 rotOffset = Vector3.zero;
+    private Vector3 rotOffset = Vector3.zero;
     private float refAngle = 0;
+
+    [SerializeField] float RotationalSmooth;
 
     [Header("CameraFovTweaking")]
     private Camera cam;
     private float refValue;
-    [SerializeField] private float Smooth;
+    [SerializeField] private float ViewSmooth;
     [SerializeField] private int[] FovValues;
 
     private void Start()
@@ -34,12 +36,12 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, FovValues[(int)PlayerMovement.PlayerState], ref refValue, Smooth);
+        cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, FovValues[(int)PlayerMovement.PlayerState], ref refValue, ViewSmooth);
 
         float delta = Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotOffset));
         if (delta > 1f)
         {
-            float t = Mathf.SmoothDampAngle(delta, 0.0f, ref refAngle, Smooth);
+            float t = Mathf.SmoothDampAngle(delta, 0.0f, ref refAngle, RotationalSmooth);
             t = 1.0f - (t / delta);
             transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotOffset), t);
         }
@@ -59,25 +61,11 @@ public class PlayerCamera : MonoBehaviour
     
         Vector3 direction = Player.transform.position - transform.position + Offset;
         float magnitude = direction.magnitude;
-        if (magnitude > 0.01f)
+        
+        if(magnitude > 0.01f)
         {
             transform.position += Time.deltaTime * Speed * Mathf.Min(magnitude, 3) / magnitude * direction;
         }
-
-        //float dampDiff = Math.Abs(transform.localEulerAngles.y - rotOffset.y); // зачем это, если ты до этого использовал Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotOffset)) ?
-
-        //if (Input.GetButtonDown("TurnCamLeft") && dampDiff < 1f)
-        //{
-        //    rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
-        //    rotOffset.y -= rotOffset.y > 360 ? 360 : 0; //оффсет уходил за 360, а eulerAngles всегда <= 360 то dampDiff был > 1 = баг
-        //    UpdateOffset();
-        //}
-        //else if(Input.GetButtonDown("TurnCamRight") && dampDiff < 1f)
-        //{
-        //    rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
-        //    rotOffset.y += rotOffset.y < 0 ? 360 : 0; // оффсет становился -10, когда eulerAngles = 350
-        //    UpdateOffset();
-        //}
     }
 
     private void UpdateOffset()

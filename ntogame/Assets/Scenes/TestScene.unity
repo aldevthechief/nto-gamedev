@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 58590636}
   m_Layer: 3
   m_Name: Cube (6)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1257,7 +1257,7 @@ GameObject:
   - component: {fileID: 172111956}
   m_Layer: 3
   m_Name: Cube (5)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1504,7 +1504,7 @@ GameObject:
   - component: {fileID: 250789414}
   m_Layer: 3
   m_Name: Cube (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1711,12 +1711,13 @@ MonoBehaviour:
   groundvelmult: 50
   airmult: 1
   jumpheight: 17.5
-  jumpgrace: 0.1
+  jumpgrace: 0.15
   PlayerState: 0
   SpriteAnim: {fileID: 320503163}
   PlayerTrail: {fileID: 8130861273992033701, guid: cfbaf4d03b9879e4daae08dcf3cc0a08, type: 3}
   JumpParticles: {fileID: 8130861273992033701, guid: d4246df029a694945943426564606d90, type: 3}
-  trailtime: 0.2
+  LandParticles: {fileID: 7332144787033194013, guid: 0b7349bf71d9479468819fb9d4ff0a25, type: 3}
+  TrailTime: 0.175
 --- !u!114 &264462238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1781,7 +1782,7 @@ GameObject:
   - component: {fileID: 273417403}
   m_Layer: 3
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4525,7 +4526,7 @@ GameObject:
   - component: {fileID: 846260848}
   m_Layer: 3
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5168,7 +5169,8 @@ MonoBehaviour:
   StartRotOffset: {x: 45, y: 45, z: 0}
   Speed: 5
   RotationAngle: 45
-  Smooth: 0.5
+  RotationalSmooth: 0.4
+  ViewSmooth: 0.5
   FovValues: 5a0000005f000000
 --- !u!1 &986706108
 GameObject:
@@ -6052,7 +6054,7 @@ GameObject:
   - component: {fileID: 1315459171}
   m_Layer: 3
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6574,7 +6576,7 @@ GameObject:
   - component: {fileID: 1438346722}
   m_Layer: 3
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7831,7 +7833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc75254c7091d540a724e337450ffc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinimalY: -10
 --- !u!114 &2013010728
 MonoBehaviour:
   m_ObjectHideFlags: 0
