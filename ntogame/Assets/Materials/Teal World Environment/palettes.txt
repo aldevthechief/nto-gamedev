@@ -1,2 +1,10 @@
+teal color palettes:
 sky: https://colorhunt.co/palette/164863427d9d9bbec8ddf2fd
 environment: https://colorhunt.co/palette/04364a176b8764ccc5dafffb
+
+current environment:
+sky and ground: https://colorhunt.co/palette/e3d9ca95a792596c68403f48
+
+good palettes:
+https://colorhunt.co/palette/e4e3e384a9ac3b6978204051
+https://colorhunt.co/palette/232931393e464ecca3eeeeee
