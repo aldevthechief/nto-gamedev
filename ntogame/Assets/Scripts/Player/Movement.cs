@@ -115,8 +115,9 @@ public class Movement : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.CompareTag("Ground") && isLanding)
+        if(other.gameObject.layer == 3 && isLanding) //layermask в этом случае тоже этакий тэг
         {
+            print("da");
             SpriteAnim.SetBool("isJumping", false);
             Instantiate(LandParticles, gc.position, Quaternion.identity);
             isLanding = false;

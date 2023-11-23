@@ -15,7 +15,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float RotationAngle;
 
     private Vector3 Offset = Vector3.zero;
-    private Vector3 rotOffset = Vector3.zero;
+    [SerializeField] private Vector3 rotOffset = Vector3.zero;
     private float refAngle = 0;
 
     [SerializeField] float RotationalSmooth;
@@ -30,7 +30,7 @@ public class PlayerCamera : MonoBehaviour
     {
         Offset = StartOffset;
         rotOffset = StartRotOffset;
-        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
+        Player.transform.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
         cam = GetComponent<Camera>();
     }
 
@@ -49,12 +49,12 @@ public class PlayerCamera : MonoBehaviour
         {
             if (Input.GetButtonDown("TurnCamLeft"))
             {
-                rotOffset = new Vector3(45, transform.localEulerAngles.y + RotationAngle, 0);
+                rotOffset = new Vector3(45, rotOffset.y + RotationAngle, 0);
                 UpdateOffset();
             }
             else if (Input.GetButtonDown("TurnCamRight"))
             {
-                rotOffset = new Vector3(45, transform.localEulerAngles.y - RotationAngle, 0);
+                rotOffset = new Vector3(45, rotOffset.y - RotationAngle, 0);
                 UpdateOffset();
             }
         }
@@ -70,7 +70,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void UpdateOffset()
     {
-        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
+        Player.transform.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
+        print($"time {Time.time} offset {rotOffset.y} player {Player.transform.localEulerAngles.y}");
 
         Vector3 newOffset = Vector3.zero;
         newOffset.y = StartOffset.y;
