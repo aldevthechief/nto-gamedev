@@ -70,8 +70,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void UpdateOffset()
     {
-        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
-
         Vector3 newOffset = Vector3.zero;
         newOffset.y = StartOffset.y;
 
@@ -84,5 +82,7 @@ public class PlayerCamera : MonoBehaviour
         newOffset.z = StartOffset.z * (Mathf.Abs(op) < 0.25f ? 0 : Math.Sign(op));
 
         Offset = newOffset;
+
+        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
     }
 }
