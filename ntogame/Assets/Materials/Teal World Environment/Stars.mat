@@ -126,9 +126,9 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 0.34901962, b: 0.36862746, a: 1}
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
-    - _Color: {r: 1, g: 0.6627451, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Colour: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 2, g: 0.7921569, b: 0, a: 1}
+    - _EmissionColor: {r: 2.2681327, g: 2.194065, b: 2.2913392, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5817531216344213945
