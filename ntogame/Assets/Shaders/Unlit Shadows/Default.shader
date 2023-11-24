@@ -1,4 +1,4 @@
-Shader "Custom/Deault"
+Shader "Custom/Default"
 {
     Properties
     {

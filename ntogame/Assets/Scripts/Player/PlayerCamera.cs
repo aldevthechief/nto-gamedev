@@ -84,6 +84,6 @@ public class PlayerCamera : MonoBehaviour
 
         Offset = newOffset;
 
-        Player.transform.localRotation = Quaternion.Euler(22.5f, rotOffset.y, 0);
+        Player.transform.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
     }
 }

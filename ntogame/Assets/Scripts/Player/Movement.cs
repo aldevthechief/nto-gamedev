@@ -66,15 +66,15 @@ public class Movement : MonoBehaviour
                 isLanding = true;
         }
 
-        float x = Input.GetAxis("Horizontal") * speed;
-        float z = Input.GetAxis("Vertical") * speed;
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
         float inputmagnitude = new Vector2(x, z).magnitude;
         velocityMagnitude = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
 
         SpriteAnim.SetBool("isWalking", inputmagnitude > 0);
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 move = Vector3.ClampMagnitude(transform.right * x + transform.forward * z, 1) * speed;
         Vector3 newmove = new Vector3(move.x, rb.velocity.y, move.z);
 
         CalculateMovementVector(newmove);
@@ -102,7 +102,6 @@ public class Movement : MonoBehaviour
     void CalculateMovementVector(Vector3 dir)
     {
         velocityChange = dir - rb.velocity;
-        velocityChange = Vector3.ClampMagnitude(velocityChange, speed);
     }
 
     IEnumerator InstantiateTrail()
@@ -115,9 +114,8 @@ public class Movement : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.layer == 3 && isLanding) //layermask в этом случае тоже этакий тэг
+        if(other.gameObject.layer == 3 && isLanding) //layermask пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
         {
-            print("da");
             SpriteAnim.SetBool("isJumping", false);
             Instantiate(LandParticles, gc.position, Quaternion.identity);
             isLanding = false;

@@ -1,66 +1,65 @@
-﻿using UnityEngine;
+using Unity.Collections;
+using UnityEngine;
 
 public class RobotPlatform : MonoBehaviour
 {
-    [SerializeField] private Material[] Materials;
-    [SerializeField] private MeshRenderer Renderer;
-    [SerializeField] private Transform Player;
+    [Header("movement properties")]
+    private Rigidbody rb;
     [SerializeField] private float Speed;
-    private bool CanMove = true;
+    private Vector3 move;
+    [SerializeField] Transform PlayerPos;
+
+    [Header("other properties")]
+    private MeshRenderer mesh;
+    [SerializeField] private Material[] Materials;
+    private bool canMove = true;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        mesh = GetComponent<MeshRenderer>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if(other.GetComponent<Player>())
         {
-            CanMove = false;
-            Renderer.material = Materials[1];
+            canMove = false;
+            mesh.material = Materials[1];
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if(other.GetComponent<Player>())
         {
-            CanMove = true;
-            Renderer.material = Materials[0];
+            canMove = true;
+            mesh.material = Materials[0];
         }
     }
 
     private void Update()
     {
-        if (!CanMove)
+        if(!canMove)
         {
+            rb.isKinematic = true;
             return;
         }
-
-        Vector3 direction = Vector3.zero;
-        if (Input.GetKey(KeyCode.Keypad6))
+        else
         {
-            direction += Player.right;
-        }
-        else if (Input.GetKey(KeyCode.Keypad4))
-        {
-            direction -= Player.right;
+            rb.isKinematic = false;
         }
 
-        if (Input.GetKey(KeyCode.Keypad8))
-        {
-            direction += Player.forward;
-        }
-        else if (Input.GetKey(KeyCode.Keypad2))
-        {
-            direction -= Player.forward;
-        }
+        float x = Input.GetAxis("PlatformHorizontalAxis");
+        float y = Input.GetAxis("PlatformHeightAxis");
+        float z = Input.GetAxis("PlatformVerticalAxis");
 
-        if (Input.GetKey(KeyCode.KeypadPlus))
-        {
-            direction += Vector3.up;
-        }
-        else if (Input.GetKey(KeyCode.KeypadMinus))
-        {
-            direction -= Vector3.up;
-        }
+        move = Vector3.ClampMagnitude(PlayerPos.right * x + transform.up * y + PlayerPos.forward * z, 1);
+    }
 
-        transform.position += direction.normalized * Time.deltaTime * Speed;
+    void FixedUpdate()
+    {
+        if(canMove)
+            rb.velocity = move * Speed;
     }
 }
