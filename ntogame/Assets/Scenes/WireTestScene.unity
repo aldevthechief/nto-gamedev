@@ -7671,11 +7671,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1704785938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185c96a800b3d2040a7b67f5a94a5cd9, type: 3}
+  m_Script: {fileID: 11500000, guid: ca23d5854f4c1c64191900763383fa66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wireStartPosition: {fileID: 1704785943}
-  wireEndPosition: {fileID: 1301546262}
+  wireStartPosition: {fileID: 0}
+  wireEndPosition: {fileID: 264462235}
   wireColor: {r: 1, g: 0, b: 0, a: 1}
   wireThickness: 1
   wireLineRenderer: {fileID: 2124841010}
