@@ -1,8 +1,18 @@
 using UnityEngine;
+using EZCameraShake;
 
 public class PlayerTrigger : MonoBehaviour
 {
     private IPlayerInteractable[] Interactables = new IPlayerInteractable[0];
+
+    [Header("camera shake properties")]
+    [SerializeField] float Magnitude = 4f;
+    [SerializeField] float Roughness = 4f;
+    [SerializeField] float FadeInTime = 0.1f;
+    [SerializeField] float FadeOutTime = 0.5f;
+
+    [Header("collision particles")]
+    [SerializeField] GameObject KeyParticles;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +26,14 @@ public class PlayerTrigger : MonoBehaviour
 
             Interactables = StaticTools.ExpandMassive(Interactables, interactable, 0);
             interactable.Indicate(true);
+        }
+
+        if(other.CompareTag("Key"))
+        {
+            CameraShaker.Instance.ShakeOnce(Magnitude, Roughness, FadeInTime, FadeOutTime);
+            Instantiate(KeyParticles, other.transform.position, other.transform.rotation);
+            GameManager.KeyCount++;
+            Destroy(other.gameObject);
         }
     }
 

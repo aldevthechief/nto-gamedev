@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1594,7 +1594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c5bba8daef9eec4aab92afdce191c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 264462238}
   rb: {fileID: 264462236}
   speed: 7.5
   gc: {fileID: 321101342}
@@ -1610,7 +1609,8 @@ MonoBehaviour:
   SpriteAnim: {fileID: 320503163}
   PlayerTrail: {fileID: 8130861273992033701, guid: cfbaf4d03b9879e4daae08dcf3cc0a08, type: 3}
   JumpParticles: {fileID: 8130861273992033701, guid: d4246df029a694945943426564606d90, type: 3}
-  trailtime: 0.2
+  LandParticles: {fileID: 0}
+  TrailTime: 0
 --- !u!114 &264462238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5211,8 +5211,8 @@ MonoBehaviour:
   StartRotOffset: {x: 45, y: 45, z: 0}
   Speed: 5
   RotationAngle: 45
-  rotOffset: {x: 0, y: 0, z: 0}
-  Smooth: 0.5
+  RotationalSmooth: 0
+  ViewSmooth: 0
   FovValues: 5a0000005f000000
 --- !u!1 &986706108
 GameObject:
@@ -9137,7 +9137,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 30.97
+  m_Intensity: 10
   m_Range: 128.2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9196,7 +9196,7 @@ Transform:
   m_GameObject: {fileID: 1937937275}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 433.5, y: 17.48, z: -6.4}
+  m_LocalPosition: {x: 433.1, y: 24.1, z: -40.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
