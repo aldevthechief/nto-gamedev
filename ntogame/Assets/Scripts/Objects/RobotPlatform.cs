@@ -61,5 +61,6 @@ public class RobotPlatform : MonoBehaviour
     {
         if(canMove)
             rb.velocity = move * Speed;
+            // rb.MovePosition(rb.position + move * Time.fixedDeltaTime * Speed);
     }
 }
