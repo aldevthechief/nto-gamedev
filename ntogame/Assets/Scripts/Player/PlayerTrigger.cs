@@ -60,18 +60,18 @@ public class PlayerTrigger : MonoBehaviour
                 allowInteraction = false;
             }
         }
-
-        if(other.CompareTag("NPC"))
+        else if (other.CompareTag("NPC"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
-            if(outline != null)
+            if (outline != null)
             {
                 outline.enabled = true;
-                if(allowInteraction)
-                    Dialogue.StartDialogue(other.transform.parent.name);
+                if (allowInteraction)
+                    Dialogue.StartDialogue(other.GetComponentInParent<IDialogue>().GetPhrases());
                 allowInteraction = false;
             }
         }
+
     }
 
     private void OnTriggerExit(Collider other)
