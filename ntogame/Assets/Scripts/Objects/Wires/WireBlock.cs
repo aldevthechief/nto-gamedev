@@ -6,61 +6,71 @@ using UnityEngine;
 
 public class WireBlock : MonoBehaviour
 {
-    [Header("Wire start/end position")]
-    [SerializeField] private Transform wireStartPosition;
-    [SerializeField] private Transform wireEndPosition;
-
-    // bools for logics
-    private bool isUsing = false;
-    private bool isComplete = false;
-
-    [Header("Wire graphics")]
-    [SerializeField] private Color wireColor = Color.red;
-    [SerializeField] private float wireThickness = 1.0f;
-
-    // objects
+    [Header("wire start/end position")]
+    public Transform wireStartPosition;
+    public Transform wireEndPosition;
     private List<Transform> points = new List<Transform>();
-    [SerializeField] private LineRenderer wireLineRenderer;
 
-    private void Start()
-    {
-        if (wireStartPosition == null) 
-        {
-            wireStartPosition = this.transform;
-        }
-        StartWiring();
-    }
+    [HideInInspector] public bool isUsing = false;
+    // private bool isComplete = false;
+
+    [Header("wire graphics")]
+    // [SerializeField] private Color wireColor = Color.red;
+    // [SerializeField] private float wireThickness = 1.0f;
+
+    [SerializeField] private GameObject LineRendererObject;
+    private LineRenderer wireLineRenderer;
+
+    [Header("other stuff")]
+    [SerializeField] LayerMask WrapLayer;
+    [SerializeField] Transform WirePointHolder;
+    [SerializeField] Transform WireSystemHolder;
 
     private void Update()
     {
-        if (isUsing)
+        if(isUsing)
         {
             CalculateWireTrajectory();   
         }
     }
 
-    public void StartWiring()
+    public void StartWiring(Transform playertransf, Transform pillartransf)
     {
+        wireStartPosition = pillartransf;
+        wireEndPosition = playertransf;
+
+        GameObject lr = Instantiate(LineRendererObject, Vector3.zero, Quaternion.identity);
+        lr.transform.parent = WireSystemHolder;
+        wireLineRenderer = lr.GetComponent<LineRenderer>();
+        points.Clear();
         isUsing = true;
 
         points.Add(wireStartPosition);
         points.Add(wireEndPosition);
     }
 
+    public void StopWiring(Transform pillar)
+    {
+        wireLineRenderer.SetPosition(points.Count - 1, pillar.position);
+        isUsing = false;
+    }
+
     private void CalculateWireTrajectory()
     {
         RaycastHit rHit;
         Vector3 direction = points[points.Count - 1].position - points[points.Count - 2].position;
-        int layerMask = 1 << 3;
+
+        Debug.DrawRay(points[points.Count - 2].position, direction, Color.green);
 
         // Creating new points
-        if (Physics.Raycast(points[points.Count-2].position, direction, out rHit, direction.magnitude, layerMask))
+        if (Physics.Raycast(points[points.Count - 2].position, direction, out rHit, direction.magnitude, WrapLayer))
         {
-            GameObject newPoint = new GameObject();
-            newPoint.transform.position = (rHit.point - rHit.collider.transform.position) * 1.07f + rHit.collider.transform.position;
+            GameObject newPoint = new GameObject("WirePoint" + points.Count.ToString());
+            newPoint.transform.position = (rHit.point - rHit.collider.transform.position) * 1.1f + rHit.collider.transform.position;
             points.Insert(points.Count - 1, newPoint.transform);
+            newPoint.transform.parent = WirePointHolder;
  
-            Debug.Log("Hit" + points.Count);
+            // Debug.Log("Hit" + points.Count);
         }
 
 
@@ -71,26 +81,26 @@ public class WireBlock : MonoBehaviour
 
             Vector3 old_direction = points[points.Count - 1].position - points[points.Count - 3].position;
 
-            if (!Physics.Raycast(points[points.Count - 3].position, direction, out rHit, direction.magnitude, layerMask))
+            if(!Physics.Raycast(points[points.Count - 3].position, direction, out rHit, direction.magnitude, WrapLayer))
             {
                 points.RemoveAt(points.Count - 2);
-                Debug.Log("Removed" + points.Count);
+                // Debug.Log("Removed" + points.Count);
             }
         }
+
         Debug.DrawLine(points[points.Count - 2].position, points[points.Count - 1].position, Color.yellow);
 
-        if (wireLineRenderer.positionCount != points.Count)
+        if(wireLineRenderer.positionCount != points.Count)
             DrawWire();
 
-        wireLineRenderer.SetPosition(points.Count-1, wireEndPosition.position);
+        wireLineRenderer.SetPosition(points.Count - 1, wireEndPosition.position);
         wireLineRenderer.SetPosition(0, wireStartPosition.position);
-
     }
 
     private void DrawWire()
     {
         wireLineRenderer.positionCount = points.Count;
-        for (int i = 0; i < points.Count; i++)
+        for(int i = 0; i < points.Count; i++)
         {
             wireLineRenderer.SetPosition(i, points[i].position);
         }
