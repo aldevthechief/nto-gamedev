@@ -7,6 +7,7 @@ public class PlayerTrigger : MonoBehaviour
 
     [Header("references")]
     [SerializeField] WireBlock WiringSystem;
+    [SerializeField] DialogueSystem Dialogue;
 
     [Header("camera shake properties")]
     [SerializeField] float Magnitude = 4f;
@@ -59,6 +60,18 @@ public class PlayerTrigger : MonoBehaviour
                 allowInteraction = false;
             }
         }
+
+        if(other.CompareTag("NPC"))
+        {
+            Outline outline = other.GetComponentInParent<Outline>();
+            if(outline != null)
+            {
+                outline.enabled = true;
+                if(allowInteraction)
+                    Dialogue.StartDialogue(other.transform.parent.name);
+                allowInteraction = false;
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -87,6 +100,15 @@ public class PlayerTrigger : MonoBehaviour
         }
 
         if(other.CompareTag("WirePillar"))
+        {
+            Outline outline = other.GetComponentInParent<Outline>();
+            if(outline != null)
+            {
+                outline.enabled = false;
+            }
+        }
+
+        if(other.CompareTag("NPC"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
             if(outline != null)

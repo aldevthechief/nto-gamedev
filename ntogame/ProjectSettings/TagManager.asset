@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Key
   - WirePillar
+  - NPC
   layers:
   - Default
   - TransparentFX
