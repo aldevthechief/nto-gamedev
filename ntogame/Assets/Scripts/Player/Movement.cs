@@ -4,7 +4,7 @@ using System.Collections;
 public class Movement : MonoBehaviour
 {
     [Header("moving and jumping properties")]
-    [SerializeField] private Rigidbody rb;
+    public Rigidbody rb;
     [SerializeField] private float speed;
     private float velocityMagnitude;
 
@@ -102,6 +102,11 @@ public class Movement : MonoBehaviour
     void CalculateMovementVector(Vector3 dir)
     {
         velocityChange = dir - rb.velocity;
+    }
+
+    public void AddForceToThePlayer(Vector3 force)
+    {
+        rb.AddForce(force, ForceMode.Impulse);
     }
 
     IEnumerator InstantiateTrail()

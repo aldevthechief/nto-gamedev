@@ -112,35 +112,6 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    //public void StartDialogue(string characterName)
-    //{
-    //    DialogueWindow.SetActive(true);
-
-    //    Cursor.lockState = CursorLockMode.None;
-    //    Cursor.visible = true;
-
-    //    AddPhraseCount();
-    //    CharacterNameText.text = characterName;
-    //}
-
-    //public void AddPhraseCount()
-    //{
-    //    if(phraseNumber < Phrases.Length - 1)
-    //    {
-    //        phraseNumber++;
-    //        DialogueText.text = Phrases[phraseNumber];
-    //    }
-    //    else
-    //    {
-    //        DialogueWindow.SetActive(false);
-
-    //        Cursor.lockState = CursorLockMode.Locked;
-    //        Cursor.visible = false;
-
-    //        phraseNumber = -1;
-    //    }
-    //}
-
     private IEnumerator WriteSentence(string sentence, float speed)
     {
         speed = 1 / speed;

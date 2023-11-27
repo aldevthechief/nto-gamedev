@@ -1,5 +1,6 @@
 using UnityEngine;
 using EZCameraShake;
+using UnityEditor.Callbacks;
 
 public class PlayerTrigger : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerTrigger : MonoBehaviour
     [Header("references")]
     [SerializeField] WireBlock WiringSystem;
     [SerializeField] DialogueSystem Dialogue;
+    private Movement playerMovement;
 
     [Header("camera shake properties")]
     [SerializeField] float Magnitude = 4f;
@@ -16,10 +18,17 @@ public class PlayerTrigger : MonoBehaviour
     [SerializeField] float FadeOutTime = 0.5f;
 
     [Header("collision particles")]
-    [SerializeField] GameObject KeyParticles;
+    [SerializeField] GameObject FluidParticles;
+    [SerializeField] GameObject ElectricParticles;
 
     [Header("interaction properties")]
     private bool allowInteraction = false;
+    [SerializeField] float PushForce;
+
+    void Start()
+    {
+        playerMovement = GetComponent<Movement>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,9 +47,19 @@ public class PlayerTrigger : MonoBehaviour
         if(other.CompareTag("Key"))
         {
             CameraShaker.Instance.ShakeOnce(Magnitude, Roughness, FadeInTime, FadeOutTime);
-            Instantiate(KeyParticles, other.transform.position, other.transform.rotation);
+            GameObject fp = SetParticlesMaterial(other.gameObject, FluidParticles);
+            Instantiate(fp, other.transform.position, other.transform.rotation);
             GameManager.KeyCount++;
             Destroy(other.gameObject);
+        }
+
+        if(other.CompareTag("Wire"))
+        {
+            CameraShaker.Instance.ShakeOnce(Magnitude * 1.5f, Roughness * 1.5f, FadeInTime, FadeOutTime);
+            playerMovement.AddForceToThePlayer(-playerMovement.rb.velocity.normalized * PushForce);
+            GameObject blood = SetParticlesMaterial(gameObject, FluidParticles);
+            Instantiate(blood, transform.position, transform.rotation);
+            Instantiate(ElectricParticles, other.ClosestPoint(transform.position), transform.rotation);
         }
     }
 
@@ -127,5 +146,27 @@ public class PlayerTrigger : MonoBehaviour
 
         if(Input.GetButtonDown("Interact"))
             allowInteraction = true;
+    }
+
+    GameObject SetParticlesMaterial(GameObject thingCollidedWith, GameObject desiredParticles)
+    {
+        GameObject resultParticles = desiredParticles;
+        ParticleSystemRenderer resultRenderer = resultParticles.GetComponent<ParticleSystemRenderer>();
+        MeshRenderer mesh = thingCollidedWith.GetComponent<MeshRenderer>();
+        if(mesh != null)
+        {
+            resultRenderer.sharedMaterial = mesh.material;
+            resultRenderer.trailMaterial = mesh.material;
+        }
+        else
+        {
+            LineRenderer lr = thingCollidedWith.GetComponent<LineRenderer>();
+            if(lr != null)
+            {
+                resultRenderer.sharedMaterial = lr.material;
+                resultRenderer.trailMaterial = lr.material;
+            }
+        }
+        return resultParticles;
     }
 }

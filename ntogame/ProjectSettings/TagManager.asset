@@ -8,6 +8,7 @@ TagManager:
   - Key
   - WirePillar
   - NPC
+  - Wire
   layers:
   - Default
   - TransparentFX

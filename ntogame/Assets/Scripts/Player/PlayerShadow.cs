@@ -16,7 +16,7 @@ public class PlayerShadow : MonoBehaviour
     private void Update()
     {
         RaycastHit raycast;
-        if(Physics.Raycast(Player.position, Vector3.down, out raycast, 10.5f, LayerMask)) //ÚÂÌ¸ ÌÛÊÌ‡ ˜ÚÓ· Ë„ÓÍ ÔÓÌËÏ‡Î „‰Â ÓÌ Ì‡ÏÌÓ„Ó ÚÓ˜ÌÂÂ Ë ‚ ÔÓÎÂÚÂ ˝ÚÓ ÌÛÊÌÓ Â˘Â ·ÓÎ¸¯Â => 1.5f -> 10.5f
+        if(Physics.Raycast(Player.position, Vector3.down, out raycast, 1.5f, LayerMask)) //—è —Å–¥–µ–ª–∞–ª 1.5f –¥–ª—è –ø–ª–∞–≤–Ω–æ—Å—Ç–∏, —Ç–∞–∫ –∫–∞–∫ –ø—Ä–∏ –±–æ–ª—å—à–∏—Ö –∑–Ω–∞—á–µ–Ω–∏—è—Ö –ø—Ä–∏ –∑–∞–ø—Ä—ã–≥–∏–≤–∞–Ω–∏–∏ –Ω–∞ –æ–±—ä–µ–∫—Ç—ã –ø—Ä–æ–∏—Å—Ö–æ–¥–∏—Ç —Å–ª–∏—à–∫–æ–º —Ä–µ–∑–∫–æ–µ –ø–µ—Ä–µ–º–µ—â–µ–Ω–∏–µ —Ç–µ–Ω–∏
         {
             transform.position = raycast.point;
             transform.localScale = Vector3.SmoothDamp(transform.localScale, normalScale, ref refScale, Smooth);
