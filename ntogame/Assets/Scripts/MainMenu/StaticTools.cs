@@ -2,8 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public delegate void SimpleVoid();
-
 public class StaticTools
 {
     static public float ScreenHeight => 1080 * Screen.height / Screen.width / 0.5625f;

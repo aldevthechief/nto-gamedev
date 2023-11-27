@@ -2,6 +2,7 @@
 
 public class GamePause : MonoBehaviour
 {
+    [SerializeField] private InputHandler InputHandler;
     [SerializeField] private GameObject MenuPanel;
     [SerializeField] private bool Paused;
 
@@ -9,14 +10,25 @@ public class GamePause : MonoBehaviour
 
     private void Awake()
     {
+        InputHandler.OnKeyDown += Pause;
         Pause(false);
     }
 
-    private void Update()
+    public void Pause()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Pause(!Paused);
+            Pause(true);
+            InputHandler.MetaKeyDown += UnPause;
+        }
+    }
+
+    public void UnPause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause(false);
+            InputHandler.MetaKeyDown -= UnPause;
         }
     }
 

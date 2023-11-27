@@ -1854,6 +1854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53aaa7e27444f4942bf59ca1ce32521c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputHandler: {fileID: 2013010729}
   Player: {fileID: 264462238}
   Sprite: {fileID: 866968625}
   CameraTiltAnimator: {fileID: 238226014}
@@ -1914,6 +1915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c5bba8daef9eec4aab92afdce191c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputHandler: {fileID: 2013010729}
   rb: {fileID: 264462236}
   speed: 7.5
   gc: {fileID: 321101342}
@@ -1959,6 +1961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WiringSystem: {fileID: 2090987534}
   Dialogue: {fileID: 415015006}
+  InputHandler: {fileID: 2013010729}
   Magnitude: 4
   Roughness: 3
   FadeInTime: 0.1
@@ -2983,6 +2986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf250c96feb1fb488c7c28b3eb685b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputHandler: {fileID: 2013010729}
   DialogueWindow: {fileID: 415015002}
   Caret: {fileID: 330996826}
   NameHolder: {fileID: 1355220535}
@@ -5996,7 +6000,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f22341e54f98a4db9b59ee7ca7f7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 264462238}
+  InputHandler: {fileID: 2013010729}
+  Player: {fileID: 264462235}
   PlayerMovement: {fileID: 264462237}
   StartOffset: {x: -3, y: 3, z: -3}
   StartRotOffset: {x: 45, y: 45, z: 0}
@@ -9667,6 +9672,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2013010726}
+  - component: {fileID: 2013010729}
   - component: {fileID: 2013010727}
   - component: {fileID: 2013010728}
   m_Layer: 3
@@ -9727,8 +9733,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e62ae29054cdf4aa960975f54ce615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputHandler: {fileID: 2013010729}
   MenuPanel: {fileID: 663003967}
   Paused: 0
+--- !u!114 &2013010729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013010725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f314d7ff6116c8f45956fdad9999289c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2075336161
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,11 +4,12 @@ using UnityEditor.Callbacks;
 
 public class PlayerTrigger : MonoBehaviour
 {
-    private IPlayerInteractable[] Interactables = new IPlayerInteractable[0];
+  //  private IPlayerInteractable[] Interactables = new IPlayerInteractable[0]; всеравно не используется
 
     [Header("references")]
     [SerializeField] WireBlock WiringSystem;
     [SerializeField] DialogueSystem Dialogue;
+    [SerializeField] private InputHandler InputHandler;
     private Movement playerMovement;
 
     [Header("camera shake properties")]
@@ -28,22 +29,18 @@ public class PlayerTrigger : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<Movement>();
+
+        InputHandler.OnKeyHold += UpdateInteraction;
+    }
+
+    public void UpdateInteraction()
+    {
+        if (Input.GetButtonDown("Interact"))
+            allowInteraction = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        IPlayerInteractable interactable = other.GetComponent<IPlayerInteractable>();
-        if (interactable != null)
-        {
-            foreach(IPlayerInteractable _interactable in Interactables)
-            {
-                _interactable.Indicate(false);
-            }
-
-            Interactables = StaticTools.ExpandMassive(Interactables, interactable, 0);
-            interactable.Indicate(true);
-        }
-
         if(other.CompareTag("Key"))
         {
             CameraShaker.Instance.ShakeOnce(Magnitude, Roughness, FadeInTime, FadeOutTime);
@@ -95,29 +92,6 @@ public class PlayerTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        IPlayerInteractable interactable = other.GetComponent<IPlayerInteractable>();
-        if (interactable != null)
-        {
-            int index = StaticTools.IndexOf(Interactables, interactable);
-
-            if(index < 0)
-            {
-                return;
-            }
-
-            if(index == 0)
-            {
-                Interactables[0].Indicate(false);
-            }
-
-            Interactables = StaticTools.ReduceMassive(Interactables, index);
-
-            if(Interactables.Length > 0)
-            {
-                Interactables[0].Indicate(true);
-            }
-        }
-
         if(other.CompareTag("WirePillar"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
@@ -135,17 +109,6 @@ public class PlayerTrigger : MonoBehaviour
                 outline.enabled = false;
             }
         }
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.F) && Interactables.Length > 0)
-        {
-            Interactables[0].Interact();
-        }
-
-        if(Input.GetButtonDown("Interact"))
-            allowInteraction = true;
     }
 
     GameObject SetParticlesMaterial(GameObject thingCollidedWith, GameObject desiredParticles)

@@ -5,6 +5,7 @@ using System.Collections;
 
 public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private InputHandler InputHandler;
     [SerializeField] private GameObject DialogueWindow;
     [SerializeField] private RectTransform Caret;
     [SerializeField] private RectTransform NameHolder;
@@ -18,8 +19,38 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     private Coroutine Writing = null;
 
+    public void Skip()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StopAllCoroutines();
+            Writing = null;
+
+            CurrentText = "";
+            Text.text = "";
+            SentenceIndex = 0;
+
+            PhraseIndex++;
+
+            Phrases = new PhraseInfo[0];
+
+            DialogueWindow.SetActive(false);
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            InputHandler.MetaKeyDown -= Skip;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.F))
+        {
+            Next();
+        }
+    }
+
     public void StartDialogue(PhraseInfo[] infos)
     {
+        InputHandler.MetaKeyDown += Skip;
+
         Phrases = infos;
         PhraseIndex = 0;
         SentenceIndex = 0; 
@@ -68,6 +99,8 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+
+                InputHandler.MetaKeyDown -= Skip;
                 return;
             }
 
