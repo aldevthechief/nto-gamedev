@@ -6,14 +6,15 @@ using System.Collections;
 public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject DialogueWindow;
+    [SerializeField] private RectTransform Caret;
     [SerializeField] private RectTransform NameHolder;
     [SerializeField] private Image Sprite;
     [SerializeField] private Text Name;
     [SerializeField] private Text Text;
     private PhraseInfo[] Phrases = new PhraseInfo[0];
     private string CurrentText = "";
-    [SerializeField] private int PhraseIndex = -1;
-    [SerializeField] private int SentenceIndex = -1;
+    private int PhraseIndex = -1;
+    private int SentenceIndex = -1;
 
     private Coroutine Writing = null;
 
@@ -46,7 +47,8 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         {
             StopCoroutine(Writing);
             Writing = null;
-            Text.text = CurrentText;
+
+            StartCoroutine(EndSentence());
             return;
         }
 
@@ -114,14 +116,17 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     private IEnumerator WriteSentence(string sentence, float speed)
     {
+        Caret.gameObject.SetActive(false);
+
         speed = 1 / speed;
         foreach(char letter in sentence)
         {
             Text.text += letter;
+
             yield return new WaitForSecondsRealtime(speed);
         }
 
-        Text.text = CurrentText;
+        StartCoroutine(EndSentence());
 
         Writing = null;
     }
@@ -130,8 +135,30 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
     {
         yield return new WaitForEndOfFrame();
 
-        NameHolder.sizeDelta = new Vector2(25 + Name.preferredWidth, 50);
-        NameHolder.anchoredPosition = new Vector2(40 + NameHolder.sizeDelta.x / 2, 365);
+        NameHolder.sizeDelta = new Vector2(200 + Name.preferredWidth, 50);
+        NameHolder.anchoredPosition = new Vector2(40 + NameHolder.sizeDelta.x / 2, 360);
+    }
+
+    private IEnumerator EndSentence()
+    {
+        Text.text = CurrentText;
+
+        yield return new WaitForEndOfFrame();
+
+        Caret.gameObject.SetActive(true);
+
+        UICharInfo charInfo = Text.cachedTextGenerator.characters[Text.cachedTextGenerator.characterCount - 1];
+
+        if (SentenceIndex >= Phrases[PhraseIndex].Sentences.Length)
+        {
+            Caret.anchoredPosition = charInfo.cursorPos + new Vector2(charInfo.charWidth + 16, -Text.cachedTextGenerator.lines[Text.cachedTextGenerator.lineCount - 1].height);
+            Caret.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            Caret.anchoredPosition = charInfo.cursorPos + new Vector2(charInfo.charWidth + 16, -Text.cachedTextGenerator.lines[Text.cachedTextGenerator.lineCount - 1].height / 2);
+            Caret.localRotation = Quaternion.Euler(0, 0, 90);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
