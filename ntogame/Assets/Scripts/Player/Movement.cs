@@ -68,8 +68,8 @@ public class Movement : MonoBehaviour
                 isLanding = true;
         }
 
-        float x = InputHandler._InputAllowed ? Input.GetAxis("Horizontal") : 0;
-        float z = InputHandler._InputAllowed ? Input.GetAxis("Vertical") : 0;
+        float x = InputHandler._InputAllowed ? InputManager._Instance.GetAxis("Horizontal") : 0;
+        float z = InputHandler._InputAllowed ? InputManager._Instance.GetAxis("Vertical") : 0;
 
         float inputmagnitude = new Vector2(x, z).magnitude;
         velocityMagnitude = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
@@ -81,7 +81,7 @@ public class Movement : MonoBehaviour
 
         CalculateMovementVector(newmove);
 
-        if (Input.GetButtonDown("Jump") && InputHandler._InputAllowed)
+        if (InputManager._Instance.GetButtonDown("Jump") && InputHandler._InputAllowed)
         {
             jumppress = Time.time;
         }

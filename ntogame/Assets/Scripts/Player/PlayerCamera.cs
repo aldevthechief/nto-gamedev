@@ -50,12 +50,12 @@ public class PlayerCamera : MonoBehaviour
         }
         else if(InputHandler._InputAllowed)
         {
-            if (Input.GetButtonDown("TurnCamLeft"))
+            if (InputManager._Instance.GetButtonDown("TurnCamLeft"))
             {
                 rotOffset = new Vector3(45, rotOffset.y + RotationAngle, 0);
                 UpdateOffset();
             }
-            else if (Input.GetButtonDown("TurnCamRight"))
+            else if (InputManager._Instance.GetButtonDown("TurnCamRight"))
             {
                 rotOffset = new Vector3(45, rotOffset.y - RotationAngle, 0);
                 UpdateOffset();

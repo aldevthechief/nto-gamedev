@@ -21,7 +21,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     public void Skip()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputManager._Instance.GetButtonDown("SkipDialogue"))
         {
             StopAllCoroutines();
             Writing = null;
@@ -41,7 +41,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
             InputHandler.MetaKeyDown -= Skip;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.F))
+        else if (InputManager._Instance.GetButtonDown("DialogueNext"))
         {
             Next();
         }

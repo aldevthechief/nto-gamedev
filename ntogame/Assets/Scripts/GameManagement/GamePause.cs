@@ -16,7 +16,7 @@ public class GamePause : MonoBehaviour
 
     public void Pause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputManager._Instance.GetButtonDown("Pause"))
         {
             Pause(true);
             InputHandler.MetaKeyDown += UnPause;
@@ -25,7 +25,7 @@ public class GamePause : MonoBehaviour
 
     public void UnPause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputManager._Instance.GetButtonDown("Pause"))
         {
             Pause(false);
             InputHandler.MetaKeyDown -= UnPause;
@@ -48,6 +48,7 @@ public class GamePause : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
+            InputHandler.MetaKeyDown -= UnPause;
         }
     }
 }

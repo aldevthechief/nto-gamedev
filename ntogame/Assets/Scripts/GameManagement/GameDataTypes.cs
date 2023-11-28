@@ -33,4 +33,19 @@ namespace GameData
             return clone;
         }
     }
+
+    [System.Serializable]
+    public class KeyMapData
+    {
+        public string Horizontal = "+D +RightArrow -A -LeftArrow"; 
+        public string Vertical = "+W +UpArrow -S -DownArrow";
+
+        public string Pause = "Escape";
+        public string SkipDialogue = "Escape";
+        public string DialogueNext = "F Return Space";
+        public string Interact = "F Return";
+        public string Jump = "Space";
+        public string TurnCamLeft = "Q";
+        public string TurnCamRight = "E";
+    }
 }
