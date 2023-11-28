@@ -1,15 +1,15 @@
-using System;
 using UnityEngine;
 
 public class PlayerGraphics : MonoBehaviour
 {
+    [SerializeField] private InputHandler InputHandler;
     [SerializeField] private Player Player;
     [SerializeField] private Transform Sprite;
     [SerializeField] private Animator CameraTiltAnimator;
 
     void Update()
     {
-        CameraTiltAnimator.SetFloat("horizontalValue", Input.GetAxis("HorizontalTilt"));
+        CameraTiltAnimator.SetFloat("horizontalValue", InputHandler._InputAllowed ? Input.GetAxis("HorizontalTilt") : 0);
         
         // rotate the player according to the camera direction
         // Vector3 direction = Player._Camera.transform.position - transform.position;

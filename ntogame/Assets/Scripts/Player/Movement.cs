@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private InputHandler InputHandler;
+
     [Header("moving and jumping properties")]
     public Rigidbody rb;
     [SerializeField] private float speed;
@@ -66,8 +68,8 @@ public class Movement : MonoBehaviour
                 isLanding = true;
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = InputHandler._InputAllowed ? Input.GetAxis("Horizontal") : 0;
+        float z = InputHandler._InputAllowed ? Input.GetAxis("Vertical") : 0;
 
         float inputmagnitude = new Vector2(x, z).magnitude;
         velocityMagnitude = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
@@ -79,7 +81,7 @@ public class Movement : MonoBehaviour
 
         CalculateMovementVector(newmove);
 
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && InputHandler._InputAllowed)
         {
             jumppress = Time.time;
         }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using EZCameraShake;
 
 public class WireBlock : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class WireBlock : MonoBehaviour
         }
 
         TryDestroyWireLineRenderer();
-        Debug.Log(fullWireLength);
+      //  Debug.Log(fullWireLength);
     }
 
     public void StartWiring(Transform playertransf, Transform pillartransf)
@@ -116,6 +117,7 @@ public class WireBlock : MonoBehaviour
 
     private void TearWireApart() //<-- Cleans all data and destroys the wire
     {
+        CameraShaker.Instance.ShakeOnce(5, 3, 0.1f, 1);
         isUsing = false;
         isDestroying = true;
         wirePositions.Clear();
@@ -130,7 +132,7 @@ public class WireBlock : MonoBehaviour
     {
         if (isDestroying)
         {
-            wireLineRenderer.widthMultiplier -= 1.25f * Time.deltaTime;
+            wireLineRenderer.widthMultiplier -= 3f * Time.deltaTime;
 
             if (wireLineRenderer.widthMultiplier <= 0.02f)
             {
