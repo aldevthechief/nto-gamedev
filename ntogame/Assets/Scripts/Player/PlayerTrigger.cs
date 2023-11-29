@@ -35,7 +35,7 @@ public class PlayerTrigger : MonoBehaviour
 
     public void UpdateInteraction()
     {
-        if (InputManager._Instance.GetButtonDown("Interact"))
+        if (InputManager.GetButtonDown("Interact"))
             allowInteraction = true;
     }
 

@@ -46,6 +46,7 @@ public class KeyNameHolder : MonoBehaviour
         {
             Caret.SetActive(true);
             Listening = true;
+
             FindObjectOfType<InputHandler>().MetaKeyDown += GetKey;
         }
     }

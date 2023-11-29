@@ -1,1 +1,1 @@
-{"Horizontal":"+D +RightArrow -A -LeftArrow","Vertical":"+W +UpArrow -S -DownArrow","Pause":"Escape","SkipDialogue":"Escape","DialogueNext":"F Return Space","Interact":"F Return","Jump":"Space","TurnCamLeft":"Q","TurnCamRight":"E"}
+{"Horizontal":"+D +RightArrow -A -LeftArrow","Vertical":"+W +UpArrow -S -DownArrow","Pause":"P Escape","SkipDialogue":"Escape","DialogueNext":"F Return Space","Interact":"F Return","Jump":"Space","TurnCamLeft":"Q","TurnCamRight":"E"}

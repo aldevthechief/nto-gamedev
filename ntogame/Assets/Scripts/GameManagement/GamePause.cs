@@ -16,7 +16,7 @@ public class GamePause : MonoBehaviour
 
     public void Pause()
     {
-        if (InputManager._Instance.GetButtonDown("Pause"))
+        if (InputManager.GetButtonDown("Pause"))
         {
             Pause(true);
             InputHandler.MetaKeyDown += UnPause;
@@ -25,7 +25,7 @@ public class GamePause : MonoBehaviour
 
     public void UnPause()
     {
-        if (InputManager._Instance.GetButtonDown("Pause"))
+        if (InputManager.GetButtonDown("Pause"))
         {
             Pause(false);
             InputHandler.MetaKeyDown -= UnPause;

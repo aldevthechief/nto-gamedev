@@ -5,7 +5,20 @@ using GameData;
 public class InputManager : MonoBehaviour
 {
     private static InputManager Instance = null;
-    public static InputManager _Instance => Instance;
+    public static InputManager _Instance
+    {
+        get
+        {
+            if(Instance == null)
+            {
+                Instance = new GameObject("InputManager").AddComponent<InputManager>();
+            }
+
+            return Instance;
+        }
+    }
+
+    public enum ButtonState { Down, Hold, Up }
 
 
     [SerializeField] private KeyMapData KeyMap;
@@ -35,19 +48,10 @@ public class InputManager : MonoBehaviour
     private Button TurnCamLeft = null;
     private Button TurnCamRight = null;
 
-    public enum ButtonState {Down, Hold, Up}
-
 
     private void Awake()
     {
-        if(Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         DontDestroyOnLoad(gameObject);
-        Instance = this;
 
         string path = Path.Combine(Application.dataPath, "keyConfig.txt");
         if (File.Exists(path))
@@ -97,14 +101,14 @@ public class InputManager : MonoBehaviour
         Jump = new Button(KeyMap.Jump);
     }
 
-    public float GetAxis(string axis)
+    public static float GetAxis(string axis)
     {
         switch (axis)
         {
             case "Horizontal":
-                return Horizontal.GetValue();
+                return _Instance.Horizontal.GetValue();
             case "Vertical":
-                return Vertical.GetValue();
+                return _Instance.Vertical.GetValue();
         }
 
         Debug.LogError($"аксиса <color=white>{axis}</color> не существует");
@@ -137,11 +141,11 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
-    public bool GetButtonDown(string button) => GetButtonState(button, ButtonState.Down);
+    public static bool GetButtonDown(string button) => _Instance.GetButtonState(button, ButtonState.Down);
 
-    public bool GetButton(string button) => GetButtonState(button, ButtonState.Hold);
+    public static bool GetButton(string button) => _Instance.GetButtonState(button, ButtonState.Hold);
 
-    public bool GetButtonUp(string button) => GetButtonState(button, ButtonState.Up);
+    public static bool GetButtonUp(string button) => _Instance.GetButtonState(button, ButtonState.Up);
 
     public class Axis
     {
