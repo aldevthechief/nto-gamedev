@@ -19,6 +19,7 @@ public class WireBlock : MonoBehaviour
     [Header("other stuff")]
     [SerializeField] LayerMask WrapLayer;
     [SerializeField] Transform WireSystemHolder;
+    [SerializeField] KeyBox Box;
 
     public List<Vector3> wirePositions { get; set; } = new List<Vector3>();
 
@@ -77,7 +78,33 @@ public class WireBlock : MonoBehaviour
     {
         wireLineRenderer.SetPosition(wirePositions.Count - 1, pillar.position);
         wireLineRenderer.gameObject.GetComponent<WireCollisions>().BakeCollisions();
+
+        WirePillar endWirePillar = pillar.gameObject.GetComponentInParent<WirePillar>();
+        if(endWirePillar != null) endWirePillar.isConnected = true;
+
+        WirePillar startWirePillar = wireStartTransform.gameObject.GetComponentInParent<WirePillar>();
+        if(startWirePillar != null) startWirePillar.isConnected = true;
+
+        CheckIfEnergyIsFlowing();
+
         isUsing = false;
+    }
+
+    void CheckIfEnergyIsFlowing()
+    {
+        WirePillar[] sceneconnectibles = GameObject.FindObjectsOfType<WirePillar>();
+        bool allconnected = true;
+        foreach(WirePillar x in sceneconnectibles)
+        {
+            if(!x.isConnected)
+            {
+                allconnected = false;
+                break;
+            }
+        }
+        
+        if(allconnected) 
+            Box.OpenTheBox();
     }
 
     private void DetectCollisionEnter()

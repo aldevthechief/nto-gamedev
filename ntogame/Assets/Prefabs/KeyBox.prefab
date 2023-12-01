@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 5230335935896327994}
   - component: {fileID: 6269567151499462496}
   - component: {fileID: 4031210754559466321}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,9 +182,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1bc6698a23df68d48945b306d0b8b597, type: 2}
-  - {fileID: 2100000, guid: b2b9c35e64367f040837055005f1fc8e, type: 2}
-  - {fileID: 2100000, guid: 0d5a9e8b649dea24b88732d8b23b1c01, type: 2}
+  - {fileID: 2100000, guid: 565202afa1c967f4886a6f126c68f13a, type: 2}
+  - {fileID: 2100000, guid: 2a46de1524ef86a4ca2d4191992ae3dc, type: 2}
+  - {fileID: 2100000, guid: 2a46de1524ef86a4ca2d4191992ae3dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -207,7 +207,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 7265744515449303197, guid: dfcf624b01be8654fb8c1997370cefeb, type: 3}
   m_Bones:
@@ -381,9 +381,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7413488696797095553}
   - component: {fileID: 2783622855679660155}
-  m_Layer: 0
+  - component: {fileID: 344084510019151311}
+  - component: {fileID: 6881060197273634922}
+  m_Layer: 3
   m_Name: KeyBox
-  m_TagString: Untagged
+  m_TagString: KeyBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -396,14 +398,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4606316547709132279}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.08, y: 0.5, z: -4.57}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4555079878950979729}
   - {fileID: 2431613750988051065}
   - {fileID: 5230335935896327994}
+  - {fileID: 7460349477572896913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2783622855679660155
@@ -419,7 +422,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: fa31077178ff2214bb4d8d3e717790b5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -427,6 +430,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &344084510019151311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606316547709132279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b369d76596788594190fe94141ae622e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coll: {fileID: 4031210754559466321}
+--- !u!114 &6881060197273634922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606316547709132279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5757302847552106357
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +506,7 @@ GameObject:
   - component: {fileID: 311545731214571178}
   - component: {fileID: 1268178587262556976}
   - component: {fileID: 3450648939651983773}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Key
   m_TagString: Key
   m_Icon: {fileID: 0}
@@ -488,7 +522,7 @@ Transform:
   m_GameObject: {fileID: 6584459354297828838}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.775, z: 0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -617,6 +651,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1146189606193634319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8094981864145836755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7460349477572896913}
+  - component: {fileID: 8549626098965406054}
+  m_Layer: 8
+  m_Name: BoxTrigger
+  m_TagString: KeyBox
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7460349477572896913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094981864145836755}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7413488696797095553}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8549626098965406054
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094981864145836755}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9117098057962104730
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +713,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2431613750988051065}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}

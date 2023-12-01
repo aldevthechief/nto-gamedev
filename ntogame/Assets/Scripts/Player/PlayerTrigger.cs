@@ -4,13 +4,15 @@ using UnityEditor.Callbacks;
 
 public class PlayerTrigger : MonoBehaviour
 {
-  //  private IPlayerInteractable[] Interactables = new IPlayerInteractable[0]; всеравно не используется
+  //  private IPlayerInteractable[] Interactables = new IPlayerInteractable[0]; пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     [Header("references")]
     [SerializeField] WireBlock WiringSystem;
     [SerializeField] DialogueSystem Dialogue;
     [SerializeField] private InputHandler InputHandler;
     private Movement playerMovement;
+
+    [SerializeField] private Transform WireGrabPos;
 
     [Header("camera shake properties")]
     [SerializeField] float Magnitude = 4f;
@@ -52,8 +54,8 @@ public class PlayerTrigger : MonoBehaviour
 
         if(other.CompareTag("Wire"))
         {
-            CameraShaker.Instance.ShakeOnce(Magnitude * 1.5f, Roughness * 1.5f, FadeInTime, FadeOutTime);
-            playerMovement.AddForceToThePlayer(-playerMovement.rb.velocity.normalized * PushForce);
+            CameraShaker.Instance.ShakeOnce(Magnitude * 1.25f, Roughness * 1.25f, FadeInTime, FadeOutTime);
+            playerMovement.AddForceToThePlayer(-new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z) * PushForce);
             GameObject blood = SetParticlesMaterial(gameObject, FluidParticles);
             Instantiate(blood, transform.position, transform.rotation);
             Instantiate(ElectricParticles, other.ClosestPoint(transform.position), transform.rotation);
@@ -69,8 +71,8 @@ public class PlayerTrigger : MonoBehaviour
             {
                 outline.enabled = true;
                 if(allowInteraction && !WiringSystem.isUsing)
-                    WiringSystem.StartWiring(transform, other.transform);
-                else if(allowInteraction)
+                    WiringSystem.StartWiring(WireGrabPos, other.transform);
+                else if(allowInteraction && other.transform != WiringSystem.wireStartTransform)
                     WiringSystem.StopWiring(other.transform);
 
                 allowInteraction = false;
@@ -87,7 +89,26 @@ public class PlayerTrigger : MonoBehaviour
                 allowInteraction = false;
             }
         }
+        else if(other.CompareTag("WireDispenser"))
+        {
+            Outline outline = other.GetComponentInParent<Outline>();
+            if(outline != null)
+            {
+                outline.enabled = true;
+                if(allowInteraction && !WiringSystem.isUsing)
+                    WiringSystem.StartWiring(WireGrabPos, other.transform);
+                else if(allowInteraction && other.transform != WiringSystem.wireStartTransform)
+                    WiringSystem.StopWiring(other.transform);
 
+                allowInteraction = false;
+            }
+
+            Animator dispanim = other.GetComponentInParent<Animator>();
+            if(dispanim != null)
+            {
+                dispanim.SetBool("PlayerIsNear", true);
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -107,6 +128,21 @@ public class PlayerTrigger : MonoBehaviour
             if(outline != null)
             {
                 outline.enabled = false;
+            }
+        }
+
+        if(other.CompareTag("WireDispenser"))
+        {
+            Outline outline = other.GetComponentInParent<Outline>();
+            if(outline != null)
+            {
+                outline.enabled = false;
+            }
+
+            Animator dispanim = other.GetComponentInParent<Animator>();
+            if(dispanim != null)
+            {
+                dispanim.SetBool("PlayerIsNear", false);
             }
         }
     }

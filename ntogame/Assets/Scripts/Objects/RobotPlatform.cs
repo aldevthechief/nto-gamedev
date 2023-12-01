@@ -22,7 +22,7 @@ public class RobotPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<Player>())
+        if(other.CompareTag("Player"))
         {
             canMove = false;
             mesh.material = Materials[1];
@@ -31,7 +31,7 @@ public class RobotPlatform : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.GetComponent<Player>())
+        if(other.CompareTag("Player"))
         {
             canMove = true;
             mesh.material = Materials[0];

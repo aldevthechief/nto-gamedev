@@ -9,6 +9,8 @@ TagManager:
   - WirePillar
   - NPC
   - Wire
+  - KeyBox
+  - WireDispenser
   layers:
   - Default
   - TransparentFX
