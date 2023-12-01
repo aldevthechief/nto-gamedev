@@ -1,8 +1,21 @@
+using System.Collections;
 using UnityEngine;
 
 public class WireCollisions : MonoBehaviour
 {
-    public void BakeCollisions()
+    private bool allowCollision = false;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(allowCollision)
+        {
+            PlayerTrigger player = other.gameObject.GetComponent<PlayerTrigger>();
+            if(player != null)
+                player.WireColl(other.ClosestPoint(transform.position));
+        }
+    }
+
+    public IEnumerator BakeCollisions()
     {
         LineRenderer lr = GetComponent<LineRenderer>();
         MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
@@ -10,7 +23,7 @@ public class WireCollisions : MonoBehaviour
         Mesh mesh = new Mesh();
         lr.BakeMesh(mesh, true);
         meshCollider.sharedMesh = mesh;
-        meshCollider.convex = true;
-        meshCollider.isTrigger = true;
+        yield return new WaitForSeconds(0.25f);
+        allowCollision = true;
     }
 }

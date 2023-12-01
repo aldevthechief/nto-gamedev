@@ -3588,6 +3588,8 @@ GameObject:
   m_Component:
   - component: {fileID: 264462235}
   - component: {fileID: 264462242}
+  - component: {fileID: 264462244}
+  - component: {fileID: 264462243}
   - component: {fileID: 264462236}
   - component: {fileID: 264462238}
   - component: {fileID: 264462237}
@@ -3631,7 +3633,6 @@ Transform:
   m_Children:
   - {fileID: 238226013}
   - {fileID: 635779690}
-  - {fileID: 770536425}
   - {fileID: 321101342}
   - {fileID: 2075634582}
   m_Father: {fileID: 0}
@@ -3685,7 +3686,7 @@ MonoBehaviour:
     m_Bits: 8
   groundvelmult: 40
   airmult: 1
-  jumpheight: 17.5
+  jumpheight: 22.5
   jumpgrace: 0.15
   PlayerState: 0
   SpriteAnim: {fileID: 320503163}
@@ -3722,6 +3723,7 @@ MonoBehaviour:
   WiringSystem: {fileID: 2090987534}
   Dialogue: {fileID: 415015006}
   InputHandler: {fileID: 2013010729}
+  playerMovement: {fileID: 0}
   WireGrabPos: {fileID: 635779690}
   Magnitude: 4
   Roughness: 3
@@ -3772,6 +3774,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &264462243
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264462232}
+  m_Material: {fileID: 13400000, guid: 00737343c3bf13d4cbe2fdde95235d33, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.6
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.25, z: 0.75}
+--- !u!136 &264462244
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264462232}
+  m_Material: {fileID: 13400000, guid: 00737343c3bf13d4cbe2fdde95235d33, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.6
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.25, z: 0.75}
 --- !u!1 &273417398
 GameObject:
   m_ObjectHideFlags: 0
@@ -8439,61 +8487,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750492234}
   m_CullTransparentMesh: 1
---- !u!1 &770536424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 770536425}
-  - component: {fileID: 770536426}
-  m_Layer: 6
-  m_Name: PlayerCollider
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &770536425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 770536424}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.25, z: 0.75}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 264462235}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &770536426
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 770536424}
-  m_Material: {fileID: 13400000, guid: 00737343c3bf13d4cbe2fdde95235d33, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.6
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &775022994
 GameObject:
   m_ObjectHideFlags: 0
@@ -19190,7 +19183,7 @@ MonoBehaviour:
     m_Bits: 8
   WireSystemHolder: {fileID: 295152752}
   Box: {fileID: 1782801416}
-  maxWireLength: 25
+  maxWireLength: 30
   fullWireLength: 0
 --- !u!4 &2090987538
 Transform:

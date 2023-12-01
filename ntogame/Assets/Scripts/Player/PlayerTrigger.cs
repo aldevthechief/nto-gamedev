@@ -1,6 +1,7 @@
 using UnityEngine;
 using EZCameraShake;
 using UnityEditor.Callbacks;
+using System.Collections;
 
 public class PlayerTrigger : MonoBehaviour
 {
@@ -10,23 +11,23 @@ public class PlayerTrigger : MonoBehaviour
     [SerializeField] WireBlock WiringSystem;
     [SerializeField] DialogueSystem Dialogue;
     [SerializeField] private InputHandler InputHandler;
-    private Movement playerMovement;
+    [HideInInspector] public Movement playerMovement;
 
     [SerializeField] private Transform WireGrabPos;
 
     [Header("camera shake properties")]
-    [SerializeField] float Magnitude = 4f;
-    [SerializeField] float Roughness = 4f;
-    [SerializeField] float FadeInTime = 0.1f;
-    [SerializeField] float FadeOutTime = 0.5f;
+    public float Magnitude = 4f;
+    public float Roughness = 4f;
+    public float FadeInTime = 0.1f;
+    public float FadeOutTime = 0.5f;
 
     [Header("collision particles")]
-    [SerializeField] GameObject FluidParticles;
-    [SerializeField] GameObject ElectricParticles;
+    public GameObject FluidParticles;
+    public GameObject ElectricParticles;
 
     [Header("interaction properties")]
     private bool allowInteraction = false;
-    [SerializeField] float PushForce;
+    public float PushForce;
 
     void Start()
     {
@@ -41,6 +42,16 @@ public class PlayerTrigger : MonoBehaviour
             allowInteraction = true;
     }
 
+    // воркэраунд для колизии обмотанных проводов, так как OnCollisionEnter почему-то не работает :\
+    public void WireColl(Vector3 particlesPos)
+    {
+        CameraShaker.Instance.ShakeOnce(Magnitude * 1.25f, Roughness * 1.25f, FadeInTime, FadeOutTime);
+        playerMovement.AddForceToThePlayer(-new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z) * PushForce);
+        GameObject blood = SetParticlesMaterial(gameObject, FluidParticles);
+        Instantiate(blood, transform.position, transform.rotation);
+        Instantiate(ElectricParticles, particlesPos, transform.rotation);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Key"))
@@ -52,14 +63,14 @@ public class PlayerTrigger : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if(other.CompareTag("Wire"))
-        {
-            CameraShaker.Instance.ShakeOnce(Magnitude * 1.25f, Roughness * 1.25f, FadeInTime, FadeOutTime);
-            playerMovement.AddForceToThePlayer(-new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z) * PushForce);
-            GameObject blood = SetParticlesMaterial(gameObject, FluidParticles);
-            Instantiate(blood, transform.position, transform.rotation);
-            Instantiate(ElectricParticles, other.ClosestPoint(transform.position), transform.rotation);
-        }
+        // if(other.CompareTag("Wire"))
+        // {
+        //     CameraShaker.Instance.ShakeOnce(Magnitude * 1.25f, Roughness * 1.25f, FadeInTime, FadeOutTime);
+        //     playerMovement.AddForceToThePlayer(-new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z) * PushForce);
+        //     GameObject blood = SetParticlesMaterial(gameObject, FluidParticles);
+        //     Instantiate(blood, transform.position, transform.rotation);
+        //     Instantiate(ElectricParticles, other.ClosestPoint(transform.position), transform.rotation);
+        // }
     }
 
     void OnTriggerStay(Collider other)
@@ -147,7 +158,7 @@ public class PlayerTrigger : MonoBehaviour
         }
     }
 
-    GameObject SetParticlesMaterial(GameObject thingCollidedWith, GameObject desiredParticles)
+    public GameObject SetParticlesMaterial(GameObject thingCollidedWith, GameObject desiredParticles)
     {
         GameObject resultParticles = desiredParticles;
         ParticleSystemRenderer resultRenderer = resultParticles.GetComponent<ParticleSystemRenderer>();
