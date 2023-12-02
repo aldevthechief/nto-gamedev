@@ -52,6 +52,9 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if(!GameManager.InputAllowed)
+            return;
+
         isGrounded = Physics.CheckSphere(gc.position, groundDistance, groundMask); 
 
         if(isGrounded)
@@ -98,6 +101,8 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!GameManager.InputAllowed)
+            return;
         rb.AddForce(velocityChange * velocitymult, ForceMode.Force);
     }
 
@@ -113,14 +118,21 @@ public class Movement : MonoBehaviour
 
     IEnumerator InstantiateTrail()
     {
-        if(isGrounded && velocityMagnitude > 0.1f)
-            Instantiate(PlayerTrail, gc.position, Quaternion.identity);
-        yield return new WaitForSeconds(TrailTime);
-        StartCoroutine(InstantiateTrail());
+        if(!GameManager.IsDead || GameManager.InputAllowed)
+        {
+            if(isGrounded && velocityMagnitude > 0.1f)
+                Instantiate(PlayerTrail, gc.position, Quaternion.identity);
+            yield return new WaitForSeconds(TrailTime);
+            yield return InstantiateTrail();
+        }
+        else yield return null;
     }
 
     void OnCollisionEnter(Collision other)
     {
+        if(GameManager.IsDead || !GameManager.InputAllowed)
+            return;
+
         if(other.gameObject.layer == 3 && isLanding) //layermask � ���� ������ ���� ������ ���
         {
             SpriteAnim.SetBool("isJumping", false);

@@ -4,6 +4,7 @@ using UnityEngine;
 public class WireCollisions : MonoBehaviour
 {
     private bool allowCollision = false;
+    [SerializeField] private Material EnergyFlowMaterial;
 
     void OnTriggerEnter(Collider other)
     {
@@ -19,6 +20,8 @@ public class WireCollisions : MonoBehaviour
     {
         LineRenderer lr = GetComponent<LineRenderer>();
         MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
+
+        lr.sharedMaterial = EnergyFlowMaterial;
  
         Mesh mesh = new Mesh();
         lr.BakeMesh(mesh, true);

@@ -149,3 +149,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48748c5708744de4ead04a6ad47f5b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnergyFlowMaterial: {fileID: 2100000, guid: 4e145eb2dc09b3944970611d3905faef, type: 2}

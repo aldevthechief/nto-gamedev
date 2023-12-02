@@ -5,7 +5,8 @@ public class Level : MonoBehaviour
 {
     public void GoMainMenu()
     {
-        SceneManager.LoadScene(0);
+        // SceneManager.LoadScene(0);
+        SceneTransitions.instance.CallSceneTrans(0);
     }
 
     public void QuitGame()
@@ -19,6 +20,7 @@ public class Level : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -16,6 +16,9 @@ public class GamePause : MonoBehaviour
 
     public void Pause()
     {
+        if(!GameManager.InputAllowed)
+            return;
+            
         if (InputManager.GetButtonDown("Pause"))
         {
             Pause(true);

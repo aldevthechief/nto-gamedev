@@ -18,12 +18,14 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadScene(1);
+        // SceneManager.LoadScene(1);
+        SceneTransitions.instance.CallSceneTrans(1);
     }
 
     public void StartNewGame()
     {
-        SceneManager.LoadScene(1);
+        // SceneManager.LoadScene(1);
+        SceneTransitions.instance.CallSceneTrans(1);
     }
 
     public void OpenSettings()

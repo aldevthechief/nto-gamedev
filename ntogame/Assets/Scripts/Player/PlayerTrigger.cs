@@ -2,18 +2,19 @@ using UnityEngine;
 using EZCameraShake;
 using UnityEditor.Callbacks;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerTrigger : MonoBehaviour
 {
-  //  private IPlayerInteractable[] Interactables = new IPlayerInteractable[0]; �������� �� ������������
-
     [Header("references")]
     [SerializeField] WireBlock WiringSystem;
     [SerializeField] DialogueSystem Dialogue;
     [SerializeField] private InputHandler InputHandler;
     [HideInInspector] public Movement playerMovement;
-
     [SerializeField] private Transform WireGrabPos;
+    [SerializeField] private PlayerCamera CameraMovement;
+    [SerializeField] private Animator DeathAnim;
+    [SerializeField] private GameObject HealthBar;
 
     [Header("camera shake properties")]
     public float Magnitude = 4f;
@@ -32,8 +33,8 @@ public class PlayerTrigger : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<Movement>();
-
         InputHandler.OnKeyHold += UpdateInteraction;
+        GameManager.ResetVariables();
     }
 
     public void UpdateInteraction()
@@ -45,32 +46,56 @@ public class PlayerTrigger : MonoBehaviour
     // воркэраунд для колизии обмотанных проводов, так как OnCollisionEnter почему-то не работает :\
     public void WireColl(Vector3 particlesPos)
     {
+        if(GameManager.IsDead)
+            return;
+
         CameraShaker.Instance.ShakeOnce(Magnitude * 1.25f, Roughness * 1.25f, FadeInTime, FadeOutTime);
-        playerMovement.AddForceToThePlayer(-new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z) * PushForce);
         GameObject blood = SetParticlesMaterial(gameObject, FluidParticles);
         Instantiate(blood, transform.position, transform.rotation);
         Instantiate(ElectricParticles, particlesPos, transform.rotation);
+        GameManager.Health--;
+
+        if(GameManager.Health <= 0)
+            StartCoroutine(PlayerDeath());
+        else  
+            playerMovement.AddForceToThePlayer(-new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z) * PushForce);
+    }
+
+    IEnumerator PlayerDeath()
+    {        
+        GameManager.IsDead = true;
+        DeathAnim.CrossFade("Death", 0.05f, 0);
+        Vector3 lastFlight = -new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z);
+        playerMovement.rb.velocity = Vector3.zero;
+        playerMovement.AddForceToThePlayer(lastFlight * PushForce / 3);
+        CameraMovement.enabled = false;
+        GameManager.InputAllowed = false;
+        HealthBar.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Key"))
         {
+            // DeathAnim.enabled = false;
             CameraShaker.Instance.ShakeOnce(Magnitude, Roughness, FadeInTime, FadeOutTime);
             GameObject fp = SetParticlesMaterial(other.gameObject, FluidParticles);
             Instantiate(fp, other.transform.position, other.transform.rotation);
-            GameManager.KeyCount++;
+            GameManager.KeyObtained = true;
+            playerMovement.rb.velocity = Vector3.zero;
+            GameManager.InputAllowed = false;
+            HealthBar.SetActive(false);
+            Invoke("LoadNextScene", 1.5f);
             Destroy(other.gameObject);
         }
+    }
 
-        // if(other.CompareTag("Wire"))
-        // {
-        //     CameraShaker.Instance.ShakeOnce(Magnitude * 1.25f, Roughness * 1.25f, FadeInTime, FadeOutTime);
-        //     playerMovement.AddForceToThePlayer(-new Vector3(playerMovement.rb.velocity.normalized.x, 0, playerMovement.rb.velocity.normalized.z) * PushForce);
-        //     GameObject blood = SetParticlesMaterial(gameObject, FluidParticles);
-        //     Instantiate(blood, transform.position, transform.rotation);
-        //     Instantiate(ElectricParticles, other.ClosestPoint(transform.position), transform.rotation);
-        // }
+    void LoadNextScene()
+    {
+        // change argument when new scene is created
+        SceneTransitions.instance.CallSceneTrans(0);
     }
 
     void OnTriggerStay(Collider other)

@@ -15,15 +15,22 @@ public class PlayerShadow : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit raycast;
-        if(Physics.Raycast(Player.position, Vector3.down, out raycast, 10f, LayerMask)) //я сделал 1.5f для плавности, так как при больших значениях при запрыгивании на объекты происходит слишком резкое перемещение тени
+        if(GameManager.IsDead)
         {
-            transform.position = raycast.point;
-            transform.localScale = Vector3.SmoothDamp(transform.localScale, normalScale, ref refScale, Smooth);
+            transform.localScale = Vector3.SmoothDamp(transform.localScale, Vector3.zero, ref refScale, Smooth);
         }
         else
         {
-            transform.localScale = Vector3.SmoothDamp(transform.localScale, Vector3.zero, ref refScale, Smooth);
+            RaycastHit raycast;
+            if(Physics.Raycast(Player.position, Vector3.down, out raycast, 10f, LayerMask))
+            {
+                transform.position = raycast.point;
+                transform.localScale = Vector3.SmoothDamp(transform.localScale, normalScale, ref refScale, Smooth);
+            }
+            else
+            {
+                transform.localScale = Vector3.SmoothDamp(transform.localScale, Vector3.zero, ref refScale, Smooth);
+            }
         }
     }
 }

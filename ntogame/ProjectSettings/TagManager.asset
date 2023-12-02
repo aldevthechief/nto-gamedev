@@ -11,6 +11,7 @@ TagManager:
   - Wire
   - KeyBox
   - WireDispenser
+  - SceneTransitions
   layers:
   - Default
   - TransparentFX
