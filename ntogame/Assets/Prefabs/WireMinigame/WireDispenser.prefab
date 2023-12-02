@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5336458520962666200}
   - component: {fileID: 6032480406410335998}
   - component: {fileID: 7449566781057142654}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: MainPart
   m_TagString: WireDispenser
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1698901653281183933}
   - component: {fileID: 4538676108258809467}
   - component: {fileID: 1583147495315958192}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Door
   m_TagString: WireDispenser
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 4448062601332760124}
   - component: {fileID: 2751448342518866225}
   - component: {fileID: 5076992182381005663}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: WireDispenser
   m_TagString: WireDispenser
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 8458921719640602130}
   - component: {fileID: 4840545759432604959}
   - component: {fileID: 1887926761766241553}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Rotator
   m_TagString: WireDispenser
   m_Icon: {fileID: 0}
