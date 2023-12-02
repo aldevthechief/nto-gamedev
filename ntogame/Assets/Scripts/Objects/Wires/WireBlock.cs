@@ -54,7 +54,7 @@ public class WireBlock : MonoBehaviour
         }
 
         TryDestroyWireLineRenderer();
-      //  Debug.Log(fullWireLength);
+    Debug.Log(fullWireLength);
     }
 
     public void StartWiring(Transform playertransf, Transform pillartransf)
@@ -112,8 +112,9 @@ public class WireBlock : MonoBehaviour
         RaycastHit hit;
         if(Physics.Linecast(wireEndTransform.position, wireLineRenderer.GetPosition(wirePositions.Count - 2), out hit, WrapLayer))
         {
-            //ropeTensionPos = hit.point + -0.4f * (hit.point - ropePositions[ropePositions.Count - 2]).normalized;  <-- Do not use rn!
-            wirePositions.Insert(wirePositions.Count - 1, (hit.point - hit.collider.transform.position) * 1.07f + hit.collider.transform.position);
+            //wirePositions.Insert(wirePositions.Count - 1, (hit.point - hit.collider.transform.position) * 1.07f + hit.collider.transform.position);
+            wirePositions.Insert(wirePositions.Count - 1, hit.point + (Vector3.Cross(hit.normal, Vector3.down) * 0.2f));
+
             wireTensionPos = wirePositions[wirePositions.Count - 2] + -0.4f * (wirePositions[wirePositions.Count - 2] - wirePositions[wirePositions.Count - 3]).normalized;
 
             //Length calculations

@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class WireCollisions : MonoBehaviour
 {
+    public bool allowCollisionOnStart = false;
+
+    void Start()
+    {
+        if (allowCollisionOnStart)
+            StartCoroutine(BakeCollisions());
+    }
+
     private bool allowCollision = false;
     [SerializeField] private Material EnergyFlowMaterial;
 
