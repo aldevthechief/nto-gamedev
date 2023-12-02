@@ -29,6 +29,7 @@ public class PlayerTrigger : MonoBehaviour
     [Header("interaction properties")]
     private bool allowInteraction = false;
     public float PushForce;
+    private Transform lastPillar;
 
     void Start()
     {
@@ -103,16 +104,18 @@ public class PlayerTrigger : MonoBehaviour
         if(other.CompareTag("WirePillar"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
-            if(outline != null)
-            {
+            if(outline != null && !WiringSystem.isUsing && lastPillar == other.transform || outline != null && other.transform != WiringSystem.wireStartTransform && WiringSystem.isUsing)
                 outline.enabled = true;
-                if(allowInteraction && !WiringSystem.isUsing)
-                    WiringSystem.StartWiring(WireGrabPos, other.transform);
-                else if(allowInteraction && other.transform != WiringSystem.wireStartTransform)
-                    WiringSystem.StopWiring(other.transform);
 
-                allowInteraction = false;
+            if(allowInteraction && !WiringSystem.isUsing && lastPillar == other.transform)
+                WiringSystem.StartWiring(WireGrabPos, other.transform);
+            else if(allowInteraction && other.transform != WiringSystem.wireStartTransform && WiringSystem.isUsing)
+            {
+                lastPillar = other.transform;
+                WiringSystem.StopWiring(lastPillar);
             }
+
+            allowInteraction = false;
         }
         else if (other.CompareTag("NPC"))
         {
@@ -128,13 +131,16 @@ public class PlayerTrigger : MonoBehaviour
         else if(other.CompareTag("WireDispenser"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
-            if(outline != null)
+            if(outline != null && !WiringSystem.isUsing)
             {
                 outline.enabled = true;
-                if(allowInteraction && !WiringSystem.isUsing)
+                if(allowInteraction)
+                {
+                    DestroyOtherWires();
                     WiringSystem.StartWiring(WireGrabPos, other.transform);
-                else if(allowInteraction && other.transform != WiringSystem.wireStartTransform)
-                    WiringSystem.StopWiring(other.transform);
+                }
+                // else if(allowInteraction && other.transform != WiringSystem.wireStartTransform)
+                //     WiringSystem.StopWiring(other.transform);
 
                 allowInteraction = false;
             }
@@ -144,6 +150,23 @@ public class PlayerTrigger : MonoBehaviour
             {
                 dispanim.SetBool("PlayerIsNear", true);
             }
+        }
+    }
+
+    void DestroyOtherWires()
+    {
+        GameObject[] wires = GameObject.FindGameObjectsWithTag("Wire");
+        foreach(GameObject w in wires)
+        {
+            Destroy(w);
+        }
+        
+        GameObject[] sceneconnectibles = GameObject.FindGameObjectsWithTag("WirePillar");
+        foreach(GameObject x in sceneconnectibles)
+        {
+            WirePillar wp = x.GetComponent<WirePillar>();
+            if(wp != null)
+                wp.isConnected = false;
         }
     }
 

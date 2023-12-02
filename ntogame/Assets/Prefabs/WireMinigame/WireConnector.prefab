@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 6931183798581659206}
   - component: {fileID: 2306314174170060978}
   - component: {fileID: 5159402456835136177}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: MainPartConnector
   m_TagString: WirePillar
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 6817171842748177837}
   - component: {fileID: 1259433371425504164}
   - component: {fileID: 515038046684007587}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Rotator
   m_TagString: WirePillar
   m_Icon: {fileID: 0}
