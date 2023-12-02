@@ -17,6 +17,8 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerDownHan
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+        UISoundMachine.PlaySound(UISoundMachine.UISoundType.Button, 0.65f, Random.Range(0.84f, 1), 0);
+
         transform.localScale = Vector3.one * ScaleWhilePressed;
     }
 

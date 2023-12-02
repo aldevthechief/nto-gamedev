@@ -30,6 +30,8 @@ public class MainMenuButton : CustomButton, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        UISoundMachine.PlaySound(UISoundMachine.UISoundType.Other, 0.3f, Random.Range(0.6f, 1), 0);
+
         foreach (Graphic defaultColorful in Defaults)
         {
             defaultColorful.color = HighlightColor;

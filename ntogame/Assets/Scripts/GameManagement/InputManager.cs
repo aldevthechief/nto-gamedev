@@ -37,6 +37,9 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private Axis PlatformHorizontalAxis = null;
+    private Axis PlatformHeightAxis = null;
+    private Axis PlatformVerticalAxis = null;
     private Axis Horizontal = null;
     private Axis Vertical = null;
 
@@ -89,6 +92,10 @@ public class InputManager : MonoBehaviour
 
     private void UpdateKeys()
     {
+        PlatformHorizontalAxis = new Axis(KeyMap.PlatformHorizontalAxis);
+        PlatformHeightAxis = new Axis(KeyMap.PlatformHeightAxis);
+        PlatformVerticalAxis = new Axis(KeyMap.PlatformVerticalAxis);
+
         Horizontal = new Axis(KeyMap.Horizontal);
         Vertical = new Axis(KeyMap.Vertical);
 
@@ -105,6 +112,12 @@ public class InputManager : MonoBehaviour
     {
         switch (axis)
         {
+            case "PlatformHorizontalAxis":
+                return _Instance.PlatformHorizontalAxis.GetValue();
+            case "PlatformHeightAxis":
+                return _Instance.PlatformHeightAxis.GetValue();
+            case "PlatformVerticalAxis":
+                return _Instance.PlatformVerticalAxis.GetValue();
             case "Horizontal":
                 return _Instance.Horizontal.GetValue();
             case "Vertical":

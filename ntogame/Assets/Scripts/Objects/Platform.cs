@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public enum MaterialType { None = -1, Beton, Dirt, Water, Metal, Wood}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private MaterialType Material;
+
+    public MaterialType _Material => Material;
 }

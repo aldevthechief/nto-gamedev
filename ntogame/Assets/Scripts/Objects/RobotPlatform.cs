@@ -1,7 +1,7 @@
 using Unity.Collections;
 using UnityEngine;
 
-public class RobotPlatform : MonoBehaviour
+public class RobotPlatform : Platform
 {
     [Header("movement properties")]
     private Rigidbody rb;
@@ -50,9 +50,9 @@ public class RobotPlatform : MonoBehaviour
             rb.isKinematic = false;
         }
 
-        float x = Input.GetAxis("PlatformHorizontalAxis");
-        float y = Input.GetAxis("PlatformHeightAxis");
-        float z = Input.GetAxis("PlatformVerticalAxis");
+        float x = InputManager.GetAxis("PlatformHorizontalAxis");
+        float y = InputManager.GetAxis("PlatformHeightAxis");
+        float z = InputManager.GetAxis("PlatformVerticalAxis");
 
         move = Vector3.ClampMagnitude(PlayerPos.right * x + transform.up * y + PlayerPos.forward * z, 1);
     }
