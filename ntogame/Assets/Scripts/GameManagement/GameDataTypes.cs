@@ -37,6 +37,10 @@ namespace GameData
     [System.Serializable]
     public class KeyMapData
     {
+        public string PlatformHorizontalAxis = "+Keypad6 +L -Keypad4 -J";
+        public string PlatformHeightAxis = "+KeypadPlus +Equals -KeypadMinus -Minus";
+        public string PlatformVerticalAxis = "+Keypad8 +I -Keypad2 -K";
+
         public string Horizontal = "+D +RightArrow -A -LeftArrow"; 
         public string Vertical = "+W +UpArrow -S -DownArrow";
 

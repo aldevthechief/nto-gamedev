@@ -10,6 +10,13 @@ public class KeyMapper : MonoBehaviour
     [SerializeField] private ButtonInfoHolder Jump;
     [SerializeField] private ButtonInfoHolder Interact;
 
+    [SerializeField] private ButtonInfoHolder PlatformMoveRight;
+    [SerializeField] private ButtonInfoHolder PlatformMoveLeft;
+    [SerializeField] private ButtonInfoHolder PlatformMoveForward;
+    [SerializeField] private ButtonInfoHolder PlatformMoveBack;
+    [SerializeField] private ButtonInfoHolder PlatformMoveUp;
+    [SerializeField] private ButtonInfoHolder PlatformMoveDown;
+
     [SerializeField] private ButtonInfoHolder Pause;
     [SerializeField] private ButtonInfoHolder SkipDialogue;
     [SerializeField] private ButtonInfoHolder DialogueNext;
@@ -28,6 +35,18 @@ public class KeyMapper : MonoBehaviour
             axes = InputManager.Axis.ParseKeys(keyMap.Vertical);
             MoveUp.SetKeys(axes[0]);
             MoveDown.SetKeys(axes[1]);
+
+            axes = InputManager.Axis.ParseKeys(keyMap.PlatformHorizontalAxis);
+            PlatformMoveRight.SetKeys(axes[0]);
+            PlatformMoveLeft.SetKeys(axes[1]);
+
+            axes = InputManager.Axis.ParseKeys(keyMap.PlatformHeightAxis);
+            PlatformMoveUp.SetKeys(axes[0]);
+            PlatformMoveDown.SetKeys(axes[1]);
+
+            axes = InputManager.Axis.ParseKeys(keyMap.PlatformVerticalAxis);
+            PlatformMoveForward.SetKeys(axes[0]);
+            PlatformMoveBack.SetKeys(axes[1]);
         }
 
         Pause.SetKeys(InputManager.Button.ParseKeys(keyMap.Pause));

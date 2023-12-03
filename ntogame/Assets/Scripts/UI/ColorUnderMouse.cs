@@ -18,6 +18,8 @@ public class ColorUnderMouse : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        UISoundMachine.PlaySound(UISoundMachine.UISoundType.Other, 0.2f, Random.Range(0.8f, 1.1f), 0);
+
         foreach (Graphic colorful in Colorful)
         {
             colorful.color = HighlightColor;
