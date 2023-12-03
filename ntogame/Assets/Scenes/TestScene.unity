@@ -4235,6 +4235,7 @@ GameObject:
   - component: {fileID: 264462237}
   - component: {fileID: 264462234}
   - component: {fileID: 264462240}
+  - component: {fileID: 264462245}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -4352,6 +4353,7 @@ MonoBehaviour:
   CameraMovement: {fileID: 963194229}
   DeathAnim: {fileID: 320503163}
   HealthBar: {fileID: 863245048}
+  WireClip: {fileID: 8300000, guid: 918b83d230fd1234191505ba67809feb, type: 3}
   Magnitude: 4
   Roughness: 3
   FadeInTime: 0.1
@@ -4447,6 +4449,102 @@ CapsuleCollider:
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: -0.25, z: 0.75}
+--- !u!82 &264462245
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264462232}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.25
+  m_Pitch: 0.75
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &273417398
 GameObject:
   m_ObjectHideFlags: 0
@@ -5278,6 +5376,7 @@ MonoBehaviour:
   WaterLandSound: {fileID: 8300000, guid: e2ef9ff1c9d32714aa6e82a5861f41cb, type: 3}
   MetalLandSound: {fileID: 8300000, guid: da1d1d9b5884ac64393a298cb7c95de8, type: 3}
   WoodLandSound: {fileID: 8300000, guid: 2a4c9e5363266dc4c83e067ffa8ea3eb, type: 3}
+  PlayerDeathSound: {fileID: 8300000, guid: 63e1d0c6bdc86ae4088fa67c7bc08798, type: 3}
   Volume: 0.25
   Pitch: 1
   Razbros: 0.1
@@ -11233,7 +11332,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2fb3479ff0f42e4798d33e3beac33e8, type: 2}
+  - {fileID: 2100000, guid: f8867deaf272321419ecf0daa685f213, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11290,7 +11389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455a991876338d846a3df97f6357878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Material: 4
+  Material: 0
 --- !u!1 &855734716
 GameObject:
   m_ObjectHideFlags: 0
@@ -18208,7 +18307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1459005980
 Transform:
   m_ObjectHideFlags: 0
@@ -18764,7 +18863,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1500305009
 Transform:
   m_ObjectHideFlags: 0
@@ -25182,10 +25281,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2013010726}
     m_Modifications:
-    - target: {fileID: 3730629845600870834, guid: 163493cc36b351745999064b0571edf7, type: 3}
-      propertyPath: Material
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3730629845600870834, guid: 163493cc36b351745999064b0571edf7, type: 3}
       propertyPath: PlayerPos
       value: 

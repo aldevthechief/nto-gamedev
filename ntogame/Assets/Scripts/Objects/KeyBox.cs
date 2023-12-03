@@ -6,6 +6,8 @@ public class KeyBox : MonoBehaviour
 {
     private Animator anim;
     [SerializeField] private BoxCollider coll;
+    [SerializeField] private AudioSource Source;
+    [SerializeField] private AudioClip BoxOpenSound;
 
     void Start()
     {
@@ -16,5 +18,11 @@ public class KeyBox : MonoBehaviour
     {
         anim.SetTrigger("isOpening");
         coll.enabled = false;
+    }
+
+    public void PlayOpenSound()
+    {
+        Source.clip = BoxOpenSound;
+        Source.Play();
     }
 }

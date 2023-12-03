@@ -17,6 +17,8 @@ public class WalkSoundHandler : MonoBehaviour
     [SerializeField] private AudioClip MetalLandSound;
     [SerializeField] private AudioClip WoodLandSound;
 
+    [SerializeField] private AudioClip PlayerDeathSound;
+
     [SerializeField] private float Volume;
     [SerializeField] private float Pitch;
     [SerializeField] private float Razbros;
@@ -88,9 +90,16 @@ public class WalkSoundHandler : MonoBehaviour
                 break;
         }
 
-        Source.volume = Volume;
+        Source.volume = Volume * 2f;
         Source.pitch = Random.Range(Pitch - Razbros, Pitch + Razbros);
 
+        Source.Play();
+    }
+
+    public void PlayDeathSound()
+    {
+        Source.clip = PlayerDeathSound;
+        Source.volume = Volume * 2;
         Source.Play();
     }
 }

@@ -16,6 +16,10 @@ public class PlayerTrigger : MonoBehaviour
     [SerializeField] private Animator DeathAnim;
     [SerializeField] private GameObject HealthBar;
 
+    [Header("AudioSetup")]
+    private AudioSource source;
+    [SerializeField] private AudioClip WireClip;
+
     [Header("camera shake properties")]
     public float Magnitude = 4f;
     public float Roughness = 4f;
@@ -34,6 +38,7 @@ public class PlayerTrigger : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<Movement>();
+        source = GetComponent<AudioSource>();
         InputHandler.OnKeyHold += UpdateInteraction;
         GameManager.ResetVariables();
     }
@@ -108,11 +113,17 @@ public class PlayerTrigger : MonoBehaviour
                 outline.enabled = true;
 
             if(allowInteraction && !WiringSystem.isUsing && lastPillar == other.transform)
+            {
                 WiringSystem.StartWiring(WireGrabPos, other.transform);
+
+                PlayWiringSound();
+            }
             else if(allowInteraction && other.transform != WiringSystem.wireStartTransform && WiringSystem.isUsing)
             {
                 lastPillar = other.transform;
                 WiringSystem.StopWiring(lastPillar);
+
+                PlayWiringSound();
             }
 
             allowInteraction = false;
@@ -138,6 +149,8 @@ public class PlayerTrigger : MonoBehaviour
                 {
                     DestroyOtherWires();
                     WiringSystem.StartWiring(WireGrabPos, other.transform);
+
+                    PlayWiringSound();
                 }
                 // else if(allowInteraction && other.transform != WiringSystem.wireStartTransform)
                 //     WiringSystem.StopWiring(other.transform);
@@ -226,5 +239,12 @@ public class PlayerTrigger : MonoBehaviour
             }
         }
         return resultParticles;
+    }
+
+    void PlayWiringSound()
+    {
+        source.clip = WireClip;
+        source.pitch = Random.Range(0.75f, 1f);
+        source.Play();
     }
 }
