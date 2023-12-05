@@ -25,6 +25,10 @@ public class Movement : MonoBehaviour
     private float? lastgrounded;
     private float? jumppress;
 
+    [Header("slope movement")]
+    [SerializeField] float slopeDamp = 6f;
+    [SerializeField] float slopeDistance = 5f;
+
     [Header("current movement state")]
     public MovementState PlayerState;
     public enum MovementState
@@ -97,14 +101,26 @@ public class Movement : MonoBehaviour
             jumppress = null;
             lastgrounded = null;
         }
+
+        // slopedir = transform.up - slopehit.normal * Vector3.Dot(transform.up, slopehit.normal);
     }
 
     void FixedUpdate()
     {
         if(!GameManager.InputAllowed)
             return;
+
         rb.AddForce(velocityChange * velocitymult, ForceMode.Force);
+
+
+        // RaycastHit slopehit;
+        // if(Physics.Raycast(rb.position, Vector3.down, out slopehit, slopeDistance, groundMask))
+        // {
+        //     Quaternion sloperot = Quaternion.FromToRotation(transform.up, slopehit.normal);
+        //     rb.MoveRotation(Quaternion.Slerp(rb.rotation, sloperot * rb.rotation, Time.fixedDeltaTime * slopeDamp));
+        // }
     }
+
 
     void CalculateMovementVector(Vector3 dir)
     {

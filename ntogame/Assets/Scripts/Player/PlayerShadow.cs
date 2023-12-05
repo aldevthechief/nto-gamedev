@@ -25,6 +25,7 @@ public class PlayerShadow : MonoBehaviour
             if(Physics.Raycast(Player.position, Vector3.down, out raycast, 10f, LayerMask))
             {
                 transform.position = raycast.point;
+                transform.rotation = Quaternion.FromToRotation(transform.up, raycast.normal) * transform.rotation;
                 transform.localScale = Vector3.SmoothDamp(transform.localScale, normalScale, ref refScale, Smooth);
             }
             else

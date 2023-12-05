@@ -35,12 +35,24 @@ public class PlayerTrigger : MonoBehaviour
     public float PushForce;
     private Transform lastPillar;
 
+    [Header("other stuff")]
+    [SerializeField] private Transform spawnPoint;
+
     void Start()
     {
         playerMovement = GetComponent<Movement>();
         source = GetComponent<AudioSource>();
         InputHandler.OnKeyHold += UpdateInteraction;
         GameManager.ResetVariables();
+    }
+
+    void Update()
+    {
+        if(transform.position.y < -10)
+        {
+            transform.position = spawnPoint.position;
+            StartCoroutine(PlayerFell());
+        }
     }
 
     public void UpdateInteraction()
@@ -78,6 +90,16 @@ public class PlayerTrigger : MonoBehaviour
         GameManager.InputAllowed = false;
         HealthBar.SetActive(false);
         yield return new WaitForSeconds(2f);
+        SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    IEnumerator PlayerFell()
+    {        
+        GameManager.IsDead = true;
+        GameManager.InputAllowed = false;
+        CameraMovement.enabled = false;
+        HealthBar.SetActive(false);
+        yield return new WaitForSeconds(1f);
         SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
     }
 

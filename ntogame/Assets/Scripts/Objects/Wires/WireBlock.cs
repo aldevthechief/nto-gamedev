@@ -54,7 +54,7 @@ public class WireBlock : MonoBehaviour
         }
 
         TryDestroyWireLineRenderer();
-    Debug.Log(fullWireLength);
+    // Debug.Log(fullWireLength);
     }
 
     public void StartWiring(Transform playertransf, Transform pillartransf)

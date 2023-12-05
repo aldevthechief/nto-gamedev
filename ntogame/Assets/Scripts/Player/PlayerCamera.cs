@@ -35,6 +35,9 @@ public class PlayerCamera : MonoBehaviour
         rotOffset = StartRotOffset;
         Player.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
         cam = GetComponent<Camera>();
+
+        rotOffset = new Vector3(45, rotOffset.y + RotationAngle, 0);
+        UpdateOffset();
     }
 
     private void Update()
@@ -52,19 +55,19 @@ public class PlayerCamera : MonoBehaviour
         {
             if (InputManager.GetButtonDown("TurnCamLeft"))
             {
-                rotOffset = new Vector3(45, rotOffset.y + RotationAngle, 0);
+                rotOffset = new Vector3(45, rotOffset.y - RotationAngle, 0);
                 UpdateOffset();
             }
             else if (InputManager.GetButtonDown("TurnCamRight"))
             {
-                rotOffset = new Vector3(45, rotOffset.y - RotationAngle, 0);
+                rotOffset = new Vector3(45, rotOffset.y + RotationAngle, 0);
                 UpdateOffset();
             }
         }
-    
+
         Vector3 direction = Player.position - transform.position + Offset;
         float magnitude = direction.magnitude;
-        
+
         if(magnitude > 0.01f)
         {
             transform.position += Time.deltaTime * Speed * Mathf.Min(magnitude, 3) / magnitude * direction;
@@ -91,7 +94,7 @@ public class PlayerCamera : MonoBehaviour
         StartCoroutine(RotatePlayer());
     }
 
-    private IEnumerator RotatePlayer() // да костыль, но гг теперь всегда будет поворачиваться за камерой нормально (почему он отворачивается так и не понял)
+    private IEnumerator RotatePlayer() // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
     {
         while(Player.localEulerAngles.y != rotOffset.y)
         {
