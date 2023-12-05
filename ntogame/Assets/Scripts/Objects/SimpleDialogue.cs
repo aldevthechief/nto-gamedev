@@ -7,7 +7,7 @@ public interface IDialogue
 
 public class SimpleDialogue : MonoBehaviour, IDialogue
 {
-    [SerializeField] private PhraseInfo[] Phrases;
+    [SerializeField] protected PhraseInfo[] Phrases;
 
     public PhraseInfo[] GetPhrases() => Phrases;
 }

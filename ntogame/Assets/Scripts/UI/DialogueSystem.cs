@@ -12,6 +12,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image Sprite;
     [SerializeField] private Text Name;
     [SerializeField] private Text Text;
+    [SerializeField] private bool Skipable = true;
     private PhraseInfo[] Phrases = new PhraseInfo[0];
     private string CurrentText = "";
     private int PhraseIndex = -1;
@@ -19,8 +20,16 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     private Coroutine Writing = null;
 
+    public bool _Writing => Writing != null;
+    public bool _Skipable { get { return Skipable; } set { Skipable = value; } }
+
     public void Skip()
     {
+        if (!Skipable)
+        {
+            return;
+        }
+
         if (InputManager.GetButtonDown("SkipDialogue"))
         {
             StopAllCoroutines();
@@ -49,6 +58,11 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     public void StartDialogue(PhraseInfo[] infos)
     {
+        if(Phrases.Length > 0)
+        {
+            Skip();
+        }
+
         InputHandler.MetaKeyDown += Skip;
 
         Phrases = infos;
@@ -69,7 +83,12 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     public void Next()
     {
-        if(Phrases.Length <= 0)
+        if (!Skipable)
+        {
+            return;
+        }
+
+        if (Phrases.Length <= 0)
         {
             return;
         }
@@ -122,7 +141,6 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        Sprite.sprite = Phrases[PhraseIndex].Sprite;
         Name.text = Phrases[PhraseIndex].Name;
 
         if(Name.text == "")
@@ -135,14 +153,17 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
             StartCoroutine(UpdateNameSize());
         }
 
-        if(Sprite.sprite == null)
+        Sprite sprite = Phrases[PhraseIndex].Sprite;
+
+        Sprite.sprite = sprite;
+        if (sprite == null)
         {
             Sprite.gameObject.SetActive(false);
         }
         else
         {
             Sprite.gameObject.SetActive(true);
-            Sprite.rectTransform.sizeDelta = new Vector2(Sprite.sprite.texture.width, Sprite.sprite.texture.height);
+            Sprite.rectTransform.sizeDelta = new Vector2(sprite.texture.width, sprite.texture.height) / (sprite.texture.height) * Screen.height * 0.75f;
             Sprite.rectTransform.anchoredPosition = new Vector2(-80 - Sprite.rectTransform.sizeDelta.x/2, 40 + Sprite.rectTransform.sizeDelta.y / 2);
         }
     }
@@ -177,6 +198,9 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         Text.text = CurrentText;
 
         yield return new WaitForEndOfFrame();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         Caret.gameObject.SetActive(true);
 

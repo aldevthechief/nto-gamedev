@@ -23,6 +23,8 @@ public class WireBlock : MonoBehaviour
 
     public List<Vector3> wirePositions { get; set; } = new List<Vector3>();
 
+    [SerializeField] private UnityEngine.Events.UnityEvent OnEnergyFlow;
+
     [Header("wire length")]
     public float maxWireLength;
     [HideInInspector] public float fullWireLength;
@@ -102,9 +104,12 @@ public class WireBlock : MonoBehaviour
                 break;
             }
         }
-        
-        if(allconnected) 
+
+        if (allconnected)
+        {
+            OnEnergyFlow.Invoke();
             Box.OpenTheBox();
+        }
     }
 
     private void DetectCollisionEnter()
