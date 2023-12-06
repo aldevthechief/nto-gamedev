@@ -4,6 +4,7 @@ Shader "Custom/NegativeMask"
     {
       [HideInInspector]  _MainTex ("Texture", 2D) = "white" {}
     _Color("Color", Color) = (1,1,1,1)
+        _Multiplier("Multiplier", Range(0, 5)) = 1
     }
     SubShader
     {
@@ -49,10 +50,11 @@ Shader "Custom/NegativeMask"
 
             sampler2D _BackgroundTexture;
             fixed4 _Color;
+            fixed _Multiplier;
 
             fixed4 frag (pixel i) : SV_Target
             {
-                fixed4 color = 1 - tex2Dproj(_BackgroundTexture, i.grabPos);
+                fixed4 color = 1 - tex2Dproj(_BackgroundTexture, i.grabPos) * _Multiplier;
                 color.a = 1;
                 return color * _Color;
             }

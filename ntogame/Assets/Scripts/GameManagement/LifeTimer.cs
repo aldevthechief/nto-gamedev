@@ -6,7 +6,7 @@ public class LifeTimer : MonoBehaviour
 
     private void Update()
     {
-        LifeTime -= Time.deltaTime;
+        LifeTime -= Time.unscaledDeltaTime;
         if(LifeTime <= 0)
         {
             Destroy(gameObject);

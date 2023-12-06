@@ -1,1 +1,1 @@
-{"XResolution":1280,"YResolution":720,"ScreenMode":0,"FPSCap":-1,"MusicsVolume":0.0,"EffectsVolume":1.0}
+{"XResolution":1280,"YResolution":720,"ScreenMode":0,"FPSCap":-1,"MusicsVolume":0.0,"EffectsVolume":0.5067833065986633}
