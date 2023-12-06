@@ -12,6 +12,7 @@ TagManager:
   - KeyBox
   - WireDispenser
   - SceneTransitions
+  - FallPlane
   layers:
   - Default
   - TransparentFX

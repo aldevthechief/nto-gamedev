@@ -4327,6 +4327,8 @@ MonoBehaviour:
   airmult: 1
   jumpheight: 22.5
   jumpgrace: 0.15
+  slopeDamp: 6
+  slopeDistance: 5
   PlayerState: 0
   SpriteAnim: {fileID: 320503163}
   PlayerTrail: {fileID: 8130861273992033701, guid: cfbaf4d03b9879e4daae08dcf3cc0a08, type: 3}
@@ -4361,6 +4363,7 @@ MonoBehaviour:
   FluidParticles: {fileID: 4567914528018093721, guid: ce06c13149e5ae046b9c290c91df4901, type: 3}
   ElectricParticles: {fileID: 4453225157121584623, guid: c257bea79221f934384e03793d0fdb22, type: 3}
   PushForce: 100
+  spawnPoint: {fileID: 0}
 --- !u!23 &264462242
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5987,6 +5990,7 @@ MonoBehaviour:
   Sprite: {fileID: 1616276062}
   Name: {fileID: 95038271}
   Text: {fileID: 488970012}
+  Skipable: 1
 --- !u!1 &418754330
 GameObject:
   m_ObjectHideFlags: 0
@@ -19527,7 +19531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1547178499
 Transform:
   m_ObjectHideFlags: 0
@@ -24083,7 +24087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84beeba643449cf4bae39f57dd52bfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 264462235}
+  ShadowCast: {fileID: 0}
   LayerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -24393,6 +24397,9 @@ MonoBehaviour:
     m_Bits: 8
   WireSystemHolder: {fileID: 295152752}
   Box: {fileID: 1782801416}
+  OnEnergyFlow:
+    m_PersistentCalls:
+      m_Calls: []
   maxWireLength: 30
   fullWireLength: 0
 --- !u!4 &2090987538

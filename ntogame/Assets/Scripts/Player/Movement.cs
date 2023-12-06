@@ -29,6 +29,9 @@ public class Movement : MonoBehaviour
     [SerializeField] float slopeDamp = 6f;
     [SerializeField] float slopeDistance = 5f;
 
+    private Quaternion slopeRot = Quaternion.identity;
+    private RaycastHit slopeHit;
+
     [Header("current movement state")]
     public MovementState PlayerState;
     public enum MovementState
@@ -102,7 +105,7 @@ public class Movement : MonoBehaviour
             lastgrounded = null;
         }
 
-        // slopedir = transform.up - slopehit.normal * Vector3.Dot(transform.up, slopehit.normal);
+        slopeRot = Quaternion.FromToRotation(transform.up, slopeHit.normal);
     }
 
     void FixedUpdate()
@@ -112,20 +115,28 @@ public class Movement : MonoBehaviour
 
         rb.AddForce(velocityChange * velocitymult, ForceMode.Force);
 
-
-        // RaycastHit slopehit;
-        // if(Physics.Raycast(rb.position, Vector3.down, out slopehit, slopeDistance, groundMask))
-        // {
-        //     Quaternion sloperot = Quaternion.FromToRotation(transform.up, slopehit.normal);
-        //     rb.MoveRotation(Quaternion.Slerp(rb.rotation, sloperot * rb.rotation, Time.fixedDeltaTime * slopeDamp));
-        // }
+        if(Physics.Raycast(rb.position, Vector3.down, out slopeHit, slopeDistance, groundMask))
+        {
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, slopeRot * rb.rotation, Time.deltaTime * slopeDamp));
+        }
     }
-
 
     void CalculateMovementVector(Vector3 dir)
     {
         velocityChange = dir - rb.velocity;
     }
+
+    // bool OnSlope()
+    // {
+    //     if(!isGrounded)
+    //         return false;
+
+    //     float slopeAngle = Vector3.SignedAngle(slopeHit.normal, Vector3.up, Vector3.up);
+    //     if(slopeAngle > slopeMinAngle)
+    //         return true;
+
+    //     return false;
+    // }
 
     public void AddForceToThePlayer(Vector3 force)
     {
@@ -149,7 +160,7 @@ public class Movement : MonoBehaviour
         if(GameManager.IsDead || !GameManager.InputAllowed)
             return;
 
-        if(other.gameObject.layer == 3 && isLanding) //layermask � ���� ������ ���� ������ ���
+        if(other.gameObject.layer == 3 && isLanding)
         {
             SpriteAnim.SetBool("isJumping", false);
             Instantiate(LandParticles, gc.position, Quaternion.identity);

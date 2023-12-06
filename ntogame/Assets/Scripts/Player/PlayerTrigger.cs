@@ -46,15 +46,6 @@ public class PlayerTrigger : MonoBehaviour
         GameManager.ResetVariables();
     }
 
-    void Update()
-    {
-        if(transform.position.y < -10)
-        {
-            transform.position = spawnPoint.position;
-            StartCoroutine(PlayerFell());
-        }
-    }
-
     public void UpdateInteraction()
     {
         if (InputManager.GetButtonDown("Interact"))
@@ -93,16 +84,6 @@ public class PlayerTrigger : MonoBehaviour
         SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
     }
 
-    IEnumerator PlayerFell()
-    {        
-        GameManager.IsDead = true;
-        GameManager.InputAllowed = false;
-        CameraMovement.enabled = false;
-        HealthBar.SetActive(false);
-        yield return new WaitForSeconds(1f);
-        SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Key"))
@@ -117,6 +98,11 @@ public class PlayerTrigger : MonoBehaviour
             HealthBar.SetActive(false);
             Invoke("LoadNextScene", 1.5f);
             Destroy(other.gameObject);
+        }
+
+        if(other.CompareTag("FallPlane"))
+        {
+            SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
         }
     }
 

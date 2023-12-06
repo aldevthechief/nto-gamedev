@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerShadow : MonoBehaviour
 {
-    [SerializeField] private Transform Player;
+    [SerializeField] private Transform ShadowCast;
     [SerializeField] private LayerMask LayerMask;
     [SerializeField] private float Smooth;
     private Vector3 refScale = Vector3.zero;
@@ -22,7 +22,7 @@ public class PlayerShadow : MonoBehaviour
         else
         {
             RaycastHit raycast;
-            if(Physics.Raycast(Player.position, Vector3.down, out raycast, 10f, LayerMask))
+            if(Physics.Raycast(ShadowCast.position, Vector3.down, out raycast, 9.5f, LayerMask))
             {
                 transform.position = raycast.point;
                 transform.rotation = Quaternion.FromToRotation(transform.up, raycast.normal) * transform.rotation;

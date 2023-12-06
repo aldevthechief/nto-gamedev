@@ -8,6 +8,7 @@ public class PlayerCamera : MonoBehaviour
     [Header("References")]
     [SerializeField] private InputHandler InputHandler;
     [SerializeField] private Transform Player;
+    private Rigidbody playerRb;
     [SerializeField] private Movement PlayerMovement;
 
     [Header("Offset and rotation")]
@@ -33,7 +34,8 @@ public class PlayerCamera : MonoBehaviour
     {
         Offset = StartOffset;
         rotOffset = StartRotOffset;
-        Player.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
+        playerRb = Player.GetComponent<Rigidbody>();
+        playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
         cam = GetComponent<Camera>();
 
         rotOffset = new Vector3(45, rotOffset.y + RotationAngle, 0);
@@ -76,7 +78,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void UpdateOffset()
     {
-        Player.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
+        playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
         Vector3 newOffset = Vector3.zero;
         newOffset.y = StartOffset.y;
 
@@ -91,23 +93,23 @@ public class PlayerCamera : MonoBehaviour
         Offset = newOffset;
 
         StopAllCoroutines();
-        StartCoroutine(RotatePlayer());
+        // StartCoroutine(RotatePlayer());
     }
 
-    private IEnumerator RotatePlayer() // �� �������, �� �� ������ ������ ����� �������������� �� ������� ��������� (������ �� �������������� ��� � �� �����)
-    {
-        while(Player.localEulerAngles.y != rotOffset.y)
-        {
-            Player.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
-            yield return new WaitForSeconds(0.05f);
-        }
+    // private IEnumerator RotatePlayer()
+    // {
+    //     while(Player.localEulerAngles.y != rotOffset.y)
+    //     {
+    //         playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
+    //         yield return new WaitForSeconds(0.05f);
+    //     }
 
-        yield return new WaitForSeconds(0.2f);
+    //     yield return new WaitForSeconds(0.2f);
 
-        while (Player.localEulerAngles.y != rotOffset.y)
-        {
-            Player.localRotation = Quaternion.Euler(0, rotOffset.y, 0);
-            yield return new WaitForSeconds(0.05f);
-        }
-    }
+    //     while (Player.localEulerAngles.y != rotOffset.y)
+    //     {
+    //         playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
+    //         yield return new WaitForSeconds(0.05f);
+    //     }
+    // }
 }
