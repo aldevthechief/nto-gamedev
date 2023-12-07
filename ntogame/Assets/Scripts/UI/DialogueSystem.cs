@@ -58,10 +58,8 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     public void StartDialogue(PhraseInfo[] infos)
     {
-        if(Phrases.Length > 0)
-        {
-            Skip();
-        }
+        StopAllCoroutines();
+        Writing = null;
 
         InputHandler.MetaKeyDown += Skip;
 

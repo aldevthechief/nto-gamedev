@@ -132,7 +132,7 @@ MonoBehaviour:
     value: 65472
   diffusion:
     overrideState: 1
-    value: 5.25
+    value: 5.15
   anamorphicRatio:
     overrideState: 0
     value: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 4
+    value: -10
   brightness:
     overrideState: 0
     value: 0
