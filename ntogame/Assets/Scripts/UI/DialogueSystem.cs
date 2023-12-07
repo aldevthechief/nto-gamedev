@@ -164,7 +164,8 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         {
             Sprite.gameObject.SetActive(true);
             Sprite.rectTransform.sizeDelta = new Vector2(sprite.texture.width, sprite.texture.height) / (sprite.texture.height) * Screen.height * 0.75f;
-            Sprite.rectTransform.anchoredPosition = new Vector2(-80 - Sprite.rectTransform.sizeDelta.x/2, 40 + Sprite.rectTransform.sizeDelta.y / 2);
+            Sprite.rectTransform.anchoredPosition = new Vector2(-80 - Sprite.rectTransform.sizeDelta.x / 2, Sprite.rectTransform.sizeDelta.y / 2 - 250);
+            // Sprite.rectTransform.anchoredPosition = new Vector2(-80 - Sprite.rectTransform.sizeDelta.x/2, 40 + Sprite.rectTransform.sizeDelta.y / 2);
         }
     }
 

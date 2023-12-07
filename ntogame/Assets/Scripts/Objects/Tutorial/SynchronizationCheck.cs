@@ -45,7 +45,7 @@ namespace Tutorial
                     }
                     break;
                 case 2:
-                    if (Input.GetKeyDown(KeyCode.T))
+                    if (Input.GetKeyDown(KeyCode.R))
                     {
                         Stage++;
                         Next();
