@@ -3,9 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
+    public virtual string GetLevelInfo() => "";
+
+    public virtual void ReadLevelInfo(string info) { }
+
     public void GoMainMenu()
     {
-        // SceneManager.LoadScene(0);
         SceneTransitions.instance.CallSceneTrans(0);
     }
 
@@ -20,7 +23,13 @@ public class Level : MonoBehaviour
 
     public void Restart()
     {
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SaveHandler.DeleteMain();
+        SaveHandler.DeleteInstance();
         SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
     }
+    public void LoadMain() => SaveHandler._Instance.LoadMain();
+    public void FastSave() => SaveHandler._Instance.FastSave();
+    public void FastLoad() => SaveHandler._Instance.FastLoad();
+
+    public void SaveMain() => SaveHandler._Instance.MainSave();
 }

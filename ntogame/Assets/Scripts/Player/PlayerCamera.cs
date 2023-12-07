@@ -8,7 +8,7 @@ public class PlayerCamera : MonoBehaviour
     [Header("References")]
     [SerializeField] private InputHandler InputHandler;
     [SerializeField] private Transform Player;
-    private Rigidbody playerRb;
+    [SerializeField] private Rigidbody playerRb;
     [SerializeField] private Movement PlayerMovement;
 
     [Header("Offset and rotation")]
@@ -30,11 +30,11 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float ViewSmooth;
     [SerializeField] private int[] FovValues;
 
-    private void Start()
+    private void Awake()
     {
         Offset = StartOffset;
         rotOffset = StartRotOffset;
-        playerRb = Player.GetComponent<Rigidbody>();
+    //    playerRb = Player.GetComponent<Rigidbody>();
         playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
         cam = GetComponent<Camera>();
 
@@ -76,6 +76,13 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    public void SetRotation(float y)
+    {
+        rotOffset = new Vector3(45, y, 0);
+        transform.localRotation = Quaternion.Euler(rotOffset);
+        UpdateOffset();
+    }
+
     private void UpdateOffset()
     {
         playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
@@ -91,25 +98,5 @@ public class PlayerCamera : MonoBehaviour
         newOffset.z = StartOffset.z * (Mathf.Abs(op) < 0.25f ? 0 : Math.Sign(op));
 
         Offset = newOffset;
-
-        StopAllCoroutines();
-        // StartCoroutine(RotatePlayer());
     }
-
-    // private IEnumerator RotatePlayer()
-    // {
-    //     while(Player.localEulerAngles.y != rotOffset.y)
-    //     {
-    //         playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
-    //         yield return new WaitForSeconds(0.05f);
-    //     }
-
-    //     yield return new WaitForSeconds(0.2f);
-
-    //     while (Player.localEulerAngles.y != rotOffset.y)
-    //     {
-    //         playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
-    //         yield return new WaitForSeconds(0.05f);
-    //     }
-    // }
 }

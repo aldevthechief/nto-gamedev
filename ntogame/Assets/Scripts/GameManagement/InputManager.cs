@@ -50,6 +50,8 @@ public class InputManager : MonoBehaviour
     private Button Jump = null;
     private Button TurnCamLeft = null;
     private Button TurnCamRight = null;
+    private Button FastSave = null;
+    private Button FastLoad = null;
 
 
     private void Awake()
@@ -106,6 +108,9 @@ public class InputManager : MonoBehaviour
         TurnCamLeft = new Button(KeyMap.TurnCamLeft);
         TurnCamRight = new Button(KeyMap.TurnCamRight);
         Jump = new Button(KeyMap.Jump);
+
+        FastLoad = new Button(KeyMap.FastLoad);
+        FastSave = new Button(KeyMap.FastSave);
     }
 
     public static float GetAxis(string axis)
@@ -147,6 +152,10 @@ public class InputManager : MonoBehaviour
                 return TurnCamLeft.CheckState(state);
             case "TurnCamRight":
                 return TurnCamRight.CheckState(state);
+            case "FastLoad":
+                return FastLoad.CheckState(state);
+            case "FastSave":
+                return FastSave.CheckState(state);
         }
 
         Debug.LogError($"кнопка <color=white>{button}</color> не найдена");

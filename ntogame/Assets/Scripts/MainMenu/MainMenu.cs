@@ -5,11 +5,14 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject CreditsPanel;
     [SerializeField] private GameObject SettingsPanel;
+    [SerializeField] private GameObject ContinueButton;
     [SerializeField] private AudioClip Music;
 
     private void Start()
     {
         FindObjectOfType<Music>().SetMusic(Music);
+
+        ContinueButton.SetActive(SaveHandler._Instance._HasContinue);
 
         Time.timeScale = 1;
         Cursor.visible = true;
@@ -18,13 +21,13 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-        // SceneManager.LoadScene(1);
-        SceneTransitions.instance.CallSceneTrans(1);
+        SaveHandler._Instance.LoadMain();
     }
 
     public void StartNewGame()
     {
-        // SceneManager.LoadScene(1);
+        SaveHandler.DeleteMain();
+        SaveHandler.DeleteInstance();
         SceneTransitions.instance.CallSceneTrans(1);
     }
 

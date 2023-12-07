@@ -1,9 +1,33 @@
 
 namespace GameData
 {
+    [System.Serializable]
     public class SaveData
     {
-        public int CurrentLevel = 1;
+        public int CurrentLevel = 0;
+
+        public int Health = 5;
+        public float XPosition = 0;
+        public float YPosition = 0;
+        public float ZPosition = 0;
+
+        public float YRotation = 0;
+
+        public string LevelInfo = "";
+
+        public SaveData GetClone()
+        {
+            SaveData clone = new SaveData();
+            clone.CurrentLevel = CurrentLevel;
+            clone.Health = Health;
+            clone.XPosition = XPosition;
+            clone.YPosition = YPosition;
+            clone.ZPosition = ZPosition;
+            clone.YRotation = YRotation;
+            clone.LevelInfo = LevelInfo;
+
+            return clone;
+        }
     }
 
     [System.Serializable]
@@ -51,5 +75,8 @@ namespace GameData
         public string Jump = "Space";
         public string TurnCamLeft = "Q";
         public string TurnCamRight = "E";
+
+        public string FastLoad = "F9";
+        public string FastSave = "F5";
     }
 }

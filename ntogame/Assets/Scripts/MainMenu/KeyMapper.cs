@@ -23,6 +23,9 @@ public class KeyMapper : MonoBehaviour
     [SerializeField] private ButtonInfoHolder TurnCamLeft;
     [SerializeField] private ButtonInfoHolder TurnCamRight;
 
+    [SerializeField] private ButtonInfoHolder FastSave;
+    [SerializeField] private ButtonInfoHolder FastLoad;
+
     private void Start()
     {
         KeyMapData keyMap = InputManager._Instance._KeyMap;
@@ -56,6 +59,8 @@ public class KeyMapper : MonoBehaviour
         Jump.SetKeys(InputManager.Button.ParseKeys(keyMap.Jump));
         TurnCamLeft.SetKeys(InputManager.Button.ParseKeys(keyMap.TurnCamLeft));
         TurnCamRight.SetKeys(InputManager.Button.ParseKeys(keyMap.TurnCamRight));
+        FastSave.SetKeys(InputManager.Button.ParseKeys(keyMap.FastSave));
+        FastLoad.SetKeys(InputManager.Button.ParseKeys(keyMap.FastLoad));
     }
 
     public void ApplyKeys()
@@ -82,8 +87,52 @@ public class KeyMapper : MonoBehaviour
         {
             keys += $"-{key} ";
         }
-        keyMap.Vertical = keys.Remove(keys.Length - 1); 
-        
+        keyMap.Vertical = keys.Remove(keys.Length - 1);
+
+        keys = "";
+        foreach (string key in PlatformMoveRight._Keys)
+        {
+            keys += $"+{key} ";
+        }
+        foreach (string key in PlatformMoveLeft._Keys)
+        {
+            keys += $"-{key} ";
+        }
+        keyMap.PlatformHorizontalAxis = keys.Remove(keys.Length - 1);
+
+        keys = "";
+        foreach (string key in PlatformMoveForward._Keys)
+        {
+            keys += $"+{key} ";
+        }
+        foreach (string key in PlatformMoveBack._Keys)
+        {
+            keys += $"-{key} ";
+        }
+        keyMap.PlatformVerticalAxis = keys.Remove(keys.Length - 1);
+
+        keys = "";
+        foreach (string key in PlatformMoveUp._Keys)
+        {
+            keys += $"+{key} ";
+        }
+        foreach (string key in PlatformMoveDown._Keys)
+        {
+            keys += $"-{key} ";
+        }
+        keyMap.PlatformHeightAxis = keys.Remove(keys.Length - 1);
+
+        keys = "";
+        foreach (string key in MoveUp._Keys)
+        {
+            keys += $"+{key} ";
+        }
+        foreach (string key in MoveDown._Keys)
+        {
+            keys += $"-{key} ";
+        }
+        keyMap.Vertical = keys.Remove(keys.Length - 1);
+
         keys = "";
         foreach (string key in Pause._Keys)
         {
@@ -132,6 +181,20 @@ public class KeyMapper : MonoBehaviour
             keys += $"{key} ";
         }
         keyMap.TurnCamRight = keys.Remove(keys.Length - 1);
+
+        keys = "";
+        foreach (string key in FastLoad._Keys)
+        {
+            keys += $"{key} ";
+        }
+        keyMap.FastLoad = keys.Remove(keys.Length - 1);
+
+        keys = "";
+        foreach (string key in FastSave._Keys)
+        {
+            keys += $"{key} ";
+        }
+        keyMap.FastSave = keys.Remove(keys.Length - 1);
 
         InputManager._Instance._KeyMap = keyMap;
     }
