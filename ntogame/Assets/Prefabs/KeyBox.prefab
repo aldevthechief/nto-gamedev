@@ -457,7 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b369d76596788594190fe94141ae622e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 2783622855679660155}
   coll: {fileID: 4031210754559466321}
   Source: {fileID: 6928317792034637512}
   BoxOpenSound: {fileID: 8300000, guid: 24006d6e19284704891643d569f92090, type: 3}
