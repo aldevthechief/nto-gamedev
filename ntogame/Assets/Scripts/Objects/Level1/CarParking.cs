@@ -98,7 +98,7 @@ namespace Level1
                     currentWay++;
                 }
 
-                transform.rotation = Quaternion.Euler(0, Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + 90, 0);
+                transform.rotation = Quaternion.Euler(0, Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg - 90, 0);
 
                 yield return new WaitForEndOfFrame();
             }

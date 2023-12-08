@@ -120,7 +120,16 @@ public class PlayerTrigger : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("WirePillar"))
+        if (other.GetComponent<IInteractable>() != null)
+        {
+            other.GetComponent<IInteractable>().SetOutline(true);
+            if (allowInteraction)
+            {
+                other.GetComponent<IInteractable>().Interact();
+                allowInteraction = false;
+            }
+        }
+        else if (other.CompareTag("WirePillar"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
             if(outline != null && !WiringSystem.isUsing && lastPillar == other.transform || outline != null && other.transform != WiringSystem.wireStartTransform && WiringSystem.isUsing)
@@ -176,15 +185,6 @@ public class PlayerTrigger : MonoBehaviour
             if(dispanim != null)
             {
                 dispanim.SetBool("PlayerIsNear", true);
-            }
-        }
-        else if (other.GetComponent<IInteractable>() != null)
-        {
-            other.GetComponent<IInteractable>().SetOutline(true);
-            if (allowInteraction)
-            {
-                other.GetComponent<IInteractable>().Interact();
-                allowInteraction = false;
             }
         }
     }

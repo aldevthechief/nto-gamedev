@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TutorialSceneWithFog.unity
     guid: 22653d12d2e32f04cb028e6cf7bf2bd0
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
-    guid: 8d2312b518620cf429abf6198c1e4768
+    path: Assets/Scenes/LevelOneEgorEdit.unity
+    guid: 0b8c857ba6dd2924395fc2d1f534668d
   m_configObjects: {}

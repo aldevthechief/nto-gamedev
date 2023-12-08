@@ -1,1 +1,0 @@
-{"CurrentLevel":2,"Health":5,"XPosition":152.50006103515626,"YPosition":-55.78555679321289,"ZPosition":8.500001907348633,"YRotation":270.0,"LevelInfo":""}

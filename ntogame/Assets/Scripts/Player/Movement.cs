@@ -62,9 +62,9 @@ public class Movement : MonoBehaviour
         if(!GameManager.InputAllowed)
             return;
 
-        isGrounded = Physics.CheckSphere(gc.position, groundDistance, groundMask); 
+        isGrounded = Physics.Raycast(gc.position, Vector3.down, groundDistance, groundMask);
 
-        if(isGrounded)
+        if (isGrounded)
         {
             PlayerState = MovementState.grounded;
             velocitymult = groundvelmult;
