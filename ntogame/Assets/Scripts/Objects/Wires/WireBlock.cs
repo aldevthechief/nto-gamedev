@@ -40,6 +40,17 @@ public class WireBlock : MonoBehaviour
     //     //StartWiring(wireStartTransform, wireEndTransform);
     // }
 
+    public void UpdateLines()
+    {
+        if (isUsing)
+        {
+            UpdateRopePositions();
+            LastSegmentGoToPlayerPos();
+
+            DetectCollisionEnter();
+        }
+    }
+
     private void Update()
     {
         // Debug.Log(wireEndTransform.position);
@@ -78,14 +89,17 @@ public class WireBlock : MonoBehaviour
 
     public void StopWiring(Transform pillar)
     {
-        wireLineRenderer.SetPosition(wirePositions.Count - 1, pillar.position);
+        wireLineRenderer.SetPosition(wireLineRenderer.positionCount - 1, pillar.position);
         StartCoroutine(wireLineRenderer.gameObject.GetComponent<WireCollisions>().BakeCollisions());
 
         WirePillar endWirePillar = pillar.gameObject.GetComponentInParent<WirePillar>();
-        if(endWirePillar != null) endWirePillar.isConnected = true;
-
         WirePillar startWirePillar = wireStartTransform.gameObject.GetComponentInParent<WirePillar>();
-        if(startWirePillar != null) startWirePillar.isConnected = true;
+
+        if(endWirePillar != null && startWirePillar != null)
+        {
+            endWirePillar.Connect(startWirePillar, true);
+            startWirePillar.Connect(endWirePillar, false);
+        }
 
         CheckIfEnergyIsFlowing();
 

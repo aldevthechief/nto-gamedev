@@ -4,6 +4,12 @@ using UnityEditor.Callbacks;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+public interface IInteractable
+{
+    public void SetOutline(bool enabled);
+    public void Interact();
+}
+
 public class PlayerTrigger : MonoBehaviour
 {
     [Header("references")]
@@ -81,7 +87,7 @@ public class PlayerTrigger : MonoBehaviour
         GameManager.InputAllowed = false;
         HealthBar.SetActive(false);
         yield return new WaitForSeconds(2f);
-        SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
+        FindObjectOfType<Level>().LoadMain();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -102,7 +108,7 @@ public class PlayerTrigger : MonoBehaviour
 
         if(other.CompareTag("FallPlane"))
         {
-            SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex);
+            FindObjectOfType<Level>().LoadMain();
         }
     }
 
@@ -172,6 +178,15 @@ public class PlayerTrigger : MonoBehaviour
                 dispanim.SetBool("PlayerIsNear", true);
             }
         }
+        else if (other.GetComponent<IInteractable>() != null)
+        {
+            other.GetComponent<IInteractable>().SetOutline(true);
+            if (allowInteraction)
+            {
+                other.GetComponent<IInteractable>().Interact();
+                allowInteraction = false;
+            }
+        }
     }
 
     void DestroyOtherWires()
@@ -187,7 +202,7 @@ public class PlayerTrigger : MonoBehaviour
         {
             WirePillar wp = x.GetComponent<WirePillar>();
             if(wp != null)
-                wp.isConnected = false;
+                wp.Disconnect();
         }
     }
 
@@ -201,8 +216,7 @@ public class PlayerTrigger : MonoBehaviour
                 outline.enabled = false;
             }
         }
-
-        if(other.CompareTag("NPC"))
+        else if(other.CompareTag("NPC"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
             if(outline != null)
@@ -210,8 +224,7 @@ public class PlayerTrigger : MonoBehaviour
                 outline.enabled = false;
             }
         }
-
-        if(other.CompareTag("WireDispenser"))
+        else if(other.CompareTag("WireDispenser"))
         {
             Outline outline = other.GetComponentInParent<Outline>();
             if(outline != null)
@@ -224,6 +237,10 @@ public class PlayerTrigger : MonoBehaviour
             {
                 dispanim.SetBool("PlayerIsNear", false);
             }
+        }
+        else if (other.GetComponent<IInteractable>() != null)
+        {
+            other.GetComponent<IInteractable>().SetOutline(false);
         }
     }
 

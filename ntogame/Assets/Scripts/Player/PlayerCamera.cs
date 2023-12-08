@@ -21,6 +21,7 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 Offset = Vector3.zero;
     [SerializeField] private Vector3 rotOffset = Vector3.zero;
     private float refAngle = 0;
+    private bool Initialized = false;
 
     [SerializeField] float RotationalSmooth;
 
@@ -30,11 +31,16 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float ViewSmooth;
     [SerializeField] private int[] FovValues;
 
-    private void Awake()
+    private void Start()
     {
+        if (Initialized)
+        {
+            return;
+        }
+
         Offset = StartOffset;
         rotOffset = StartRotOffset;
-    //    playerRb = Player.GetComponent<Rigidbody>();
+        //    playerRb = Player.GetComponent<Rigidbody>();
         playerRb.MoveRotation(Quaternion.Euler(0, rotOffset.y, 0));
         cam = GetComponent<Camera>();
 
@@ -78,6 +84,10 @@ public class PlayerCamera : MonoBehaviour
 
     public void SetRotation(float y)
     {
+        Initialized = true;
+        Offset = StartOffset;
+        cam = GetComponent<Camera>();
+
         rotOffset = new Vector3(45, y, 0);
         transform.localRotation = Quaternion.Euler(rotOffset);
         UpdateOffset();

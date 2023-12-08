@@ -20,6 +20,8 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     private Coroutine Writing = null;
 
+    public event SimpleVoid OnDialogueEnd = null;
+
     public bool _Writing => Writing != null;
     public bool _Skipable { get { return Skipable; } set { Skipable = value; } }
 
@@ -49,6 +51,11 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
             Cursor.visible = false;
 
             InputHandler.MetaKeyDown -= Skip;
+
+            if(OnDialogueEnd != null)
+            {
+                OnDialogueEnd.Invoke();
+            }
         }
         else if (InputManager.GetButtonDown("DialogueNext"))
         {
@@ -118,6 +125,11 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
                 Cursor.visible = false;
 
                 InputHandler.MetaKeyDown -= Skip;
+
+                if (OnDialogueEnd != null)
+                {
+                    OnDialogueEnd.Invoke();
+                }
                 return;
             }
 

@@ -68,7 +68,7 @@ public class SaveHandler : MonoBehaviour
         else
         {
             Current = Main;
-            StopAllCoroutines();
+
             Initialize();
         }
     }
@@ -85,7 +85,6 @@ public class SaveHandler : MonoBehaviour
             return;
         }
 
-        StopAllCoroutines();
         Initialize();
     }
 
@@ -104,6 +103,8 @@ public class SaveHandler : MonoBehaviour
 
         Level = FindObjectOfType<Level>();
         Level.ReadLevelInfo(Current.LevelInfo);
+
+        Current = null;
     }
 
     public void KeyDown()
@@ -134,12 +135,20 @@ public class SaveHandler : MonoBehaviour
 
     public static void DeleteInstance()
     {
-        Destroy(Instance.gameObject);
-        Instance = null;
+        if(Instance != null)
+        {
+            Destroy(Instance.gameObject);
+            Instance = null;
+        }
     }
 
     public void LoadMain()
     {
+        if(Current != null)
+        {
+            return;
+        }
+
         Current = Main;
         SceneManager.sceneLoaded += LevelLoaded;
         SceneTransitions.instance.CallSceneTrans(Current.CurrentLevel);
@@ -147,7 +156,12 @@ public class SaveHandler : MonoBehaviour
 
     public void FastLoad()
     {
-        if(Fast.CurrentLevel == 0)
+        if (Current != null)
+        {
+            return;
+        }
+
+        if (Fast.CurrentLevel == 0)
         {
             if(Main.CurrentLevel != 0)
             {

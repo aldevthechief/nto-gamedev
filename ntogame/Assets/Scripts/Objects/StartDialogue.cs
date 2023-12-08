@@ -4,7 +4,7 @@ public class StartDialogue : SimpleDialogue
 {
     [SerializeField] private DialogueSystem DialogueSystem;
 
-    private void Awake()
+    private void Start()
     {
         DialogueSystem.StartDialogue(Phrases);
     }
