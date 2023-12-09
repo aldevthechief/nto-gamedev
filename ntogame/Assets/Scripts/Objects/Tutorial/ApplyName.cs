@@ -7,6 +7,7 @@ namespace Tutorial
     {
         [SerializeField] private InputField InputField;
         [SerializeField] private SynchronizationCheck SynchronizationCheck;
+        [SerializeField] private Levels.Tutorial Tutorial;
 
         public override void Hide()
         {
@@ -20,6 +21,8 @@ namespace Tutorial
                 return;
             }
 
+            Tutorial.NameMade();
+
             SaveHandler._Instance._PlayerName = InputField.text;
 
             InputHandler.MetaKeyDown -= Hide;
@@ -30,6 +33,12 @@ namespace Tutorial
             gameObject.SetActive(false);
 
             SynchronizationCheck.StartWork();
+        }
+
+        private void Update()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }

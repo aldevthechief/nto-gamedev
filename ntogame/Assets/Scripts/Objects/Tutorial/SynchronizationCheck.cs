@@ -6,17 +6,11 @@ namespace Tutorial
     public class SynchronizationCheck : MonoBehaviour
     {
         [SerializeField] private InputHandler InputHandler;
-        [SerializeField] private ApplyName ApplyName;
         [SerializeField] private LevelDialogue LevelDialogue;
         [SerializeField] private Levels.Tutorial Level;
         [SerializeField] private DialogueSystem DialogueSystem;
         private int Stage = 0;
         private bool Desynchronize = false;
-
-        private void Start()
-        {
-            ApplyName.Show();
-        }
 
         public void StartWork()
         {
@@ -157,7 +151,7 @@ namespace Tutorial
         {
             yield return new WaitForSeconds(1.2f);
 
-            Level.Restart();
+            Level.LoadMain();
         }
     }
 }

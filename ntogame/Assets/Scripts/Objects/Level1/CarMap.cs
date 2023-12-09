@@ -18,6 +18,11 @@ namespace Level1
         {
             get
             {
+                if (!Initialized)
+                {
+                    Initialize(); 
+                }
+
                 bool[][] map = new bool[7][];
                 for(int y = 0; y < Tiles.Length; y++)
                 {
@@ -34,9 +39,25 @@ namespace Level1
             }
             set
             {
+                if(value == null)
+                {
+                    return;
+                }
+
                 Initialize();
+
+                for (int y = 0; y < Tiles.Length; y++)
+                {
+                    for (int x = 0; x < Tiles[y].Length; x++)
+                    {
+                        Tiles[y][x]._Block = value[y][x];
+                    }
+                }
+
+                BuildWay();
             }
         }
+        public Vector3Int[] _Way => new AStar(_Tiles, new Vector3Int(0, 6), new Vector3Int(0, 0))._Path;
 
         private void Start()
         {

@@ -11,7 +11,27 @@ namespace Level1
         [SerializeField] private bool Red;
         private CarMap Map = null;
 
-        public bool _Block { get { return Block; } set { Block = value; } }
+        public bool _Block
+        {
+            get { return Block; }
+            set
+            {
+                if (Red)
+                {
+                    return;
+                }
+
+                Block = value;
+                if (Block)
+                {
+                    Image.color = new Color(0, 1, 0.5f, 1);
+                }
+                else
+                {
+                    Image.color = new Color(0, 0, 0, 1);
+                }
+            }
+        }
 
         public void SetInfo(CarMap map, bool red)
         {

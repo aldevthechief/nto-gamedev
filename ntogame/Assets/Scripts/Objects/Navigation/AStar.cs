@@ -127,7 +127,11 @@ public class AStar
             }
         }
 
-        if(position.y >= Map.Length || (position.x >= Map[position.y].Length))
+        if(position.y >= Map.Length)
+        {
+            return;
+        }
+        else if(position.x >= Map[position.y].Length)
         {
             return;
         }

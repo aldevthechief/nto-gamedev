@@ -5,17 +5,26 @@ namespace Levels
 {
     public class Tutorial : Level
     {
+        [SerializeField] private ApplyName NameApply;
         [SerializeField] private SynchronizationCheck SynchronizationCheck;
         [SerializeField] private LevelDialogue[] Dialogues;
         [SerializeField] private WirePillar[] Pillars;
         [SerializeField] private Transform[] PillarPoints;
         [SerializeField] private WireBlock WireBlock;
+        [SerializeField] private PlayerTrigger PlayerTrigger;
         [SerializeField] private TutorialLevelInfo LevelInfo;
 
         public void Synchronized()
         {
             LevelInfo.synchronized = true;
             LevelInfo.dialogues[0] = true;
+
+            SaveMain();
+        }
+
+        public void NameMade()
+        {
+            LevelInfo.namemade = true;
 
             SaveMain();
         }
@@ -29,6 +38,11 @@ namespace Levels
 
         public override string GetLevelInfo()
         {
+            if (LevelInfo == null)
+            {
+                LevelInfo = new TutorialLevelInfo();
+            }
+
             int[] connections = new int[4];
             for(int i = 0; i < connections.Length; i++)
             {
@@ -48,9 +62,14 @@ namespace Levels
                 LevelInfo = new TutorialLevelInfo();
             }
 
-            if(LevelInfo.synchronized)
+            if (!LevelInfo.namemade)
             {
-                SynchronizationCheck.Skip();
+                NameApply.Show();
+            }
+
+            if(LevelInfo.namemade && !LevelInfo.synchronized)
+            {
+                SynchronizationCheck.StartWork();
             }
 
             for(int i = 1; i < Dialogues.Length; i++)
@@ -65,6 +84,8 @@ namespace Levels
                     WireBlock.StartWiring(PillarPoints[LevelInfo.connections[i]], PillarPoints[i]);
                     WireBlock.UpdateLines();
                     WireBlock.StopWiring(PillarPoints[LevelInfo.connections[i]]);
+
+                    PlayerTrigger._LastPillar = PillarPoints[LevelInfo.connections[i]];
                 }
             }
         }
@@ -72,6 +93,7 @@ namespace Levels
         [System.Serializable]
         private class TutorialLevelInfo
         {
+            public bool namemade = false;
             public bool synchronized = false;
             public bool[] dialogues = new bool[5] {false, false, false, false, false};
             public int[] connections = new int[4] { -1, -1, -1, -1 };

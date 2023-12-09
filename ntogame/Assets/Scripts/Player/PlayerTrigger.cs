@@ -44,12 +44,23 @@ public class PlayerTrigger : MonoBehaviour
     [Header("other stuff")]
     [SerializeField] private Transform spawnPoint;
 
+    public Transform _LastPillar
+    {
+        get
+        {
+            return lastPillar;
+        }
+        set
+        {
+            lastPillar = value;
+        }
+    }
+
     void Start()
     {
         playerMovement = GetComponent<Movement>();
         source = GetComponent<AudioSource>();
         InputHandler.OnKeyHold += UpdateInteraction;
-        GameManager.ResetVariables();
     }
 
     public void UpdateInteraction()
@@ -114,8 +125,7 @@ public class PlayerTrigger : MonoBehaviour
 
     void LoadNextScene()
     {
-        // change argument when new scene is created
-        SceneTransitions.instance.CallSceneTrans(0);
+        SceneTransitions.instance.CallSceneTrans(SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings ? 0 : SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     void OnTriggerStay(Collider other)

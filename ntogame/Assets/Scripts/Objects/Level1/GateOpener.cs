@@ -6,6 +6,7 @@ namespace Level1
     {
         [SerializeField] private Animator Gate;
         [SerializeField] private Outline Outline;
+        [SerializeField] private AudioSource Sound;
         [SerializeField] private bool Interactable;
 
         public bool _IsOpen => Gate.GetBool("isOpen");
@@ -27,6 +28,7 @@ namespace Level1
         {
             if (Interactable)
             {
+                Sound.Play();
                 Gate.SetBool("isOpen", !Gate.GetBool("isOpen"));
             }
         }

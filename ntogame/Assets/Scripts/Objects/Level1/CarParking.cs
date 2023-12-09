@@ -12,6 +12,9 @@ namespace Level1
         [SerializeField] private Outline Outline;
         [SerializeField] private CarMap CarMap;
 
+        [SerializeField] private AudioSource CarSound;
+        [SerializeField] private AudioSource AvarySound;
+
         [SerializeField] private LayerMask Layer;
         [SerializeField] private Transform RayPoint;
 
@@ -28,6 +31,77 @@ namespace Level1
         [SerializeField] private bool Broken;
         [SerializeField] private bool Used;
         [SerializeField] private bool Minigaming;
+
+        public bool _Driving
+        {
+            get
+            {
+                return Driving;
+            }
+            set
+            {
+                Driving = value;
+
+                if (Driving)
+                {
+                    transform.position = StartPoint;
+                    DriveWay(CarMap._Way);
+                }
+            }
+        }
+        public bool _Broken
+        {
+            get
+            {
+                return Broken;
+            }
+            set
+            {
+                Broken = value;
+
+                if (value)
+                {
+                    foreach (GameObject fara in Fari)
+                    {
+                        fara.SetActive(false);
+                    }
+
+                    CarSound.Stop();
+                }
+            }
+        }
+        public bool _Used
+        {
+            get
+            {
+                return Used;
+            }
+            set
+            {
+                Used = value;
+
+                if(value && !Broken)
+                {
+                    foreach (GameObject fara in Fari)
+                    {
+                        fara.SetActive(false);
+                    }
+
+                    CarSound.Stop();
+                }
+            }
+        }
+        public bool _Minigaming
+        {
+            get
+            {
+                return Minigaming;
+            }
+            set
+            {
+                Minigaming = value;
+            }
+        }
 
         public void SetOutline(bool enabled) 
         {
@@ -142,6 +216,16 @@ namespace Level1
                     EZCameraShake.CameraShaker.Instance.ShakeOnce(4 * 1.25f, 4 * 1.25f, 0.1f, 0.5f);
                     Driving = false;
                     Broken = true;
+
+                    transform.position += direction * (raycast.distance + 0.5f);
+
+                    foreach (GameObject fara in Fari)
+                    {
+                        fara.SetActive(false);
+                    }
+
+                    AvarySound.Play();
+                    CarSound.Stop();
                     yield break;
                 }
 
@@ -163,6 +247,8 @@ namespace Level1
             {
                 fara.SetActive(false);
             }
+
+            CarSound.Stop();
 
             Driving = false;
         }

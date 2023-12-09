@@ -12,7 +12,7 @@ public class SaveHandler : MonoBehaviour
 
     private SaveData Current = null;
 
-    private Rigidbody Player = null;
+    [SerializeField] private Rigidbody Player = null;
     private Level Level = null;
     private InputHandler InputHandler = null;
 
@@ -56,22 +56,19 @@ public class SaveHandler : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        if(File.Exists(Path.Combine(Application.dataPath, "MainSave.txt")))
+        if (File.Exists(Path.Combine(Application.dataPath, "MainSave.txt")))
         {
             Main = JsonUtility.FromJson<SaveData>(File.ReadAllText(Path.Combine(Application.dataPath, "MainSave.txt")));
         }
         else
         {
-            Main = new SaveData();
+            Main = null;
         }
 
         if (File.Exists(Path.Combine(Application.dataPath, "FastSave.txt")))
@@ -80,31 +77,14 @@ public class SaveHandler : MonoBehaviour
         }
         else
         {
-            Fast = new SaveData();
+            Fast = null;
         }
 
+        Current = Main;
 
-        if (!FindObjectOfType<Level>())
-        {
-            return;
-        }
-
-        if(Main.CurrentLevel != SceneManager.GetActiveScene().buildIndex)
-        {
-            InputHandler = FindObjectOfType<InputHandler>();
-            InputHandler.OnKeyDown += KeyDown;
-
-            Player = FindObjectOfType<Movement>().GetComponent<Rigidbody>();
-            Level = FindObjectOfType<Level>();
-
-            MainSave();
-        }
-        else
-        {
-            Current = Main;
-
-            Initialize();
-        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += LevelLoaded;
     }
 
     public void LevelLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -113,10 +93,22 @@ public class SaveHandler : MonoBehaviour
         InputHandler = null;
         Level = null;
 
-        SceneManager.sceneLoaded -= LevelLoaded;
         if (!FindObjectOfType<Level>())
         {
             return;
+        }
+
+        if (Current == null || Current.CurrentLevel != SceneManager.GetActiveScene().buildIndex)
+        {
+            InputHandler = FindObjectOfType<InputHandler>();
+            InputHandler.OnKeyDown += KeyDown;
+
+            Player = FindObjectOfType<Movement>().GetComponent<Rigidbody>();
+            Level = FindObjectOfType<Level>();
+
+            MainSave();
+
+            Current = Main;
         }
 
         Initialize();
@@ -124,6 +116,10 @@ public class SaveHandler : MonoBehaviour
 
     private void Initialize()
     {
+        GameManager.ResetVariables();
+
+        Level = FindObjectOfType<Level>();
+
         InputHandler = FindObjectOfType<InputHandler>();
         InputHandler.OnKeyDown += KeyDown;
 
@@ -135,7 +131,6 @@ public class SaveHandler : MonoBehaviour
 
         GameManager.Health = Current.Health;
 
-        Level = FindObjectOfType<Level>();
         Level.ReadLevelInfo(Current.LevelInfo);
 
         Current = null;
@@ -184,7 +179,6 @@ public class SaveHandler : MonoBehaviour
         }
 
         Current = Main;
-        SceneManager.sceneLoaded += LevelLoaded;
         SceneTransitions.instance.CallSceneTrans(Current.CurrentLevel);
     }
 
@@ -208,12 +202,16 @@ public class SaveHandler : MonoBehaviour
         }
 
         Current = Fast;
-        SceneManager.sceneLoaded += LevelLoaded;
         SceneTransitions.instance.CallSceneTrans(Current.CurrentLevel);
     }
 
     public void MainSave()
     {
+        if(Main == null)
+        {
+            Main = new SaveData();
+        }
+
         Main.CurrentLevel = SceneManager.GetActiveScene().buildIndex;
 
         Main.Health = GameManager.Health;
