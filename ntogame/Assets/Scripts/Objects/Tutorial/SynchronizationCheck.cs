@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Levels;
 
 namespace Tutorial
 { 
     public class SynchronizationCheck : MonoBehaviour
     {
         [SerializeField] private InputHandler InputHandler;
+        [SerializeField] private ApplyName ApplyName;
+        [SerializeField] private LevelDialogue LevelDialogue;
         [SerializeField] private Levels.Tutorial Level;
         [SerializeField] private DialogueSystem DialogueSystem;
         private int Stage = 0;
@@ -14,6 +15,13 @@ namespace Tutorial
 
         private void Start()
         {
+            ApplyName.Show();
+        }
+
+        public void StartWork()
+        {
+            LevelDialogue.StartDialogue();
+
             DialogueSystem._Skipable = false;
 
             InputHandler.MetaKeyDown += PlayerPressKey;

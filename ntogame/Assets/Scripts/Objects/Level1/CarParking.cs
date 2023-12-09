@@ -8,19 +8,26 @@ namespace Level1
         [SerializeField] private LevelDialogue Dialogue1;
         [SerializeField] private LevelDialogue Dialogue2;
         [SerializeField] private LevelDialogue Dialogue3;
+        [SerializeField] private LevelDialogue Dialogue4;
         [SerializeField] private Outline Outline;
+        [SerializeField] private CarMap CarMap;
+
+        [SerializeField] private LayerMask Layer;
+        [SerializeField] private Transform RayPoint;
 
         [SerializeField] private GameObject[] Fari;
 
         [SerializeField] private DialogueSystem DialogueSystem;
         [SerializeField] private GateOpener GateOpener;
 
-        [SerializeField] private Vector3[] Points;
+        [SerializeField] private Vector3 StartPoint;
         [SerializeField] private Vector3 EndRotation;
         [SerializeField] private float Speed;
 
         [SerializeField] private bool Driving;
+        [SerializeField] private bool Broken;
         [SerializeField] private bool Used;
+        [SerializeField] private bool Minigaming;
 
         public void SetOutline(bool enabled) 
         {
@@ -40,17 +47,28 @@ namespace Level1
                 return;
             }
 
-            if (Used)
+            if (Broken)
+            {
+                Dialogue4.StartDialogue();
+            }
+            else if (Used)
             {
                 Dialogue3.StartDialogue();
             }
             else if (GateOpener._IsOpen)
             {
-                Dialogue2.StartDialogue();
+                if (Minigaming)
+                {
+                    CarMap.Show();
+                }
+                else
+                {
+                    Dialogue2.StartDialogue();
 
-                GateOpener._Interactable = false;
+                    GateOpener._Interactable = false;
 
-                DialogueSystem.OnDialogueEnd += DriveCar;
+                    DialogueSystem.OnDialogueEnd += Minigame;
+                }
             }
             else
             {
@@ -58,19 +76,29 @@ namespace Level1
             }
         }
 
-        public void DriveCar()
+        public void Minigame()
         {
-            StartCoroutine(Drive());
-            Used = true;
+            Minigaming = true;
+            DialogueSystem.OnDialogueEnd -= Minigame;
 
-            DialogueSystem.OnDialogueEnd -= DriveCar;
+            CarMap.Show();
+        }
+
+        public void DriveWay(Vector3Int[] way)
+        {
+            for(int i = 0; i < way.Length; i++)
+            {
+                way[i].x *= -1;
+                way[i].z = way[i].y;
+                way[i].y = 0;
+            }
+            StartCoroutine(Drive(way));
         }
 
         public void SetUsed(bool state)
         {
             if (Used)
             {
-                transform.position = Points[Points.Length - 1];
                 transform.rotation = Quaternion.Euler(EndRotation); 
                 
                 foreach (GameObject fara in Fari)
@@ -82,19 +110,47 @@ namespace Level1
             Used = state;
         }
 
-        private IEnumerator Drive()
+        private IEnumerator Drive(Vector3Int[] way)
         {
-            Driving = true;
+            Used = true;
+               Driving = true;
+
+            Vector3 direction = StartPoint - transform.position;
+            float magnitude = direction.magnitude;
+            while (magnitude > 0.1f)
+            {
+                transform.position += direction / magnitude * Speed * Time.deltaTime;
+                transform.rotation = Quaternion.Euler(0, Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg - 90, 0);
+
+                direction = StartPoint - transform.position;
+                magnitude = direction.magnitude;
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            transform.position = StartPoint;
 
             int currentWay = 0;
-            while(currentWay < Points.Length)
+            magnitude = 10;
+            while(currentWay < way.Length)
             {
-                Vector3 direction = Points[currentWay] - transform.position;
-                float magnitude = direction.magnitude;
-                transform.position += direction / magnitude * Speed * Time.deltaTime;
-                if(magnitude < 0.3f)
+                direction = way[currentWay];
+
+                RaycastHit raycast;
+                if(Physics.Raycast(RayPoint.position, transform.right, out raycast, Speed * Time.deltaTime, Layer))
                 {
-                    transform.position = Points[currentWay];
+                    EZCameraShake.CameraShaker.Instance.ShakeOnce(4 * 1.25f, 4 * 1.25f, 0.1f, 0.5f);
+                    Driving = false;
+                    Broken = true;
+                    yield break;
+                }
+
+                transform.position += direction * Speed * Time.deltaTime;
+                magnitude -= Speed * Time.deltaTime;
+
+                if(magnitude <= 0)
+                {
+                    magnitude = 10;
                     currentWay++;
                 }
 

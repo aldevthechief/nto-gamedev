@@ -8,6 +8,7 @@ public class SaveHandler : MonoBehaviour
     [SerializeField] private GameObject FastSavePrefab;
     [SerializeField] private SaveData Main = null;
     [SerializeField] private SaveData Fast = null;
+    private MetaData MetaData = null;
 
     private SaveData Current = null;
 
@@ -16,6 +17,39 @@ public class SaveHandler : MonoBehaviour
     private InputHandler InputHandler = null;
 
     public bool _HasContinue => Main.CurrentLevel != 0;
+
+    private MetaData _MetaData
+    {
+        get
+        {
+            if (MetaData == null)
+            {
+                if (File.Exists(Path.Combine(Application.dataPath, "MetaData.txt")))
+                {
+                    MetaData = JsonUtility.FromJson<MetaData>(File.ReadAllText(Path.Combine(Application.dataPath, "MetaData.txt")));
+                }
+                else
+                {
+                    MetaData = new MetaData();
+                }
+            }
+
+            return MetaData;
+        }
+    }
+    public string _PlayerName
+    {
+        get
+        {
+            return _MetaData.Name;
+        }
+        set
+        {
+            _MetaData.Name = value;
+
+            File.WriteAllText(Path.Combine(Application.dataPath, "MetaData.txt"), JsonUtility.ToJson(MetaData));
+        }
+    }
 
     private static SaveHandler Instance = null;
     public static SaveHandler _Instance => Instance;

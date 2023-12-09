@@ -1,6 +1,12 @@
 
 namespace GameData
 {
+    public class MetaData
+    {
+        public string Name;
+        public string[] Flags;
+    }
+
     [System.Serializable]
     public class SaveData
     {

@@ -138,7 +138,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            CurrentText += Phrases[PhraseIndex].Sentences[SentenceIndex];
+            CurrentText += CommandsExecute(Phrases[PhraseIndex].Sentences[SentenceIndex]);
             Writing = StartCoroutine(WriteSentence(Phrases[PhraseIndex].Sentences[SentenceIndex], Phrases[PhraseIndex].Speeds[SentenceIndex]));
             SentenceIndex++;
         }
@@ -151,7 +151,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        Name.text = Phrases[PhraseIndex].Name;
+        Name.text = CommandsExecute(Phrases[PhraseIndex].Name);
 
         if(Name.text == "")
         {
@@ -179,9 +179,18 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    private string CommandsExecute(string text)
+    {
+       text = text.Replace("/player", SaveHandler._Instance._PlayerName);
+
+        return text;
+    }
+
     private IEnumerator WriteSentence(string sentence, float speed)
     {
         Caret.gameObject.SetActive(false);
+
+        sentence = CommandsExecute(sentence);
 
         speed = 1 / speed;
         foreach(char letter in sentence)
