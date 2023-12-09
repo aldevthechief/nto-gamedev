@@ -5351,10 +5351,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WireConnector
       objectReference: {fileID: 0}
-    - target: {fileID: 8350123775849919234, guid: a0a18ea6579a1f74d88487c98afd120a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14758,10 +14754,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyBox
       objectReference: {fileID: 0}
-    - target: {fileID: 4606316547709132279, guid: 14955e277279a574faf285ecc6aebc81, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7413488696797095553, guid: 14955e277279a574faf285ecc6aebc81, type: 3}
       propertyPath: m_LocalPosition.x
       value: -101
@@ -16241,50 +16233,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RainParticles
       objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: lengthInSec
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: InitialModule.maxNumParticles
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 1800
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.atime1
-      value: 33731
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.atime2
-      value: 65535
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.a
-      value: 0.9657214
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key2.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898693654895923342, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8356930449731124406, guid: dbc34ff27ff1a694aa7329b3b012a394, type: 3}
       propertyPath: m_LocalPosition.x
       value: -56.8
@@ -16832,10 +16780,6 @@ PrefabInstance:
     - target: {fileID: 8350123775849919234, guid: a0a18ea6579a1f74d88487c98afd120a, type: 3}
       propertyPath: m_Name
       value: WireConnector (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350123775849919234, guid: a0a18ea6579a1f74d88487c98afd120a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21221,14 +21165,6 @@ PrefabInstance:
     - target: {fileID: 3809730876312562784, guid: 01c7a29236221994d8b2ab3eb258c501, type: 3}
       propertyPath: m_Name
       value: WireDispenser
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809730876312562784, guid: 01c7a29236221994d8b2ab3eb258c501, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5076992182381005663, guid: 01c7a29236221994d8b2ab3eb258c501, type: 3}
-      propertyPath: IsDispencer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5322382807402739634, guid: 01c7a29236221994d8b2ab3eb258c501, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54726,14 +54662,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WireConnector (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 8350123775849919234, guid: a0a18ea6579a1f74d88487c98afd120a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8441969545447503465, guid: a0a18ea6579a1f74d88487c98afd120a, type: 3}
-      propertyPath: IsEnding
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -62752,10 +62680,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WireConnector (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 8350123775849919234, guid: a0a18ea6579a1f74d88487c98afd120a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -68519,10 +68443,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RobotPlatform
       objectReference: {fileID: 0}
-    - target: {fileID: 5283711833330828848, guid: 163493cc36b351745999064b0571edf7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -69754,22 +69674,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1304580966188302876, guid: f7a6e7dad0fed694da34d02dadaeb212, type: 3}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 175
-      objectReference: {fileID: 0}
-    - target: {fileID: 1304580966188302876, guid: f7a6e7dad0fed694da34d02dadaeb212, type: 3}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 175
-      objectReference: {fileID: 0}
-    - target: {fileID: 1304580966188302876, guid: f7a6e7dad0fed694da34d02dadaeb212, type: 3}
-      propertyPath: InitialModule.maxNumParticles
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 1304580966188302876, guid: f7a6e7dad0fed694da34d02dadaeb212, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 2276907352905158877, guid: f7a6e7dad0fed694da34d02dadaeb212, type: 3}
       propertyPath: m_Name
       value: Fog

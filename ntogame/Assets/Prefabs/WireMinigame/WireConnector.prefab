@@ -349,7 +349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a80dbde311ac57a469792c9af38f5362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isConnected: 0
+  ConnecterFrom: {fileID: 0}
+  ConnectedTo: {fileID: 0}
+  IsDispencer: 0
+  IsEnding: 1
 --- !u!82 &5513231438269577601
 AudioSource:
   m_ObjectHideFlags: 0

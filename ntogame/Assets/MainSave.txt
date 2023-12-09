@@ -1,1 +1,1 @@
-{"CurrentLevel":2,"Health":5,"XPosition":424.0799865722656,"YPosition":1.440000057220459,"ZPosition":-8.479999542236329,"YRotation":44.999996185302737,"LevelInfo":""}
+{"CurrentLevel":1,"Health":5,"XPosition":-4.5,"YPosition":2.0,"ZPosition":3.0,"YRotation":90.0,"LevelInfo":"{\"synchronized\":false,\"dialogues\":[false,false,false,false,false],\"connections\":[-1,-1,-1,-1]}"}

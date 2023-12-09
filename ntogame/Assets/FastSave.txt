@@ -1,0 +1,1 @@
+{"CurrentLevel":1,"Health":5,"XPosition":-104.45790100097656,"YPosition":2.0500001907348635,"ZPosition":77.39695739746094,"YRotation":0.0,"LevelInfo":"{\"synchronized\":true,\"dialogues\":[true,true,true,true,true],\"connections\":[1,-1,-1,-1]}"}

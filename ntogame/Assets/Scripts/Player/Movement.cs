@@ -150,6 +150,7 @@ public class Movement : MonoBehaviour
             if(isGrounded && velocityMagnitude > 0.1f)
                 Instantiate(PlayerTrail, gc.position, Quaternion.identity);
             yield return new WaitForSeconds(TrailTime);
+            yield return null;
             yield return InstantiateTrail();
         }
         else yield return null;
