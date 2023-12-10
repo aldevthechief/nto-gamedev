@@ -10,6 +10,7 @@ public class RobotPlatform : Platform
     [SerializeField] Transform PlayerPos;
 
     [Header("other properties")]
+    [SerializeField] private Animator Animator;
     private MeshRenderer mesh;
     [SerializeField] private Material[] Materials;
     private bool canMove = true;
