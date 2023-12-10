@@ -3034,6 +3034,7 @@ MonoBehaviour:
     ZPosition: 0
     YRotation: 0
     LevelInfo: 
+  Player: {fileID: 264462236}
 --- !u!4 &102961637
 Transform:
   m_ObjectHideFlags: 0
@@ -8173,6 +8174,7 @@ MonoBehaviour:
   jumpgrace: 0.15
   slopeDamp: 6
   slopeDistance: 5
+  slopeMinAngle: 5
   PlayerState: 0
   SpriteAnim: {fileID: 320503163}
   PlayerTrail: {fileID: 8130861273992033701, guid: cfbaf4d03b9879e4daae08dcf3cc0a08, type: 3}

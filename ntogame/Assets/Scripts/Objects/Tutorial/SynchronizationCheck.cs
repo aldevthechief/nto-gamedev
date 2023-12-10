@@ -60,7 +60,7 @@ namespace Tutorial
                     }
                     break;
                 case 2:
-                    if (Input.GetKeyDown(KeyCode.R))
+                    if (Input.GetKeyDown(KeyCode.R)) // нет смысла ставить клавишу е, так как игроку не понятно, русская она или английская
                     {
                         Stage++;
                         Next();

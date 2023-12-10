@@ -28,6 +28,7 @@ public class Movement : MonoBehaviour
     [Header("slope movement")]
     [SerializeField] float slopeDamp = 6f;
     [SerializeField] float slopeDistance = 5f;
+    [SerializeField] float slopeMinAngle = 5f;
 
     private Quaternion slopeRot = Quaternion.identity;
     private RaycastHit slopeHit;
@@ -126,17 +127,17 @@ public class Movement : MonoBehaviour
         velocityChange = dir - rb.velocity;
     }
 
-    // bool OnSlope()
-    // {
-    //     if(!isGrounded)
-    //         return false;
+    bool OnSlope()
+    {
+        if(!isGrounded)
+            return false;
 
-    //     float slopeAngle = Vector3.SignedAngle(slopeHit.normal, Vector3.up, Vector3.up);
-    //     if(slopeAngle > slopeMinAngle)
-    //         return true;
+        float slopeAngle = Vector3.SignedAngle(slopeHit.normal, Vector3.up, Vector3.up);
+        if(slopeAngle > slopeMinAngle)
+            return true;
 
-    //     return false;
-    // }
+        return false;
+    }
 
     public void AddForceToThePlayer(Vector3 force)
     {
