@@ -51,7 +51,6 @@ class Settings : MonoBehaviour
         get { return Config.ScreenMode; }
         set 
         {
-            value = Mathf.Clamp(value, 0, 2);
             Config.ScreenMode = value; 
         }
     }
@@ -60,7 +59,6 @@ class Settings : MonoBehaviour
         get { return Config.Quality; }
         set
         {
-            value = Mathf.Clamp(value, 0, 2);
             Config.Quality = value;
         }
     }
@@ -142,7 +140,22 @@ class Settings : MonoBehaviour
 
         Screen.SetResolution(CurrentConfig.XResolution, CurrentConfig.YResolution, GetScreenMode(CurrentConfig.ScreenMode));
 
-        QualitySettings.SetQualityLevel(CurrentConfig.Quality, true);
+        switch (CurrentConfig.Quality)
+        {
+            case 0:
+                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier1;
+                QualitySettings.SetQualityLevel(1, true);
+                break;
+            case 1:
+                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier2;
+                QualitySettings.SetQualityLevel(3, true);
+                break;
+            case 2:
+                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier3;
+                QualitySettings.SetQualityLevel(5, true);
+                break;
+        }
+
 
         if(CurrentConfig.FPSCap < 1)
         {

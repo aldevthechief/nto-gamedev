@@ -17,9 +17,18 @@ public abstract class UIMinigame : MonoBehaviour
         }
     }
 
+    public virtual void StraightHide()
+    {
+        InputHandler.MetaKeyDown -= Hide;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        gameObject.SetActive(false);
+    }
+
     public virtual void Show()
     {
-        print("+");
         InputHandler.MetaKeyDown += Hide;
 
         Cursor.lockState = CursorLockMode.None;

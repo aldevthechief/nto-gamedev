@@ -61,6 +61,7 @@ namespace GameData
             clone.FPSCap = FPSCap;
             clone.MusicsVolume = MusicsVolume;
             clone.EffectsVolume = EffectsVolume;
+            clone.Quality = Quality;
             
             return clone;
         }
