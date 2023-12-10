@@ -10,7 +10,9 @@ public class RobotPlatform : Platform
     [SerializeField] Transform PlayerPos;
 
     [Header("other properties")]
-    [SerializeField] private Animator Animator;
+    [SerializeField] private Light Light;
+    [SerializeField] private AudioSource Sound;
+    [SerializeField] private ParticleSystem ParticleSystem;
     private MeshRenderer mesh;
     [SerializeField] private Material[] Materials;
     private bool canMove = true;
@@ -21,19 +23,23 @@ public class RobotPlatform : Platform
         mesh = GetComponent<MeshRenderer>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Lock(bool state)
     {
-        if(other.GetComponent<Movement>())
+        if (state)
         {
+            Light.color = new Color(1, 0, 0, 1);
+            ParticleSystem.startColor = new Color(1, 0, 0, 1);
+            Sound.pitch = 0.6f;
+
             canMove = false;
             mesh.material = Materials[1];
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.GetComponent<Movement>())
+        else
         {
+            Light.color = new Color(1, 1, 1, 1);
+            ParticleSystem.startColor = new Color(1, 1, 1, 1);
+            Sound.pitch = 0.95f;
+
             canMove = true;
             mesh.material = Materials[0];
         }

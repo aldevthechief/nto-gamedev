@@ -15,38 +15,35 @@ namespace Level1
 
         [SerializeField] private GameObject RestartTrigger;
 
-        [SerializeField] private bool Broken;
-        [SerializeField] private bool Downed;
+        [SerializeField] private int Stage; //0 - опущено 1 - поднято и сломано 2 - опущено терминалом
 
-        public bool _Broken
+        public int _Stage
         {
             get
             {
-                return Broken;
+                return Stage;
             }
             set
             {
+                Stage = value;
+
                 StopAllCoroutines();
                 StartCoroutine(PlaySound());
+                if (Stage == 1)
+                {
+                    Animator.SetBool("Downed", false);
+                    Animator.Play("PlatformUpped");
+                }
+                else
+                {
+                    Animator.SetBool("Downed", true);
+                    Animator.Play("PlatformDowned");
 
-                Broken = value;
-                Animator.SetBool("Downed", !value);
-            }
-        }
-        public bool _Downed 
-        {
-            get
-            {
-                return Downed;
-            }
-            set
-            {
-                StopAllCoroutines();
-                StartCoroutine(PlaySound());
-
-                Downed = value;
-                Animator.SetBool("Downed", value);
-                RestartTrigger.SetActive(!value);
+                    if (Stage == 2)
+                    {
+                        RestartTrigger.SetActive(false);
+                    }
+                }
             }
         }
 
@@ -57,7 +54,7 @@ namespace Level1
 
         public void Interact()
         {
-            if (Broken)
+            if (Stage > 0)
             {
                 SecondDialogue.StartDialogue();
                 return;
@@ -68,14 +65,14 @@ namespace Level1
 
             BrokeSound.Play();
 
-            Broken = true;
+            Stage = 1;
             Animator.SetBool("Downed", false);
             FirstDialogue.StartDialogue();
         }
 
         public void Down()
         {
-            if (Downed)
+            if (Stage > 1)
             {
                 return;
             }
@@ -83,7 +80,7 @@ namespace Level1
             StopAllCoroutines();
             StartCoroutine(PlaySound());
 
-            Downed = true;
+            Stage = 2;
             Animator.SetBool("Downed", true);
             RestartTrigger.SetActive(false);
         }

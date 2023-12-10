@@ -24,7 +24,7 @@ namespace Tutorial
             Tutorial.NameMade();
 
             SaveHandler._Instance._PlayerName = InputField.text;
-            print("-");
+
             InputHandler.MetaKeyDown -= Hide;
 
             Cursor.lockState = CursorLockMode.Locked;

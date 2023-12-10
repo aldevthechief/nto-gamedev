@@ -7,6 +7,7 @@ namespace Levels
     {
         [SerializeField] private ApplyName NameApply;
         [SerializeField] private SynchronizationCheck SynchronizationCheck;
+        [SerializeField] private Rigidbody Robot;
         [SerializeField] private LevelDialogue[] Dialogues;
         [SerializeField] private WirePillar[] Pillars;
         [SerializeField] private Transform[] PillarPoints;
@@ -51,6 +52,10 @@ namespace Levels
 
             LevelInfo.connections = connections;
 
+            LevelInfo.XRobot = Robot.position.x;
+            LevelInfo.YRobot = Robot.position.y;
+            LevelInfo.ZRobot = Robot.position.z;
+
             return JsonUtility.ToJson(LevelInfo);
         }
 
@@ -72,12 +77,14 @@ namespace Levels
                 SynchronizationCheck.StartWork();
             }
 
-            for(int i = 1; i < Dialogues.Length; i++)
+            for (int i = 1; i < Dialogues.Length; i++)
             {
                 Dialogues[i]._Startable = !LevelInfo.dialogues[i];
             }
 
-            for(int i = 0; i < LevelInfo.connections.Length; i++)
+            Robot.position = new Vector3(LevelInfo.XRobot, LevelInfo.YRobot, LevelInfo.ZRobot);
+
+            for (int i = 0; i < LevelInfo.connections.Length; i++)
             {
                 if(LevelInfo.connections[i] > -1)
                 {
@@ -95,8 +102,9 @@ namespace Levels
         {
             public bool namemade = false;
             public bool synchronized = false;
-            public bool[] dialogues = new bool[5] {false, false, false, false, false};
+            public bool[] dialogues = new bool[6] {false, false, false, false, false, false};
             public int[] connections = new int[4] { -1, -1, -1, -1 };
+            public float XRobot = -69.63f, YRobot = -2.36f, ZRobot = 5.85f;
         }
     }
 }

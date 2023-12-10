@@ -25,8 +25,7 @@ namespace Levels
 
             data.startDialogue = ShowStartDialogue;
 
-            data.platformBroken = PlatformWheel._Broken;
-            data.platformDowned = PlatformWheel._Downed;
+            data.platformStage = PlatformWheel._Stage;
 
             data.gatesOpen = Gates.GetBool("isOpen");
             data.carDriving = Car._Driving;
@@ -60,8 +59,7 @@ namespace Levels
 
             ShowStartDialogue = data.startDialogue;
 
-            PlatformWheel._Broken = data.platformBroken;
-            PlatformWheel._Downed = data.platformDowned;
+            PlatformWheel._Stage = data.platformStage;
 
             bool[][] tiles = new bool[7][];
             tiles[0] = data.tilesy0;
@@ -124,8 +122,7 @@ namespace Levels
         {
             public bool startDialogue = true;
 
-            public bool platformBroken = false;
-            public bool platformDowned = false;
+            public int platformStage = 0;
 
             public bool gatesOpen = false;
             public bool carDriving = false;
