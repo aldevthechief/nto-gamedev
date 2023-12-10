@@ -181,7 +181,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     private string CommandsExecute(string text)
     {
-       text = text.Replace("/player", SaveHandler._Instance._PlayerName);
+        text = text.Replace("/player", SaveHandler._Instance._PlayerName);
 
         return text;
     }

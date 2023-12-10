@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerShadow
+  m_Name: PlayerNegativeShadow
   m_Shader: {fileID: 4800000, guid: ecc00721874700b40bde88633e439103, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
