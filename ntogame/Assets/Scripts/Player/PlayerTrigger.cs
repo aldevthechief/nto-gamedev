@@ -1,6 +1,5 @@
 using UnityEngine;
 using EZCameraShake;
-using UnityEditor.Callbacks;
 using System.Collections;
 using UnityEngine.SceneManagement;
 

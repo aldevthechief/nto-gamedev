@@ -44,6 +44,8 @@ namespace GameData
 
         public int ScreenMode = 0; //0 - окно, 1 - окно без рамок, 2 - полный экран
 
+        public int Quality = 1;
+
         public int FPSCap = -1;
 
         public float MusicsVolume = 0.5f;

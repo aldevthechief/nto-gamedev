@@ -55,6 +55,15 @@ class Settings : MonoBehaviour
             Config.ScreenMode = value; 
         }
     }
+    public int _Quality
+    {
+        get { return Config.Quality; }
+        set
+        {
+            value = Mathf.Clamp(value, 0, 2);
+            Config.Quality = value;
+        }
+    }
     public int _FPSCap
     {
         get { return Config.FPSCap; }
@@ -132,6 +141,8 @@ class Settings : MonoBehaviour
         CurrentConfig = Config.CreateClone();
 
         Screen.SetResolution(CurrentConfig.XResolution, CurrentConfig.YResolution, GetScreenMode(CurrentConfig.ScreenMode));
+
+        QualitySettings.SetQualityLevel(CurrentConfig.Quality, true);
 
         if(CurrentConfig.FPSCap < 1)
         {

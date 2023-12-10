@@ -12,11 +12,22 @@ public class SaveHandler : MonoBehaviour
 
     private SaveData Current = null;
 
-    [SerializeField] private Rigidbody Player = null;
+    private Rigidbody Player = null;
     private Level Level = null;
     private InputHandler InputHandler = null;
 
-    public bool _HasContinue => Main.CurrentLevel != 0;
+    public bool _HasContinue
+    {
+        get
+        {
+            if(Main == null)
+            {
+                return false;
+            }
+
+            return Main.CurrentLevel != 0;
+        }
+    }
 
     private MetaData _MetaData
     {
@@ -85,6 +96,11 @@ public class SaveHandler : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += LevelLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= LevelLoaded;
     }
 
     public void LevelLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -230,6 +246,11 @@ public class SaveHandler : MonoBehaviour
     public void FastSave()
     {
         Instantiate(FastSavePrefab, FindObjectOfType<Canvas>().transform);
+
+        if(Fast == null)
+        {
+            Fast = new SaveData();
+        }
 
         Fast.CurrentLevel = SceneManager.GetActiveScene().buildIndex;
 

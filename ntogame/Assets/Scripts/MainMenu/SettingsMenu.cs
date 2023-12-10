@@ -7,6 +7,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private InputField YResolution;
     [SerializeField] private InputField FPSCap;
     [SerializeField] private Dropdown ScreenMode;
+    [SerializeField] private Dropdown Quality;
     [SerializeField] private Slider MusicVolume;
     [SerializeField] private Slider EffectVolume;
     private Settings Settings = null;
@@ -42,6 +43,7 @@ public class SettingsMenu : MonoBehaviour
             FPSCap.text = Settings._FPSCap.ToString();
         }
 
+        Quality.value = Settings._Quality;
         ScreenMode.value = Settings._ScreenMode;
         MusicVolume.value = Settings._MusicVolume;
         EffectVolume.value = Settings._EffectsVolume;
@@ -77,6 +79,12 @@ public class SettingsMenu : MonoBehaviour
     {
         Settings._ScreenMode = index;
         ScreenMode.value = Settings._ScreenMode;
+    }
+
+    public void SetQuality(int index)
+    {
+        Settings._Quality = index;
+        Quality.value = Settings._Quality;
     }
 
     public void SetMusicVolume(float value)
